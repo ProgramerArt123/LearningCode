@@ -6,32 +6,37 @@ namespace code_learning {
 		m_last = code_learning_char::JudgeType(first);
 	}
 
-	bool Lexis::TryAppendChar(char last) {
-		if (IsDisconnection(last)) {
+	bool Lexis::TryAppendChar(char next) {
+		if (IsDisconnection(next)) {
 			return false;
 		}
 		else {
-			m_content.push_back(last);
-			m_last = code_learning_char::JudgeType(last);
+			m_content.push_back(next);
+			m_last = code_learning_char::JudgeType(next);
 			return true;
 		}
 	}
 
-	bool Lexis::IsDisconnection(char last) {
-		CHAR_TYPE type = code_learning_char::JudgeType(last);
+	bool Lexis::IsDisconnection(char next) {
+		CHAR_TYPE type = code_learning_char::JudgeType(next);
 		switch (m_last)
 		{
 		case CHAR_TYPE_SPACE:
 			return CHAR_TYPE_SPACE != type;
 			break;
 		case CHAR_TYPE_SYMBOL:
-			return true;
+			if ('_' != m_content.back()) {
+				return true;
+			}
+			else {
+				return CHAR_TYPE_DIGITAL != type && CHAR_TYPE_ALPHABET != type;
+			}
 			break;
 		case CHAR_TYPE_DIGITAL:
-			return CHAR_TYPE_DIGITAL != type && CHAR_TYPE_ALPHABET != type;
+			return CHAR_TYPE_DIGITAL != type && CHAR_TYPE_ALPHABET != type && '_' != next;
 			break;
 		case CHAR_TYPE_ALPHABET:
-			return CHAR_TYPE_ALPHABET != type && CHAR_TYPE_ALPHABET != type;
+			return CHAR_TYPE_ALPHABET != type && CHAR_TYPE_ALPHABET != type && '_' != next;
 			break;
 		default:
 			return false;

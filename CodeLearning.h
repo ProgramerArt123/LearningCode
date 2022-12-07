@@ -6,6 +6,7 @@
 #include <string>
 #include "SourceFile.h"
 #include "Config.h"
+#include "FrequencyWords.h"
 
 namespace code_learning {
 	class CodeLearning {
@@ -36,8 +37,9 @@ namespace code_learning {
 		void Summary();
 	private:
 		uint64_t m_file_count = 0;
-		std::map<std::string, uint64_t> m_lexes;
-		
+
+		FrequencyWords m_frequency;
+
 		Config m_cfg;
 	};
 }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "CodeLearning.h"
 
 namespace code_learning {
@@ -7,15 +8,28 @@ namespace code_learning {
 		source.Scan(m_cfg);
 		m_file_count++;
 		for (const auto &lexis : source) {
-			m_lexes[std::string(lexis->begin(), lexis->end())]++;
+			const std::string lexisContent(lexis->begin(), lexis->end());
+			m_frequency[lexisContent]++;
 		}
+		auto preLexisItor = source.begin();
+		for (auto lexisItor = source.begin();
+			lexisItor != source.end(); lexisItor ++) {
+			if (preLexisItor!=lexisItor) {
+				const std::string preLexisContent((*preLexisItor)->begin(), (*preLexisItor)->end());
+				const std::string lexisContent((*lexisItor)->begin(), (*lexisItor)->end());
+				m_frequency[preLexisContent].m_back[lexisContent]++;
+				m_frequency[lexisContent].m_front[preLexisContent]++;
+			}
+			preLexisItor = lexisItor;
+		}
+		m_frequency.Sort();
 	}
-
+	
 	void CodeLearning::Summary() {
 		std::cout << "learn file[" << m_file_count << "]" << std::endl;
 		std::cout << "learn lexis:" << std::endl;
-		for (const auto &lexis : m_lexes) {
-			std::cout << lexis.first << ':' << lexis.second << '\t';
+		for (const auto &word : m_frequency) {
+			std::cout << word->GetContent() << ':' << word->GetCount() << '\t';
 		}
 	}
 }

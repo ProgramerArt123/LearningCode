@@ -47,6 +47,18 @@ int main() {
 		student.Learning(code);
 	}
 	{
+		SourceFile code("FrequencyWords.h");
+		student.Learning(code);
+	}
+	{
+		SourceFile code("FrequencyWords.cpp");
+		student.Learning(code);
+	}
+	{
+		SourceFile code("Config.h");
+		student.Learning(code);
+	}
+	{
 		SourceFile code("main.cpp");
 		student.Learning(code);
 	}

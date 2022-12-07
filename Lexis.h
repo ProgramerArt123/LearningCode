@@ -8,11 +8,11 @@ namespace code_learning {
 	class Lexis {
 	public:
 		explicit Lexis(char first);
-		bool TryAppendChar(char last);
+		bool TryAppendChar(char next);
 		std::list<char>::const_iterator begin() const;
 		std::list<char>::const_iterator end() const;
 	private:
-		bool IsDisconnection(char last);
+		bool IsDisconnection(char next);
 	private:
 		std::list<char> m_content;
 		CHAR_TYPE m_last = CHAR_TYPE_NONE;
