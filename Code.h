@@ -3,10 +3,12 @@
 
 #include <list>
 #include <memory>
-#include "Lexis.h"
-#include "Config.h"
 
 namespace code_learning {
+
+	class Lexis;
+	struct Config;
+
 	class Code {
 	public:
 		explicit Code(const char *content, const Config &cfg);

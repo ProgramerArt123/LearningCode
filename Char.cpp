@@ -1,7 +1,7 @@
 #include "Char.h"
 
-namespace code_learning_char {
-	CHAR_TYPE JudgeType(char c) {
+namespace code_learning {
+	CHAR_TYPE JudgeCharType(char c) {
 		if (' ' == c || '\n' == c || '\r' == c || '\t' == c) {
 			return CHAR_TYPE_SPACE;
 		}

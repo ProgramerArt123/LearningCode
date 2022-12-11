@@ -1,4 +1,7 @@
+#include "Config.h"
+#include "Lexis.h"
 #include "Code.h"
+
 namespace code_learning {
 
 	Code::Code(const char *content, const Config &cfg) {

@@ -3,7 +3,7 @@ namespace code_learning {
 
 	Lexis::Lexis(char first) {
 		m_content.push_back(first);
-		m_last = code_learning_char::JudgeType(first);
+		m_last = JudgeCharType(first);
 	}
 
 	bool Lexis::TryAppendChar(char next) {
@@ -12,13 +12,13 @@ namespace code_learning {
 		}
 		else {
 			m_content.push_back(next);
-			m_last = code_learning_char::JudgeType(next);
+			m_last = JudgeCharType(next);
 			return true;
 		}
 	}
 
 	bool Lexis::IsDisconnection(char next) {
-		CHAR_TYPE type = code_learning_char::JudgeType(next);
+		CHAR_TYPE type = JudgeCharType(next);
 		switch (m_last)
 		{
 		case CHAR_TYPE_SPACE:

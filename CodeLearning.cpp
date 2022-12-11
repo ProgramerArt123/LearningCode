@@ -1,8 +1,15 @@
 #include <iostream>
 #include <algorithm>
+#include "Word.h"
+#include "Lexis.h"
+#include "SourceFile.h"
 #include "CodeLearning.h"
 
 namespace code_learning {
+
+	CodeLearning::CodeLearning():m_frequency(m_cfg) {
+
+	}
 
 	void CodeLearning::Learning(SourceFile &source) {
 		source.Scan(m_cfg);
@@ -17,8 +24,8 @@ namespace code_learning {
 			if (preLexisItor!=lexisItor) {
 				const std::string preLexisContent((*preLexisItor)->begin(), (*preLexisItor)->end());
 				const std::string lexisContent((*lexisItor)->begin(), (*lexisItor)->end());
-				m_frequency[preLexisContent].m_back[lexisContent]++;
-				m_frequency[lexisContent].m_front[preLexisContent]++;
+				m_frequency[preLexisContent].m_back.Count(lexisContent);
+				m_frequency[lexisContent].m_front.Count(preLexisContent);
 			}
 			preLexisItor = lexisItor;
 		}

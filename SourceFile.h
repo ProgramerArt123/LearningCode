@@ -3,9 +3,13 @@
 
 #include <memory>
 #include "Code.h"
-#include "Config.h"
+#include "Lexis.h"
 
 namespace code_learning {
+
+	
+	struct Config;
+
 	class SourceFile {
 	public:
 		explicit SourceFile(const char *fileName);

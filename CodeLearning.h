@@ -4,13 +4,19 @@
 #include <memory>
 #include <map>
 #include <string>
-#include "SourceFile.h"
 #include "Config.h"
+#include "Word.h"
 #include "FrequencyWords.h"
 
 namespace code_learning {
+
+	class SourceFile;
+	
+
 	class CodeLearning {
 	public:
+		explicit CodeLearning();
+
 		template<typename T>
 		void SetIgnores(T ignore) {
 			m_cfg.ignores.insert(ignore);
@@ -37,10 +43,10 @@ namespace code_learning {
 		void Summary();
 	private:
 		uint64_t m_file_count = 0;
+		
+		Config m_cfg;
 
 		FrequencyWords m_frequency;
-
-		Config m_cfg;
 	};
 }
 
