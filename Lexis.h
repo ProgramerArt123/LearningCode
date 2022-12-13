@@ -9,6 +9,7 @@ namespace code_learning {
 	public:
 		explicit Lexis(char first);
 		bool TryAppendChar(char next);
+		void AppendChar(char next);
 		std::list<char>::const_iterator begin() const;
 		std::list<char>::const_iterator end() const;
 	private:

@@ -38,5 +38,6 @@ namespace code_learning {
 		for (const auto &word : m_frequencies) {
 			std::cout << word->GetContent() << ':' << word->GetCount() << '\t';
 		}
+		
 	}
 }

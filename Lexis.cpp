@@ -11,10 +11,14 @@ namespace code_learning {
 			return false;
 		}
 		else {
-			m_content.push_back(next);
-			m_last = JudgeCharType(next);
+			AppendChar(next);
 			return true;
 		}
+	}
+
+	void Lexis::AppendChar(char next) {
+		m_content.push_back(next);
+		m_last = JudgeCharType(next);
 	}
 
 	bool Lexis::IsDisconnection(char next) {

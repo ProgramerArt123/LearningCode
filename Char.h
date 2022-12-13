@@ -1,7 +1,7 @@
 #ifndef __CODE_LEARNING_CHAR_H__
 #define __CODE_LEARNING_CHAR_H__
 
-
+#include <cstdint>
 
 namespace code_learning{
 
@@ -14,6 +14,8 @@ namespace code_learning{
 	};
 
 	CHAR_TYPE JudgeCharType(char c);
+
+	uint8_t CharHighOne(char c);
 }
 
 #endif

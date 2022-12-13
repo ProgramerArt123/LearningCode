@@ -22,4 +22,22 @@ namespace code_learning {
 			return CHAR_TYPE_NONE;
 		}
 	}
+	uint8_t CharHighOne(char c) {
+		if (!(c & 0x80)) {
+			return 0;
+		}
+		if (!(c & 0x40)) {
+			return 1;
+		}
+		if (!(c & 0x20)) {
+			return 2;
+		}
+		if (!(c & 0x10)) {
+			return 3;
+		}
+		if (!(c & 0x08)) {
+			return 4;
+		}
+		return 0;
+	}
 }
