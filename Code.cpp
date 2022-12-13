@@ -1,3 +1,4 @@
+#include <cstring>
 #include "Config.h"
 #include "Lexis.h"
 #include "Code.h"

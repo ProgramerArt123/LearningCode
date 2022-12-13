@@ -7,9 +7,9 @@ namespace code_learning {
 		m_content(content) {
 		m_type = JudgeWordType(content);
 	}
-	AdjacencyWord *AdjacencyWord::operator++(int) {
+	AdjacencyWord &AdjacencyWord::operator++(int) {
 		m_count++;
-		return this;
+		return *this;
 	}
 	const std::string &AdjacencyWord::GetContent()const {
 		return m_content;
@@ -19,6 +19,9 @@ namespace code_learning {
 	}
 	WORD_TYPE AdjacencyWord::GetType()const {
 		return m_type;
+	}
+	void AdjacencyWord::Sort() {
+		
 	}
 	WORD_TYPE AdjacencyWord::JudgeWordType(const std::string &content) {
 		char preChar = 0;

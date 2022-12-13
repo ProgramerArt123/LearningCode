@@ -5,8 +5,8 @@
 #include <map>
 #include <string>
 #include "Config.h"
-#include "Word.h"
-#include "FrequencyWords.h"
+#include "FrequencyWord.h"
+#include "Words.hpp"
 
 namespace code_learning {
 
@@ -46,7 +46,7 @@ namespace code_learning {
 		
 		Config m_cfg;
 
-		FrequencyWords m_frequency;
+		Words<FrequencyWord> m_frequencies;
 	};
 }
 
