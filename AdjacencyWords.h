@@ -3,11 +3,13 @@
 
 #include <list>
 #include <memory>
+#include <string>
 
 namespace code_learning {
 	
 	struct Config;
 	class CountAdjacencyWords;
+	class AdjacencyWord;
 
 	class AdjacencyWords {
 	public:

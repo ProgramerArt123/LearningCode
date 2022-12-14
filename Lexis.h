@@ -7,9 +7,11 @@
 namespace code_learning {
 	class Lexis {
 	public:
+		explicit Lexis();
 		explicit Lexis(char first);
 		bool TryAppendChar(char next);
 		void AppendChar(char next);
+		bool IsDescription()const;
 		std::list<char>::const_iterator begin() const;
 		std::list<char>::const_iterator end() const;
 	private:

@@ -1,6 +1,10 @@
 #include "Lexis.h"
 namespace code_learning {
 
+	Lexis::Lexis() {
+
+	}
+
 	Lexis::Lexis(char first) {
 		m_content.push_back(first);
 		m_last = JudgeCharType(first);
@@ -19,6 +23,10 @@ namespace code_learning {
 	void Lexis::AppendChar(char next) {
 		m_content.push_back(next);
 		m_last = JudgeCharType(next);
+	}
+
+	bool Lexis::IsDescription() const {
+		return CharHighOne(m_content.front());
 	}
 
 	bool Lexis::IsDisconnection(char next) {
