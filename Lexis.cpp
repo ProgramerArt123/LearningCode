@@ -29,6 +29,10 @@ namespace code_learning {
 		return CharHighOne(m_content.front());
 	}
 
+	bool Lexis::IsSpace()const {
+		return CHAR_TYPE_SPACE == JudgeCharType(m_content.front());
+	}
+
 	bool Lexis::IsDisconnection(char next) {
 		CHAR_TYPE type = JudgeCharType(next);
 		switch (m_last)

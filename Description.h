@@ -12,8 +12,8 @@ namespace code_learning {
 		explicit Description(const std::string &content, const Config &cfg);
 	
 		const std::string m_content;
-		AdjacencyWords m_front;
-		AdjacencyWords m_back;
+		std::string m_front;
+		std::string m_back;
 	};
 }
 

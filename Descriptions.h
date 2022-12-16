@@ -10,12 +10,6 @@ namespace code_learning {
 	
 	struct Config;
 
-	class Wrapper {
-	public:
-		std::string prefix;
-		std::string suffix;
-	};
-
 	class Descriptions {
 	public:
 		explicit Descriptions(const Config &cfg);
@@ -28,7 +22,6 @@ namespace code_learning {
 			return m_descs.end();
 		}
 	private:
-		std::list<std::unique_ptr<Wrapper>> m_wrappers;
 		std::list<std::unique_ptr<Description>> m_descs;
 		const Config &m_cfg;
 	};

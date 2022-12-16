@@ -12,6 +12,7 @@ namespace code_learning {
 		bool TryAppendChar(char next);
 		void AppendChar(char next);
 		bool IsDescription()const;
+		bool IsSpace()const;
 		std::list<char>::const_iterator begin() const;
 		std::list<char>::const_iterator end() const;
 	private:

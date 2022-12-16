@@ -16,6 +16,9 @@ namespace code_learning {
 		source.Scan(m_cfg);
 		m_file_count++;
 		for (const auto &lexis : source) {
+			if (lexis->IsSpace()) {
+				continue;
+			}
 			const std::string lexisContent(lexis->begin(), lexis->end());
 			if (!lexis->IsDescription()) {
 				m_frequencies[lexisContent]++;
@@ -30,19 +33,24 @@ namespace code_learning {
 			if (preLexisItor!=lexisItor) {
 				const std::string preLexisContent((*preLexisItor)->begin(), (*preLexisItor)->end());
 				const std::string lexisContent((*lexisItor)->begin(), (*lexisItor)->end());
-				if (!(*preLexisItor)->IsDescription()) {
-					m_frequencies[preLexisContent].m_back.Count(lexisContent);
+				if (!(*preLexisItor)->IsSpace()) {
+					if (!(*preLexisItor)->IsDescription()) {
+						m_frequencies[preLexisContent].m_back.Count(lexisContent);
+					}
+					else {
+						Description &desc = m_descs.GetDescription(preLexisContent);
+						desc.m_back = lexisContent;
+					}
 				}
-				else {
-					Description &desc = m_descs.GetDescription(preLexisContent);
-					desc.m_back.Count(lexisContent);
-				}
-				if (!(*lexisItor)->IsDescription()) {
-					m_frequencies[lexisContent].m_front.Count(preLexisContent);
-				}
-				else {
-					Description &desc = m_descs.GetDescription(lexisContent);
-					desc.m_front.Count(preLexisContent);
+
+				if (!(*lexisItor)->IsSpace()) {
+					if (!(*lexisItor)->IsDescription()) {
+						m_frequencies[lexisContent].m_front.Count(preLexisContent);
+					}
+					else {
+						Description &desc = m_descs.GetDescription(lexisContent);
+						desc.m_front = preLexisContent;
+					}
 				}
 			}
 			preLexisItor = lexisItor;
