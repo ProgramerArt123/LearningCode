@@ -5,7 +5,7 @@
 
 namespace code_learning {
 
-	struct Config;
+	class Config;
 
 	class Description {
 	public:

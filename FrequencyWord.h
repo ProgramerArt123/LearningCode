@@ -6,7 +6,7 @@
 
 namespace code_learning {
 
-	struct Config;
+	class Config;
 
 	class FrequencyWord : public AdjacencyWord {
 	public:

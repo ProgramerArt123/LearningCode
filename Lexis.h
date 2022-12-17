@@ -13,6 +13,7 @@ namespace code_learning {
 		void AppendChar(char next);
 		bool IsDescription()const;
 		bool IsSpace()const;
+		void SetDesc();
 		std::list<char>::const_iterator begin() const;
 		std::list<char>::const_iterator end() const;
 	private:
@@ -20,6 +21,7 @@ namespace code_learning {
 	private:
 		std::list<char> m_content;
 		CHAR_TYPE m_last = CHAR_TYPE_NONE;
+		bool m_is_desc = false;
 	};
 }
 

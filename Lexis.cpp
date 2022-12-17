@@ -26,11 +26,15 @@ namespace code_learning {
 	}
 
 	bool Lexis::IsDescription() const {
-		return CharHighOne(m_content.front());
+		return m_is_desc || CharHighOne(m_content.front());
 	}
 
 	bool Lexis::IsSpace()const {
 		return CHAR_TYPE_SPACE == JudgeCharType(m_content.front());
+	}
+
+	void Lexis::SetDesc() {
+		m_is_desc = true;
 	}
 
 	bool Lexis::IsDisconnection(char next) {

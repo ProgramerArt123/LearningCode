@@ -40,6 +40,8 @@ namespace code_learning {
 					else {
 						Description &desc = m_descs.GetDescription(preLexisContent);
 						desc.m_back = lexisContent;
+						Wrapper desWrap(desc.m_front, desc.m_back);
+						m_cfg.wrappers.insert(desWrap);
 					}
 				}
 

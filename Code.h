@@ -7,7 +7,7 @@
 namespace code_learning {
 
 	class Lexis;
-	struct Config;
+	class Config;
 
 	class Code {
 	public:
@@ -15,6 +15,9 @@ namespace code_learning {
 		const std::list<std::unique_ptr<Lexis>> &GetLexes() const;
 	private:
 		std::list<std::unique_ptr<Lexis>> m_lexes;
+		const Config &m_cfg;
+		bool CheckEncoding(const char *content, size_t len, size_t &index, bool &isPreSplit);
+		bool CheckWrap(const char *content, size_t len, size_t &index, bool &isPreSplit);
 	};
 }
 

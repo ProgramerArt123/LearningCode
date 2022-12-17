@@ -7,7 +7,7 @@
 
 namespace code_learning {
 	
-	struct Config;
+	class Config;
 
 	template<typename WORD>
 	class Words {

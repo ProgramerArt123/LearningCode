@@ -1,11 +1,10 @@
-#include <iostream>
+
 #include "CodeLearning.h"
 #include "SourceFile.h"
 
 using namespace code_learning;
 
 int main() {
-	std::cout << "代码学习" << std::endl;
 	CodeLearning student;
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
 	student.SetIgnores(' ', '\n', '\r', '\t');
