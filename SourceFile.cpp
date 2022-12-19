@@ -1,5 +1,6 @@
 #include <fstream>
 #include <sstream>
+#include "Config.h"
 #include "SourceFile.h"
 
 namespace code_learning {
@@ -21,4 +22,43 @@ namespace code_learning {
 	std::list<std::unique_ptr<Lexis>>::const_iterator SourceFile::end() const {
 		return m_code->GetLexes().end();
 	}
+	std::string SourceFile::PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, const Config &cfg) const{
+		for (const auto &wrap : cfg.wrappers) {
+			bool isMatching = true;
+			auto cursor = lexis;
+			for (const auto &c : wrap.m_prefix) {
+				if (c != *(*cursor)->begin()) {
+					isMatching = false;
+					break;
+				}
+				cursor++;
+				if (cursor == end()) {
+					return "";
+				}
+			}
+			if (isMatching) {
+				return wrap.m_prefix;
+			}
+		}
+		return "";
+	}
+	bool SourceFile::PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, const std::string &wrap)const {
+		bool isMatching = true;
+		auto cursor = lexis;
+		for (const auto &c : wrap) {
+			if (cursor == end()) {
+				throw "SourceFile::PeekWrap";
+			}
+			if (c != *(*cursor)->begin()) {
+				isMatching = false;
+				break;
+			}
+			cursor++;
+		}
+		if (isMatching) {
+			return true;
+		}
+		return false;
+	}
 }
+

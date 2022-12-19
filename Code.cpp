@@ -11,12 +11,12 @@ namespace code_learning {
 		size_t len = strlen(content);
 		bool isPreSplit = false;
 		for (size_t index = 0; index < len; index ++) {
-			if (CheckEncoding(content, len, index, isPreSplit)) {
-				break;
-			}
-			if (CheckWrap(content, len, index, isPreSplit)) {
-				break;
-			}
+			//if (CheckEncoding(content, len, index, isPreSplit)) {
+			//	break;
+			//}
+			//if (CheckWrap(content, len, index, isPreSplit)) {
+			//	break;
+			//}
 			char c = content[index];
 			if (!isPreSplit && !m_lexes.empty()) {
 				std::unique_ptr<Lexis> &last = m_lexes.back();

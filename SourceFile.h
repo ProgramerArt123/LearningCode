@@ -16,6 +16,8 @@ namespace code_learning {
 		void Scan(const Config &cfg);
 		std::list<std::unique_ptr<Lexis>>::const_iterator begin() const;
 		std::list<std::unique_ptr<Lexis>>::const_iterator end() const;
+		std::string PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, const Config &cfg)const;
+		bool PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, const std::string &wrap)const;
 	private:
 		std::unique_ptr<Code> m_code;
 		std::string m_content;

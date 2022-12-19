@@ -43,6 +43,8 @@ namespace code_learning {
 		void Learning(SourceFile &source);
 		void Summary();
 	private:
+		void StatisticsFrequencies(const SourceFile &source);
+	private:
 		uint64_t m_file_count = 0;
 		
 		Config m_cfg;
