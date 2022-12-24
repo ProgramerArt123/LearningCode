@@ -11,9 +11,10 @@ namespace code_learning {
 		size_t len = strlen(content);
 		bool isPreSplit = false;
 		for (size_t index = 0; index < len; index ++) {
-			//if (CheckEncoding(content, len, index, isPreSplit)) {
-			//	break;
-			//}
+			isPreSplit = CheckEncoding(content, index);
+			if (index == len) {
+				break;
+			}
 			//if (CheckWrap(content, len, index, isPreSplit)) {
 			//	break;
 			//}
@@ -35,8 +36,9 @@ namespace code_learning {
 		return m_lexes;
 	}
 
-	bool Code::CheckEncoding(const char *content, size_t len, size_t &index, bool &isPreSplit) {
+	bool Code::CheckEncoding(const char *content, size_t &index) {
 		uint8_t highOne = CharHighOne(content[index]);
+		bool isMulti = highOne;
 		if (highOne) {
 			m_lexes.push_back(std::unique_ptr<Lexis>(new Lexis()));
 		}
@@ -46,36 +48,8 @@ namespace code_learning {
 				last->AppendChar(content[index++]);
 			}
 			highOne = CharHighOne(content[index]);
-			isPreSplit = true;
 		}
-		return index == len;
+		return isMulti;
 	}
 
-	bool Code::CheckWrap(const char *content, size_t len, size_t &index, bool &isPreSplit) {
-		for (const auto &wrap : m_cfg.wrappers) {
-			if (len > index + wrap.m_prefix.length() &&
-				wrap.m_prefix == std::string(content + index,
-				wrap.m_prefix.length())) {
-				m_lexes.push_back(std::unique_ptr<Lexis>(new Lexis()));
-				std::unique_ptr<Lexis> &prefix = m_lexes.back();
-				for (uint8_t j = 0; j < wrap.m_prefix.length(); j++) {
-					prefix->AppendChar(content[index++]);
-				}
-				m_lexes.push_back(std::unique_ptr<Lexis>(new Lexis()));
-				std::unique_ptr<Lexis> &desc = m_lexes.back();
-				while (index + wrap.m_suffix.length() < len && wrap.m_suffix != std::string(content + index,
-					wrap.m_suffix.length())) {
-					desc->AppendChar(content[index++]);
-				}
-				desc->SetDesc();
-				m_lexes.push_back(std::unique_ptr<Lexis>(new Lexis()));
-				std::unique_ptr<Lexis> &suffix = m_lexes.back();
-				for (uint8_t j = 0; j < wrap.m_suffix.length(); j++) {
-					suffix->AppendChar(content[index++]);
-				}
-				break;
-			}
-		}
-		return index == len;
-	}
 }

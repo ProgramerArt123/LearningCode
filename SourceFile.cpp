@@ -22,7 +22,7 @@ namespace code_learning {
 	std::list<std::unique_ptr<Lexis>>::const_iterator SourceFile::end() const {
 		return m_code->GetLexes().end();
 	}
-	std::string SourceFile::PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, const Config &cfg) const{
+	Wrapper SourceFile::PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, const Config &cfg) const{
 		for (const auto &wrap : cfg.wrappers) {
 			bool isMatching = true;
 			auto cursor = lexis;
@@ -33,14 +33,16 @@ namespace code_learning {
 				}
 				cursor++;
 				if (cursor == end()) {
-					return "";
+					lexis = cursor;
+					return Wrapper();
 				}
 			}
 			if (isMatching) {
-				return wrap.m_prefix;
+				lexis = cursor;
+				return wrap;
 			}
 		}
-		return "";
+		return Wrapper();
 	}
 	bool SourceFile::PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, const std::string &wrap)const {
 		bool isMatching = true;
@@ -56,6 +58,7 @@ namespace code_learning {
 			cursor++;
 		}
 		if (isMatching) {
+			lexis = cursor;
 			return true;
 		}
 		return false;

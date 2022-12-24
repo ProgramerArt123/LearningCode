@@ -7,6 +7,8 @@ namespace code_learning {
 	
 	class Wrapper {
 	public:
+		explicit Wrapper(){
+		}
 		explicit Wrapper(const std::string &prefix, const std::string &suffix):
 			m_prefix(prefix), m_suffix(suffix){
 		}
@@ -25,8 +27,8 @@ namespace code_learning {
 			}
 			return false;
 		}
-		std::string m_prefix;
-		std::string m_suffix;
+		const std::string m_prefix;
+		const std::string m_suffix;
 	};
 	
 	class Config {

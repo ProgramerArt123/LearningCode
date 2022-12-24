@@ -16,8 +16,7 @@ namespace code_learning {
 	private:
 		std::list<std::unique_ptr<Lexis>> m_lexes;
 		const Config &m_cfg;
-		bool CheckEncoding(const char *content, size_t len, size_t &index, bool &isPreSplit);
-		bool CheckWrap(const char *content, size_t len, size_t &index, bool &isPreSplit);
+		bool CheckEncoding(const char *content, size_t &index);
 	};
 }
 

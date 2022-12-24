@@ -16,38 +16,6 @@ namespace code_learning {
 		m_file_count++;
 		source.Scan(m_cfg);
 		StatisticsFrequencies(source);
-
-		
-		//auto preLexisItor = source.begin();
-		//for (auto lexisItor = source.begin();
-		//	lexisItor != source.end(); lexisItor ++) {
-		//	if (preLexisItor!=lexisItor) {
-		//		const std::string preLexisContent((*preLexisItor)->begin(), (*preLexisItor)->end());
-		//		const std::string lexisContent((*lexisItor)->begin(), (*lexisItor)->end());
-		//		if (!(*preLexisItor)->IsSpace()) {
-		//			if (!(*preLexisItor)->IsDescription()) {
-		//				m_frequencies[preLexisContent].m_back.Count(lexisContent);
-		//			}
-		//			else {
-		//				Description &desc = m_descs.GetDescription(preLexisContent);
-		//				desc.m_back = lexisContent;
-		//				Wrapper desWrap(desc.m_front, desc.m_back);
-		//				m_cfg.wrappers.insert(desWrap);
-		//			}
-		//		}
-
-		//		if (!(*lexisItor)->IsSpace()) {
-		//			if (!(*lexisItor)->IsDescription()) {
-		//				m_frequencies[lexisContent].m_front.Count(preLexisContent);
-		//			}
-		//			else {
-		//				Description &desc = m_descs.GetDescription(lexisContent);
-		//				desc.m_front = preLexisContent;
-		//			}
-		//		}
-		//	}
-		//	preLexisItor = lexisItor;
-		//}
 		m_frequencies.Sort();
 	}
 	
@@ -64,6 +32,7 @@ namespace code_learning {
 	}
 
 	void CodeLearning::StatisticsFrequencies(const SourceFile &source) {
+		std::string preWord;
 		for (auto lexis = source.begin(); lexis != source.end(); ) {
 			if ((*lexis)->IsSpace()) {
 				lexis++;
@@ -71,31 +40,46 @@ namespace code_learning {
 			}
 
 			std::string description;
-
-			uint8_t highOne = CharHighOne(*(*lexis)->begin());
-			for (uint8_t index = 0; index < highOne; index++, lexis++) {
-				description.push_back(*(*lexis)->begin());
+			while ((*lexis)->IsMulti()) {
+				description += std::string((*lexis)->begin(), (*lexis)->end());
+				lexis++;
 			}
 			if (!description.empty()) {
 				m_descs.AddDescription(description);
+				m_cfg.wrappers.insert(Wrapper(preWord, std::string((*lexis)->begin(), (*lexis)->end())));
+				lexis++;
 				continue;
 			}
 
-			const std::string &prefix = source.PeekWrap(lexis, m_cfg);
-			if (!prefix.empty()) {
+			const Wrapper &wrapper = source.PeekWrap(lexis, m_cfg);
+			if (!wrapper.m_prefix.empty()) {
+				m_frequencies[wrapper.m_prefix]++;
+				if (!preWord.empty()) {
+					m_frequencies[wrapper.m_prefix].m_front.Count(preWord);
+					m_frequencies[preWord].m_back.Count(wrapper.m_prefix);
+				}
 				while (true){
-					description.push_back(*(*lexis)->begin());
+					description += std::string((*lexis)->begin(), (*lexis)->end());
 					lexis++;
-					if (source.PeekWrap(lexis, prefix)) {
+					if (lexis == source.end()) {
+						return;
+					}
+					if (source.PeekWrap(lexis, wrapper.m_suffix)) {
 						m_descs.AddDescription(description);
-						continue;
+						break;
 					}
 				}
+				m_frequencies[preWord = wrapper.m_suffix]++;
 				continue;
 			}
 
 			const std::string lexisContent((*lexis)->begin(), (*lexis)->end());
 			m_frequencies[lexisContent]++;
+			if (!preWord.empty()) {
+				m_frequencies[lexisContent].m_front.Count(preWord);
+				m_frequencies[preWord].m_back.Count(lexisContent);
+			}
+			preWord = lexisContent;
 			lexis++;
 		}
 	}
