@@ -1,5 +1,6 @@
 #include <fstream>
 #include <sstream>
+#include <iostream>
 #include "Config.h"
 #include "SourceFile.h"
 
@@ -11,6 +12,9 @@ namespace code_learning {
 			std::stringstream buffer;
 			buffer << source.rdbuf();
 			m_content = buffer.str();
+		}
+		else {
+			std::cerr << fileName << " open failed!" << std::endl;
 		}
 	}
 	void SourceFile::Scan(const Config &cfg) {

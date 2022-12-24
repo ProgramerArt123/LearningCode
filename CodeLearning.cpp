@@ -3,6 +3,7 @@
 #include "FrequencyWord.h"
 #include "Lexis.h"
 #include "SourceFile.h"
+#include "SourceFileBatch.hpp"
 #include "Description.h"
 #include "CodeLearning.h"
 
@@ -17,6 +18,12 @@ namespace code_learning {
 		source.Scan(m_cfg);
 		StatisticsFrequencies(source);
 		m_frequencies.Sort();
+	}
+
+	void CodeLearning::Learning(SourceFileBatch &sources) {
+		for (auto &source: sources) {
+			Learning(*source);
+		}
 	}
 	
 	void CodeLearning::Summary() {
@@ -83,4 +90,5 @@ namespace code_learning {
 			lexis++;
 		}
 	}
+
 }

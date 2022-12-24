@@ -1,6 +1,7 @@
 
 #include "CodeLearning.h"
 #include "SourceFile.h"
+#include "SourceFileBatch.hpp"
 
 using namespace code_learning;
 
@@ -8,62 +9,13 @@ int main() {
 	CodeLearning student;
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
 	student.SetIgnores(' ', '\n', '\r', '\t');
-	{
-		SourceFile code("Char.h");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("Char.cpp");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("Code.h");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("Code.cpp");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("CodeLearning.h");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("CodeLearning.cpp");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("Lexis.h");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("Lexis.cpp");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("SourceFile.h");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("SourceFile.cpp");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("FrequencyWords.h");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("FrequencyWords.cpp");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("Config.h");
-		student.Learning(code);
-	}
-	{
-		SourceFile code("main.cpp");
-		student.Learning(code);
-	}
+	SourceFileBatch samples("AdjacencyWord.h", "AdjacencyWords.h", "Char.h", "Code.h",
+		"CodeLearning.h", "Config.h", "CountAdjacencyWords.h", "Description.h", "Descriptions.h",
+		"FrequencyWord.h", "Lexis.h", "SourceFile.h", "SourceFileBatch.hpp", "Words.hpp", "WordType.h",
+		"AdjacencyWord.cpp", "AdjacencyWords.cpp", "Char.cpp", "Code.cpp", "CodeLearning.cpp", "Config.cpp",
+		"CountAdjacencyWords.cpp", "Description.cpp", "Descriptions.cpp", "FrequencyWord.cpp", "Lexis.cpp",
+		"main.cpp", "SourceFile.cpp");
+	student.Learning(samples);
 	student.Summary();
 	getchar();
 	return 0;

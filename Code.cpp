@@ -7,7 +7,7 @@
 namespace code_learning {
 
 	Code::Code(const char *content, const Config &cfg):m_cfg(cfg){
-		std::cout << "代码学习" << std::endl;
+		"代码学习";
 		size_t len = strlen(content);
 		bool isPreSplit = false;
 		for (size_t index = 0; index < len; index ++) {
@@ -15,9 +15,6 @@ namespace code_learning {
 			if (index == len) {
 				break;
 			}
-			//if (CheckWrap(content, len, index, isPreSplit)) {
-			//	break;
-			//}
 			char c = content[index];
 			if (!isPreSplit && !m_lexes.empty()) {
 				std::unique_ptr<Lexis> &last = m_lexes.back();

@@ -12,7 +12,7 @@
 namespace code_learning {
 
 	class SourceFile;
-	
+	class SourceFileBatch;
 
 	class CodeLearning {
 	public:
@@ -41,6 +41,7 @@ namespace code_learning {
 		}
 
 		void Learning(SourceFile &source);
+		void Learning(SourceFileBatch &sources);
 		void Summary();
 	private:
 		void StatisticsFrequencies(const SourceFile &source);
