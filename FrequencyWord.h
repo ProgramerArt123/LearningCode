@@ -1,5 +1,5 @@
-#ifndef __CODE_LEARNING_WORD_H__
-#define __CODE_LEARNING_WORD_H__
+#ifndef __CODE_LEARNING_FREQUENCY_WORD_H__
+#define __CODE_LEARNING_FREQUENCY_WORD_H__
 
 #include "AdjacencyWord.h"
 #include "AdjacencyWords.h"
