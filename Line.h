@@ -2,14 +2,17 @@
 #define __CODE_LEARNING_LINE_H__
 
 #include "Word.h"
-#include "Words.hpp"
+#include "Adjacencies.hpp"
+#include "ListMap.hpp"
+#include "Element.h"
 
 namespace code_learning {
-	class Line {
+	class Line : public Element {
 	public:
+		explicit Line(const std::string &content, const Config &cfg);
 		void AppendWord(const std::string &content);
 	private:
-		Words<Word> m_adjacencies;
+		ListMap<Word> m_adjacencies;
 	};
 }
 

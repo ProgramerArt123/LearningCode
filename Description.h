@@ -1,7 +1,7 @@
 #ifndef __CODE_LEARNING_DESCRIPTION_H__
 #define __CODE_LEARNING_DESCRIPTION_H__
 
-#include "AdjacencyWords.h"
+#include "Adjacencies.hpp"
 
 namespace code_learning {
 

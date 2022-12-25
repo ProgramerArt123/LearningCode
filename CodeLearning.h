@@ -5,8 +5,10 @@
 #include <map>
 #include <string>
 #include "Config.h"
-#include "FrequencyWord.h"
-#include "Words.hpp"
+#include "Word.h"
+#include "Line.h"
+#include "Frequency.hpp"
+#include "ListMap.hpp"
 #include "Descriptions.h"
 
 namespace code_learning {
@@ -44,13 +46,16 @@ namespace code_learning {
 		void Learning(SourceFileBatch &sources);
 		void Summary();
 	private:
-		void StatisticsFrequencies(const SourceFile &source);
+		void StatisticsWords(const SourceFile &source);
+		void StatisticsLines(const SourceFile &source);
 	private:
 		uint64_t m_file_count = 0;
 		
 		Config m_cfg;
 
-		Words<FrequencyWord> m_frequencies;
+		ListMap<Frequency<Word>> m_words;
+
+		ListMap<Frequency<Line>> m_lines;
 
 		Descriptions m_descs;
 	};

@@ -9,11 +9,11 @@ int main() {
 	CodeLearning student;
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
 	student.SetIgnores(' ', '\n', '\r', '\t');
-	SourceFileBatch samples("AdjacencyWord.h", "AdjacencyWords.h", "Char.h", "Code.h",
-		"CodeLearning.h", "Config.h", "CountAdjacencyWords.h", "Description.h", "Descriptions.h",
-		"FrequencyWord.h", "Lexis.h", "SourceFile.h", "SourceFileBatch.hpp", "Words.hpp", "WordType.h",
-		"AdjacencyWord.cpp", "AdjacencyWords.cpp", "Char.cpp", "Code.cpp", "CodeLearning.cpp", "Config.cpp",
-		"CountAdjacencyWords.cpp", "Description.cpp", "Descriptions.cpp", "FrequencyWord.cpp", "Lexis.cpp",
+	SourceFileBatch samples("Adjacency.hpp", "Adjacencies.hpp", "Char.h", "Code.h",
+		"CodeLearning.h", "Config.h", "CountAdjacency.hpp", "Description.h", "Descriptions.h",
+		"Frequency.hpp", "Lexis.h", "SourceFile.h", "SourceFileBatch.hpp", "ListMap.hpp", "WordType.h",
+		 "Char.cpp", "Code.cpp", "CodeLearning.cpp", "Config.cpp",
+		"Description.cpp", "Descriptions.cpp", "Lexis.cpp",
 		"main.cpp", "SourceFile.cpp");
 	student.Learning(samples);
 	student.Summary();

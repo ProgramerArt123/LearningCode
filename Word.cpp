@@ -4,7 +4,7 @@
 
 namespace code_learning {
 	Word::Word(const std::string &content, const Config &cfg) :
-		m_content(content) {
+		Element(content, cfg), m_content(content) {
 		m_type = JudgeWordType(content);
 	}
 
@@ -15,9 +15,7 @@ namespace code_learning {
 	WORD_TYPE Word::GetType()const {
 		return m_type;
 	}
-	void Word::Sort() {
-		
-	}
+	
 	WORD_TYPE Word::JudgeWordType(const std::string &content) {
 		char preChar = 0;
 		CHAR_TYPE preType = CHAR_TYPE_NONE;

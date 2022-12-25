@@ -1,6 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include "FrequencyWord.h"
 #include "Lexis.h"
 #include "SourceFile.h"
 #include "SourceFileBatch.hpp"
@@ -9,15 +8,17 @@
 
 namespace code_learning {
 
-	CodeLearning::CodeLearning():m_frequencies(m_cfg), m_descs(m_cfg) {
+	CodeLearning::CodeLearning():m_words(m_cfg), m_lines(m_cfg), m_descs(m_cfg) {
 
 	}
 
 	void CodeLearning::Learning(SourceFile &source) {
 		m_file_count++;
 		source.Scan(m_cfg);
-		StatisticsFrequencies(source);
-		m_frequencies.Sort();
+		StatisticsWords(source);
+		m_words.Sort();
+		StatisticsLines(source);
+		m_lines.Sort();
 	}
 
 	void CodeLearning::Learning(SourceFileBatch &sources) {
@@ -29,8 +30,8 @@ namespace code_learning {
 	void CodeLearning::Summary() {
 		std::cout << "learn file[" << m_file_count << "]" << std::endl;
 		std::cout << "learn lexis:" << std::endl;
-		for (const auto &word : m_frequencies) {
-			std::cout << word->GetContent() << ':' << word->GetCount() << '\t';
+		for (const auto &word : m_words) {
+			std::cout << word->m_element.GetContent() << ':' << word->GetCount() << '\t';
 		}
 		std::cout << std::endl << "==================================================" << std::endl;
 		for (const auto &desc : m_descs) {
@@ -38,7 +39,7 @@ namespace code_learning {
 		}
 	}
 
-	void CodeLearning::StatisticsFrequencies(const SourceFile &source) {
+	void CodeLearning::StatisticsWords(const SourceFile &source) {
 		std::string preWord;
 		for (auto lexis = source.begin(); lexis != source.end(); ) {
 			if ((*lexis)->IsSpace()) {
@@ -60,10 +61,10 @@ namespace code_learning {
 
 			const Wrapper &wrapper = source.PeekWrap(lexis, m_cfg);
 			if (!wrapper.m_prefix.empty()) {
-				m_frequencies[wrapper.m_prefix]++;
+				m_words[wrapper.m_prefix]++;
 				if (!preWord.empty()) {
-					m_frequencies[wrapper.m_prefix].m_front.Count(preWord);
-					m_frequencies[preWord].m_back.Count(wrapper.m_prefix);
+					m_words[wrapper.m_prefix].m_front.Count(preWord);
+					m_words[preWord].m_back.Count(wrapper.m_prefix);
 				}
 				while (true){
 					description += std::string((*lexis)->begin(), (*lexis)->end());
@@ -76,19 +77,23 @@ namespace code_learning {
 						break;
 					}
 				}
-				m_frequencies[preWord = wrapper.m_suffix]++;
+				m_words[preWord = wrapper.m_suffix]++;
 				continue;
 			}
 
 			const std::string lexisContent((*lexis)->begin(), (*lexis)->end());
-			m_frequencies[lexisContent]++;
+			m_words[lexisContent]++;
 			if (!preWord.empty()) {
-				m_frequencies[lexisContent].m_front.Count(preWord);
-				m_frequencies[preWord].m_back.Count(lexisContent);
+				m_words[lexisContent].m_front.Count(preWord);
+				m_words[preWord].m_back.Count(lexisContent);
 			}
 			preWord = lexisContent;
 			lexis++;
 		}
+	}
+
+	void CodeLearning::StatisticsLines(const SourceFile &source) {
+
 	}
 
 }
