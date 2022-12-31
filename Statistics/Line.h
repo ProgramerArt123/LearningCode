@@ -1,5 +1,5 @@
-#ifndef __CODE_LEARNING_LINE_H__
-#define __CODE_LEARNING_LINE_H__
+#ifndef __CODE_LEARNING_STATISTICS_LINE_H__
+#define __CODE_LEARNING_STATISTICS_LINE_H__
 
 #include "Config.h"
 #include "Word.h"
@@ -18,7 +18,6 @@ namespace code_learning {
 		class Line : public Element {
 		public:
 			explicit Line(const std::string &content, Config &cfg);
-			void AppendWord(const std::string &content);
 			void Statistics(code::Line &line);
 			void Summary()const override;
 		private:

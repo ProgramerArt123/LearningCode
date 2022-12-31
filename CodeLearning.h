@@ -5,8 +5,7 @@
 #include <map>
 #include <string>
 #include "Config.h"
-#include "Word.h"
-#include "Region.h"
+#include "Statistics/Region.h"
 #include "Frequency.hpp"
 #include "ListMap.hpp"
 #include "Descriptions.h"

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Code.h"
+#include "Code/Region.h"
 #include "Region.h"
 
 namespace code_learning {
@@ -9,12 +9,10 @@ namespace code_learning {
 		}
 		void Region::Statistics(code::Region &region) {
 			m_signature = region.GetSignature();
-			int index = 0;
-			for (auto &line : region.m_lines) {
+			for (auto &line : region.m_children) {
 				auto &result = m_lines[line->GetSignature()];
 				result.m_element.Statistics(*line);
 				result++;
-				index++;
 			}
 			m_lines.Sort();
 		}

@@ -3,9 +3,9 @@
 
 #include <memory>
 #include "Config.h"
-#include "Code.h"
+#include "Code/Code.h"
 #include "Lexis.h"
-#include "Region.h"
+#include "Statistics/Region.h"
 #include "Frequency.hpp"
 
 namespace code_learning {

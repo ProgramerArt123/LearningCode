@@ -1,7 +1,8 @@
 #include <iostream>
-#include "Code.h"
+#include "Code/Code.h"
 #include "Lexis.h"
 #include "Config.h"
+#include "Code/Line.h"
 #include "Line.h"
 
 namespace code_learning {
@@ -9,13 +10,10 @@ namespace code_learning {
 		Line::Line(const std::string &content, Config &cfg) :
 			Element(content, cfg), m_words(cfg),m_descs(cfg) {
 		}
-		void Line::AppendWord(const std::string &content) {
-			m_words[content];
-		}
 		void Line::Statistics(code::Line &line) {
 			m_signature = line.GetSignature();
 			std::string preWord;
-			for (auto lexis = line.m_lexes.begin(); lexis != line.m_lexes.end(); ) {
+			for (auto lexis = line.begin(); lexis != line.end(); ) {
 				if ((*lexis)->IsSpace()) {
 					lexis++;
 					continue;
@@ -24,13 +22,13 @@ namespace code_learning {
 				std::string description;
 				while ((*lexis)->IsMulti()) {
 					description += std::string((*lexis)->begin(), (*lexis)->end());
-					if (++lexis == line.m_lexes.end()) {
+					if (++lexis == line.end()) {
 						break;
 					}
 				}
 				if (!description.empty()) {
 					m_descs.AddDescription(description);
-					if (lexis != line.m_lexes.end()) {
+					if (lexis != line.end()) {
 						m_cfg.wrappers.insert(Wrapper(preWord, std::string((*lexis)->begin(), (*lexis)->end())));
 						lexis++;
 					}
@@ -40,7 +38,7 @@ namespace code_learning {
 					continue;
 				}
 
-				const Wrapper &wrapper = PeekWrap(lexis, line.m_lexes.end());
+				const Wrapper &wrapper = PeekWrap(lexis, line.end());
 				if (!wrapper.m_prefix.empty()) {
 					m_words[wrapper.m_prefix]++;
 					if (!preWord.empty()) {
@@ -50,10 +48,10 @@ namespace code_learning {
 					while (true) {
 						description += std::string((*lexis)->begin(), (*lexis)->end());
 						lexis++;
-						if (lexis == line.m_lexes.end()) {
+						if (lexis == line.end()) {
 							return;
 						}
-						if (PeekWrap(lexis, wrapper.m_suffix, line.m_lexes.end())) {
+						if (PeekWrap(lexis, wrapper.m_suffix, line.end())) {
 							m_descs.AddDescription(description);
 							break;
 						}
@@ -116,7 +114,9 @@ namespace code_learning {
 		}
 		void Line::Summary()const {
 			std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-			std::cout << "Line:" << m_signature << std::endl;
+			std::cout << "Line:" << std::endl;
+			std::cout << "Key:" << m_signature << std::endl;
+			std::cout << "Content:" << m_content << std::endl;
 			std::cout << "Words:[";
 			for (const auto &word : m_words) {
 				std::cout << word->m_element.GetContent() << ':' << word->GetCount() << '\t';

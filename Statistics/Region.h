@@ -1,5 +1,5 @@
-#ifndef __CODE_LEARNING_REGION_H__
-#define __CODE_LEARNING_REGION_H__
+#ifndef __CODE_LEARNING_STATISTICS_REGION_H__
+#define __CODE_LEARNING_STATISTICS_REGION_H__
 
 #include "Line.h"
 #include "Adjacencies.hpp"
