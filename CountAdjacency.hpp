@@ -12,7 +12,7 @@ namespace code_learning {
 	template<typename Element>
 	class CountAdjacency {
 	public:
-		CountAdjacency(WORD_TYPE type, const Config &cfg) :
+		CountAdjacency(WORD_TYPE type, Config &cfg) :
 			m_type(type), m_adjacencies(cfg) {
 
 		}

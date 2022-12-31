@@ -12,7 +12,7 @@ namespace code_learning {
 	template<typename Element>
 	class ListMap {
 	public:
-		ListMap(const Config &cfg) :
+		ListMap(Config &cfg) :
 			m_cfg(cfg) {
 		}
 		typename std::list<std::shared_ptr<Element>>::const_iterator begin() const {
@@ -39,7 +39,7 @@ namespace code_learning {
 				element->m_element.Sort();
 			}
 		}
-		const Config &m_cfg;
+		Config &m_cfg;
 	private:
 		std::map<std::string, std::shared_ptr<Element>> m_map;
 		std::list<std::shared_ptr<Element>> m_list;

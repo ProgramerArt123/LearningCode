@@ -10,7 +10,7 @@ namespace code_learning {
 	template<typename Element>
 	class Adjacency {
 	public:
-		Adjacency(const std::string &content, const Config &cfg) :
+		Adjacency(const std::string &content, Config &cfg) :
 			m_element(content, cfg) {
 		}
 		Adjacency &operator++(int) {

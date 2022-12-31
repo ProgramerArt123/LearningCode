@@ -5,20 +5,21 @@
 #include "Config.h"
 #include "Code.h"
 #include "Lexis.h"
+#include "Region.h"
+#include "Frequency.hpp"
 
 namespace code_learning {
 
 	class SourceFile {
+	
 	public:
 		explicit SourceFile(const char *fileName);
-		void Scan(const Config &cfg);
-		std::list<std::unique_ptr<Lexis>>::const_iterator begin() const;
-		std::list<std::unique_ptr<Lexis>>::const_iterator end() const;
-		Wrapper PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, const Config &cfg)const;
-		bool PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, const std::string &wrap)const;
-	private:
-		std::unique_ptr<Code> m_code;
+		void Scan(Config &cfg);
+		void Statistics(ListMap<Frequency<statistics::Region>> &regions)const;
+		
+		std::unique_ptr<code::Code> m_code;
 		std::string m_content;
+		std::string m_file_name;
 	};
 }
 

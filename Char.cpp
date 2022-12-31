@@ -1,6 +1,10 @@
 #include "Char.h"
 
 namespace code_learning {
+	bool IsReLine(char c) {
+		return '\n' == c || '\r' == c;
+	}
+
 	CHAR_TYPE JudgeCharType(char c) {
 		if (' ' == c || '\n' == c || '\r' == c || '\t' == c) {
 			return CHAR_TYPE_SPACE;

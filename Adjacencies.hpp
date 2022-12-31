@@ -13,7 +13,7 @@ namespace code_learning {
 	template<typename Element>
 	class Adjacencies {
 	public:
-		Adjacencies(const Config &cfg) :
+		Adjacencies(Config &cfg) :
 			m_cfg(cfg) {
 
 		}
@@ -46,7 +46,7 @@ namespace code_learning {
 		}
 	private:
 		std::list<std::shared_ptr<CountAdjacency<Element>>> m_words;
-		const Config &m_cfg;
+		Config &m_cfg;
 	};
 
 }

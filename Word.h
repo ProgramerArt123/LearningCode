@@ -11,7 +11,7 @@ namespace code_learning {
 
 	class Word : public Element{
 	public:
-		explicit Word(const std::string &content, const Config &cfg);
+		explicit Word(const std::string &content, Config &cfg);
 		const std::string &GetContent()const;
 		WORD_TYPE GetType() const;
 		static WORD_TYPE JudgeWordType(const std::string &content);

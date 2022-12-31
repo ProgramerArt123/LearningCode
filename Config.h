@@ -9,6 +9,9 @@ namespace code_learning {
 	public:
 		explicit Wrapper(){
 		}
+		explicit Wrapper(const std::string &prefix) :
+			m_prefix(prefix) {
+		}
 		explicit Wrapper(const std::string &prefix, const std::string &suffix):
 			m_prefix(prefix), m_suffix(suffix){
 		}

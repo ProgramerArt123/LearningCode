@@ -9,8 +9,12 @@ namespace code_learning {
 
 	class Element {
 	public:
-		explicit Element(const std::string &content, const Config &cfg);
+		explicit Element(const std::string &content, Config &cfg);
 		virtual void Sort();
+		virtual void Summary()const;
+	protected:
+		Config &m_cfg;
+		std::string m_signature;
 	};
 
 }

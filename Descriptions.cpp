@@ -1,7 +1,7 @@
 #include "Description.h"
 #include "Descriptions.h"
 namespace code_learning {
-	Descriptions::Descriptions(const Config &cfg):
+	Descriptions::Descriptions(Config &cfg):
 		m_cfg(cfg){
 
 	}

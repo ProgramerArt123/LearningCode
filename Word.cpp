@@ -3,7 +3,7 @@
 #include "Word.h"
 
 namespace code_learning {
-	Word::Word(const std::string &content, const Config &cfg) :
+	Word::Word(const std::string &content, Config &cfg) :
 		Element(content, cfg), m_content(content) {
 		m_type = JudgeWordType(content);
 	}

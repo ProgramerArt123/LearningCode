@@ -9,7 +9,7 @@ namespace code_learning {
 
 	class Description {
 	public:
-		explicit Description(const std::string &content, const Config &cfg);
+		explicit Description(const std::string &content, Config &cfg);
 	
 		const std::string m_content;
 		std::string m_front;

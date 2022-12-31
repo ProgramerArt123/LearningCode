@@ -12,7 +12,7 @@ namespace code_learning {
 
 	class Descriptions {
 	public:
-		explicit Descriptions(const Config &cfg);
+		explicit Descriptions(Config &cfg);
 		void AddDescription(const std::string &content);
 		Description &GetDescription(const std::string &content);
 		std::list<std::unique_ptr<Description>>::const_iterator begin() const {
@@ -23,7 +23,7 @@ namespace code_learning {
 		}
 	private:
 		std::list<std::unique_ptr<Description>> m_descs;
-		const Config &m_cfg;
+		Config &m_cfg;
 	};
 }
 

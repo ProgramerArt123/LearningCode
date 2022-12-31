@@ -13,6 +13,8 @@ namespace code_learning{
 		CHAR_TYPE_ALPHABET
 	};
 
+	bool IsReLine(char c);
+
 	CHAR_TYPE JudgeCharType(char c);
 
 	uint8_t CharHighOne(char c);

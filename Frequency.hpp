@@ -11,13 +11,16 @@ namespace code_learning {
 	template<typename Element>
 	class Frequency : public Adjacency<Element> {
 	public:
-		Frequency(const std::string &content, const Config &cfg) :
+		Frequency(const std::string &content, Config &cfg) :
 			Adjacency<Element>(content, cfg), m_front(cfg), m_back(cfg) {
 
 		}
 		void Sort() {
 			m_front.Sort();
 			m_back.Sort();
+		}
+		void Summary()const {
+			Adjacency<Element>::m_element.Summary();
 		}
 		Adjacencies<Element> m_front;
 		Adjacencies<Element> m_back;

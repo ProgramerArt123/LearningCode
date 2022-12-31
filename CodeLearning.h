@@ -6,7 +6,7 @@
 #include <string>
 #include "Config.h"
 #include "Word.h"
-#include "Line.h"
+#include "Region.h"
 #include "Frequency.hpp"
 #include "ListMap.hpp"
 #include "Descriptions.h"
@@ -46,18 +46,13 @@ namespace code_learning {
 		void Learning(SourceFileBatch &sources);
 		void Summary();
 	private:
-		void StatisticsWords(const SourceFile &source);
-		void StatisticsLines(const SourceFile &source);
+		void Statistics(const SourceFile &source);
 	private:
 		uint64_t m_file_count = 0;
 		
 		Config m_cfg;
 
-		ListMap<Frequency<Word>> m_words;
-
-		ListMap<Frequency<Line>> m_lines;
-
-		Descriptions m_descs;
+		ListMap<Frequency<statistics::Region>> m_regions;
 	};
 }
 

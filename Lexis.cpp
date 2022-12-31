@@ -33,6 +33,10 @@ namespace code_learning {
 		return CHAR_TYPE_SPACE == JudgeCharType(m_content.front());
 	}
 
+	bool Lexis::IsNewLine()const {
+		return '\n' == m_content.front() || '\r' == m_content.front();
+	}
+
 	bool Lexis::IsDisconnection(char next) {
 		CHAR_TYPE type = JudgeCharType(next);
 		switch (m_last)
