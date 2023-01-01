@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 #include <list>
+#include <string>
 
 namespace code_learning {
 	
@@ -21,13 +22,22 @@ namespace code_learning {
 		typename std::list<std::shared_ptr<Element>>::const_iterator end() const {
 			return m_list.end();
 		}
-		Element &operator[](const std::string &content) {
-			if (m_map.end() == m_map.find(content)) {
-				std::shared_ptr<Element> word(new Element(content, m_cfg));
-				m_map.insert(std::make_pair(content, word));
+		Element &operator[](const std::string &key) {
+			if (m_map.end() == m_map.find(key)) {
+				std::shared_ptr<Element> word(new Element(key, m_cfg));
+				m_map.insert(std::make_pair(key, word));
 				m_list.push_back(word);
 			}
-			return *m_map[content];
+			return *m_map[key];
+		}
+
+		Element &Get(const std::string &key, const std::string &content) {
+			if (m_map.end() == m_map.find(key)) {
+				std::shared_ptr<Element> word(new Element(content, m_cfg));
+				m_map.insert(std::make_pair(key, word));
+				m_list.push_back(word);
+			}
+			return *m_map[key];
 		}
 
 		static bool compare(const std::shared_ptr<Element> &one, const std::shared_ptr<Element> &other) {

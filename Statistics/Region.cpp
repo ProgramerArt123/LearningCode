@@ -10,7 +10,7 @@ namespace code_learning {
 		void Region::Statistics(code::Region &region) {
 			m_signature = region.GetSignature();
 			for (auto &line : region.m_children) {
-				auto &result = m_lines[line->GetSignature()];
+				auto &result = m_lines.Get(line->GetSignature(), line->GetContent());
 				result.m_element.Statistics(*line);
 				result++;
 			}

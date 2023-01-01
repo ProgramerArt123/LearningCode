@@ -30,7 +30,7 @@ namespace code_learning {
 
 		void Code::Statistics(ListMap<Frequency<statistics::Region>> &regions)const {
 			for (auto &region : m_regions) {
-				auto &result = regions[region->GetSignature()];
+				auto &result = regions.Get(region->GetSignature(), region->GetContent());
 				result.m_element.Statistics(*region);
 				result++;
 			}

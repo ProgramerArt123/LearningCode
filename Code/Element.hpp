@@ -33,7 +33,9 @@ namespace code_learning {
 			const std::string &GetSignature() const {
 				return m_signature;
 			}
-			
+			const std::string &GetContent() const {
+				return m_content;
+			}
 		protected:
 			Config &m_cfg;
 			std::string m_content;

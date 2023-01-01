@@ -21,7 +21,7 @@ namespace code_learning {
 
 				std::string description;
 				while ((*lexis)->IsMulti()) {
-					description += std::string((*lexis)->begin(), (*lexis)->end());
+					description.append(std::string((*lexis)->begin(), (*lexis)->end()));
 					if (++lexis == line.end()) {
 						break;
 					}
@@ -46,7 +46,7 @@ namespace code_learning {
 						m_words[preWord].m_back.Count(wrapper.m_prefix);
 					}
 					while (true) {
-						description += std::string((*lexis)->begin(), (*lexis)->end());
+						description.append(std::string((*lexis)->begin(), (*lexis)->end()));
 						lexis++;
 						if (lexis == line.end()) {
 							return;

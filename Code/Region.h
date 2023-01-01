@@ -24,6 +24,7 @@ namespace code_learning {
 			std::string GetPattern() const override;
 			friend class statistics::Region;
 		private:
+			void SetContent();
 			int re_line_count = 0;
 		};
 

@@ -14,6 +14,7 @@ namespace code_learning {
 				if (!m_children.empty()) {
 					if (re_line_count >= 2) {
 						m_children.pop_back();
+						SetContent();
 						return true;
 					}
 					else {
@@ -43,6 +44,14 @@ namespace code_learning {
 			}
 			pattern.append("]");
 			return pattern;
+		}
+		void Region::SetContent() {
+			for (const auto &child : m_children) {
+				if (!m_content.empty()) {
+					m_content.append("\n");
+				}
+				m_content.append(child->GetContent());
+			}
 		}
 	}
 }
