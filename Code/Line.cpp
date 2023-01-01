@@ -7,7 +7,7 @@
 
 namespace code_learning {
 	namespace code {
-		void Line::Decomposition(Config &cfg) {
+		void Line::Decomposition(const Config &cfg) {
 			size_t length = m_content.length();
 			bool isPreSplit = false;
 			for (size_t index = 0; index < length; index++) {
@@ -33,47 +33,16 @@ namespace code_learning {
 			m_content += c;
 			return false;
 		}
-		std::string Line::GetPattern() const {
+		std::string Line::GetPattern(const Config &cfg) const {
 			std::string pattern;
 			pattern.append("[");
 			for (const auto &lexis : m_children) {
 				WORD_TYPE type = statistics::Word::JudgeWordType(std::string(lexis->begin(), lexis->end()));
-				switch (type)
-				{
-				case code_learning::WORD_TYPE_NONE:
+				if (code_learning::WORD_TYPE_SPACE != type) {
 					if (1 < pattern.length()) {
 						pattern.append(",");
 					}
-					pattern.append("WORD_TYPE_NONE");
-					break;
-				case code_learning::WORD_TYPE_SPACE:
-					break;
-				case code_learning::WORD_TYPE_SYMBOL:
-					if (1 < pattern.length()) {
-						pattern.append(",");
-					}
-					pattern.append("WORD_TYPE_SYMBOL");
-					break;
-				case code_learning::WORD_TYPE_DIGITAL:
-					if (1 < pattern.length()) {
-						pattern.append(",");
-					}
-					pattern.append("WORD_TYPE_DIGITAL");
-					break;
-				case code_learning::WORD_TYPE_ALPHABET:
-					if (1 < pattern.length()) {
-						pattern.append(",");
-					}
-					pattern.append("WORD_TYPE_ALPHABET");
-					break;
-				case code_learning::WORD_TYPE_NAME:
-					if (1 < pattern.length()) {
-						pattern.append(",");
-					}
-					pattern.append("WORD_TYPE_NAME");
-					break;
-				default:
-					break;
+					pattern.append(wordTypes[type].m_name);
 				}
 			}
 			pattern.append("]");

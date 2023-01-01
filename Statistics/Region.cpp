@@ -4,8 +4,8 @@
 
 namespace code_learning {
 	namespace statistics {
-		Region::Region(const std::string &content, Config &cfg) :
-			Element(content, cfg), m_lines(cfg) {
+		Region::Region(const std::string &content, Glob &glob) :
+			Element(content, glob), m_lines(glob) {
 		}
 		void Region::Statistics(code::Region &region) {
 			m_signature = region.GetSignature();

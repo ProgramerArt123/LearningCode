@@ -5,13 +5,13 @@
 #include "WordType.h"
 namespace code_learning {
 
-	class Config;
+	class Glob;
 
 	template<typename Element>
 	class Adjacency {
 	public:
-		Adjacency(const std::string &content, Config &cfg) :
-			m_element(content, cfg) {
+		Adjacency(const std::string &content, Glob &glob) :
+			m_element(content, glob) {
 		}
 		Adjacency &operator++(int) {
 			m_count++;

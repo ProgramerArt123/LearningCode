@@ -1,0 +1,14 @@
+#include "WordType.h"
+
+namespace code_learning {
+
+	WordType wordTypes[] = {
+		{WORD_TYPE_NONE, "WORD_TYPE_NONE"},
+		{WORD_TYPE_SPACE, "WORD_TYPE_SPACE"},
+		{WORD_TYPE_SYMBOL, "WORD_TYPE_SYMBOL"},
+		{WORD_TYPE_DIGITAL, "WORD_TYPE_DIGITAL"},
+		{WORD_TYPE_ALPHABET, "WORD_TYPE_ALPHABET"},
+		{WORD_TYPE_NAME, "WORD_TYPE_NAME"}
+	};
+
+}

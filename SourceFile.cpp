@@ -11,14 +11,16 @@ namespace code_learning {
 		if (source.is_open()) {
 			std::stringstream buffer;
 			buffer << source.rdbuf();
-			m_content = buffer.str();
+			m_content = buffer.str(); 
+			m_code.reset(new code::Code(m_content.c_str()));
 		}
 		else {
 			std::cerr << m_file_name << " open failed!" << std::endl;
 		}
 	}
-	void SourceFile::Scan(Config &cfg) {
-		m_code.reset(new code::Code(m_content.c_str(), cfg));
+	void SourceFile::Scan(const Config &cfg) {
+		if (m_code)
+			m_code->Decomposition(cfg);
 	}
 	void SourceFile::Statistics(ListMap<Frequency<statistics::Region>> &regions)const {
 		m_code->Statistics(regions);

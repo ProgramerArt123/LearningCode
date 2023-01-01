@@ -1,14 +1,14 @@
 #include <iostream>
 #include "Code/Code.h"
 #include "Lexis.h"
-#include "Config.h"
+#include "Glob.h"
 #include "Code/Line.h"
 #include "Line.h"
 
 namespace code_learning {
 	namespace statistics {
-		Line::Line(const std::string &content, Config &cfg) :
-			Element(content, cfg), m_words(cfg),m_descs(cfg) {
+		Line::Line(const std::string &content, Glob &glob) :
+			Element(content, glob), m_words(glob) {
 		}
 		void Line::Statistics(code::Line &line) {
 			m_signature = line.GetSignature();
@@ -29,11 +29,11 @@ namespace code_learning {
 				if (!description.empty()) {
 					m_descs.AddDescription(description);
 					if (lexis != line.end()) {
-						m_cfg.wrappers.insert(Wrapper(preWord, std::string((*lexis)->begin(), (*lexis)->end())));
+						m_glob.m_generate.wrappers.insert(Wrapper(preWord, std::string((*lexis)->begin(), (*lexis)->end())));
 						lexis++;
 					}
 					else {
-						m_cfg.wrappers.insert(Wrapper(preWord));
+						m_glob.m_generate.wrappers.insert(Wrapper(preWord));
 					}
 					continue;
 				}
@@ -72,7 +72,7 @@ namespace code_learning {
 		}
 		Wrapper Line::PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, 
 			std::list<std::unique_ptr<Lexis>>::const_iterator end) const {
-			for (const auto &wrap : m_cfg.wrappers) {
+			for (const auto &wrap : m_glob.m_generate.wrappers) {
 				bool isMatching = true;
 				auto cursor = lexis;
 				for (const auto &c : wrap.m_prefix) {

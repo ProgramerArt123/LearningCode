@@ -17,11 +17,8 @@ namespace code_learning {
 
 		class Region : public Element<code::Line> {
 		public:
-			explicit Region(Config &cfg) :Element<code::Line>(cfg) {
-
-			}
 			bool ContentAppend(char c)override;
-			std::string GetPattern() const override;
+			std::string GetPattern(const Config &cfg) const override;
 			friend class statistics::Region;
 		private:
 			void SetContent();

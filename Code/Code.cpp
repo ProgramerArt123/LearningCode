@@ -10,22 +10,20 @@
 
 namespace code_learning {
 	namespace code {
-		Code::Code(const char *content, Config &cfg) :m_cfg(cfg) {
+		Code::Code(const char *content)  {
 			"代码学习";
 			size_t length = strlen(content);
 			for (size_t index = 0; index < length; index++) {
 				if (m_regions.empty()) {
-					m_regions.push_back(std::unique_ptr<Region>(new Region(m_cfg)));
+					m_regions.push_back(std::unique_ptr<Region>(new Region()));
 				}
 				char c = content[index];
 				auto &lastRegion = m_regions.back();
 				if (lastRegion->ContentAppend(c)) {
-					m_regions.push_back(std::unique_ptr<Region>(new Region(m_cfg)));
+					m_regions.push_back(std::unique_ptr<Region>(new Region()));
 				}
 			}
-			for (auto &region : m_regions) {
-				region->Decomposition(cfg);
-			}
+			
 		}
 
 		void Code::Statistics(ListMap<Frequency<statistics::Region>> &regions)const {
@@ -37,7 +35,11 @@ namespace code_learning {
 			regions.Sort();
 		}
 
-		
+		void Code::Decomposition(const Config &cfg) {
+			for (auto &region : m_regions) {
+				region->Decomposition(cfg);
+			}
+		}
 
 	}
 }

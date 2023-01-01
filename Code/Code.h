@@ -16,11 +16,11 @@ namespace code_learning {
 
 		class Code {
 		public:
-			explicit Code(const char *content, Config &cfg);
+			explicit Code(const char *content);
 			void Statistics(ListMap<Frequency<statistics::Region>> &regions)const;
+			void Decomposition(const Config &cfg);
 		private:
 			std::list<std::unique_ptr<code::Region>> m_regions;
-			Config &m_cfg;
 		};
 	}
 }

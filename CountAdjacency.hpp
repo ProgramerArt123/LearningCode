@@ -7,13 +7,13 @@
 
 namespace code_learning {
 	
-	class Config;
+	class Glob;
 
 	template<typename Element>
 	class CountAdjacency {
 	public:
-		CountAdjacency(WORD_TYPE type, Config &cfg) :
-			m_type(type), m_adjacencies(cfg) {
+		CountAdjacency(WORD_TYPE type, Glob &glob) :
+			m_type(type), m_adjacencies(glob) {
 
 		}
 		CountAdjacency(const CountAdjacency<Element>& other) :

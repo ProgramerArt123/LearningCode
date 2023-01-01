@@ -6,13 +6,13 @@
 
 namespace code_learning {
 
-	class Config;
+	class Glob;
 
 	template<typename Element>
 	class Frequency : public Adjacency<Element> {
 	public:
-		Frequency(const std::string &content, Config &cfg) :
-			Adjacency<Element>(content, cfg), m_front(cfg), m_back(cfg) {
+		Frequency(const std::string &content, Glob &glob) :
+			Adjacency<Element>(content, glob), m_front(glob), m_back(glob) {
 
 		}
 		void Sort() {

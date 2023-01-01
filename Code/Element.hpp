@@ -16,20 +16,17 @@ namespace code_learning {
 		template<typename Child>
 		class Element {
 		public:
-			Element(Config &cfg) :m_cfg(cfg){
-
-			}
 			typename std::list<std::unique_ptr<Child>>::const_iterator begin() const {
 				return m_children.begin();
 			}
 			typename std::list<std::unique_ptr<Child>>::const_iterator end() const {
 				return m_children.end();
 			}
-			virtual void Decomposition(Config &cfg) {
-				CalculateSignature();
+			virtual void Decomposition(const Config &cfg) {
+				CalculateSignature(cfg);
 			}
 			virtual bool ContentAppend(char c) = 0;
-			virtual std::string GetPattern() const = 0;
+			virtual std::string GetPattern(const Config &cfg) const = 0;
 			const std::string &GetSignature() const {
 				return m_signature;
 			}
@@ -37,12 +34,11 @@ namespace code_learning {
 				return m_content;
 			}
 		protected:
-			Config &m_cfg;
 			std::string m_content;
 			std::list<std::unique_ptr<Child>> m_children;
 		private:
-			void CalculateSignature() {
-				const std::string &pattern = GetPattern();
+			void CalculateSignature(const Config &cfg) {
+				const std::string &pattern = GetPattern(cfg);
 				boost::uuids::detail::md5 md5;
 				boost::uuids::detail::md5::digest_type digest;
 				md5.process_bytes(pattern.c_str(), pattern.length());

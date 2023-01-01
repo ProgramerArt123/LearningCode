@@ -1,13 +1,12 @@
 #include "Description.h"
 #include "Descriptions.h"
 namespace code_learning {
-	Descriptions::Descriptions(Config &cfg):
-		m_cfg(cfg){
+	Descriptions::Descriptions(){
 
 	}
 	void Descriptions::AddDescription(const std::string &content) {
 		m_descs.push_back(std::unique_ptr<Description>(
-			new Description(content, m_cfg)));
+			new Description(content)));
 	}
 	Description &Descriptions::GetDescription(const std::string &content) {
 		for (auto desc = m_descs.rbegin(); desc != m_descs.rend(); desc++) {

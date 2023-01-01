@@ -4,8 +4,8 @@
 
 namespace code_learning {
 	namespace statistics {
-		Word::Word(const std::string &content, Config &cfg) :
-			Element(content, cfg), m_content(content) {
+		Word::Word(const std::string &content, Glob &glob) :
+			Element(content, glob), m_content(content) {
 			m_type = JudgeWordType(content);
 		}
 

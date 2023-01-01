@@ -13,8 +13,8 @@ namespace code_learning {
 	template<typename Element>
 	class Adjacencies {
 	public:
-		Adjacencies(Config &cfg) :
-			m_cfg(cfg) {
+		Adjacencies(Glob &glob) :
+			m_glob(glob) {
 
 		}
 		CountAdjacency<Element> &operator[](const std::string &content) {
@@ -24,7 +24,7 @@ namespace code_learning {
 					return *frequency;
 				}
 			}
-			m_words.push_back(std::shared_ptr<CountAdjacency<Element>>(new CountAdjacency<Element>(type, m_cfg)));
+			m_words.push_back(std::shared_ptr<CountAdjacency<Element>>(new CountAdjacency<Element>(type, m_glob)));
 			return *m_words.back();
 		}
 
@@ -46,7 +46,7 @@ namespace code_learning {
 		}
 	private:
 		std::list<std::shared_ptr<CountAdjacency<Element>>> m_words;
-		Config &m_cfg;
+		Glob &m_glob;
 	};
 
 }

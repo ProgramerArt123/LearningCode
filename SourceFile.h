@@ -14,7 +14,7 @@ namespace code_learning {
 	
 	public:
 		explicit SourceFile(const char *fileName);
-		void Scan(Config &cfg);
+		void Scan(const Config &cfg);
 		void Statistics(ListMap<Frequency<statistics::Region>> &regions)const;
 		
 		std::unique_ptr<code::Code> m_code;

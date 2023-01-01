@@ -8,13 +8,13 @@
 
 namespace code_learning {
 	
-	class Config;
+	class Glob;
 
 	template<typename Element>
 	class ListMap {
 	public:
-		ListMap(Config &cfg) :
-			m_cfg(cfg) {
+		ListMap(Glob &glob) :
+			m_glob(glob) {
 		}
 		typename std::list<std::shared_ptr<Element>>::const_iterator begin() const {
 			return m_list.begin();
@@ -24,7 +24,7 @@ namespace code_learning {
 		}
 		Element &operator[](const std::string &key) {
 			if (m_map.end() == m_map.find(key)) {
-				std::shared_ptr<Element> word(new Element(key, m_cfg));
+				std::shared_ptr<Element> word(new Element(key, m_glob));
 				m_map.insert(std::make_pair(key, word));
 				m_list.push_back(word);
 			}
@@ -33,7 +33,7 @@ namespace code_learning {
 
 		Element &Get(const std::string &key, const std::string &content) {
 			if (m_map.end() == m_map.find(key)) {
-				std::shared_ptr<Element> word(new Element(content, m_cfg));
+				std::shared_ptr<Element> word(new Element(content, m_glob));
 				m_map.insert(std::make_pair(key, word));
 				m_list.push_back(word);
 			}
@@ -49,10 +49,10 @@ namespace code_learning {
 				element->m_element.Sort();
 			}
 		}
-		Config &m_cfg;
 	private:
 		std::map<std::string, std::shared_ptr<Element>> m_map;
 		std::list<std::shared_ptr<Element>> m_list;
+		Glob &m_glob;
 	};
 
 }

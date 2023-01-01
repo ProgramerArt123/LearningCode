@@ -2,6 +2,7 @@
 #define __CODE_LEARNING_STATISTICS_LINE_H__
 
 #include "Config.h"
+#include "Generate.h"
 #include "Word.h"
 #include "Adjacencies.hpp"
 #include "ListMap.hpp"
@@ -17,7 +18,7 @@ namespace code_learning {
 	namespace statistics {
 		class Line : public Element {
 		public:
-			explicit Line(const std::string &content, Config &cfg);
+			explicit Line(const std::string &content, Glob &glob);
 			void Statistics(code::Line &line);
 			void Summary()const override;
 		private:

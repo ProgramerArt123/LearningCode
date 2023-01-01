@@ -14,12 +14,9 @@ namespace code_learning {
 
 		class Line : public Element<Lexis>{
 		public:
-			explicit Line(Config &cfg) :Element<Lexis>(cfg) {
-
-			}
-			void Decomposition(Config &cfg) override;
+			void Decomposition(const Config &cfg) override;
 			bool ContentAppend(char c)override;
-			std::string GetPattern() const override;
+			std::string GetPattern(const Config &cfg) const override;
 		private:
 			bool CheckEncoding(const char *content, size_t &index);
 		};

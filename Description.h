@@ -5,11 +5,11 @@
 
 namespace code_learning {
 
-	class Config;
+	class Glob;
 
 	class Description {
 	public:
-		explicit Description(const std::string &content, Config &cfg);
+		explicit Description(const std::string &content);
 	
 		const std::string m_content;
 		std::string m_front;

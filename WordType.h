@@ -12,6 +12,13 @@ namespace code_learning {
 		WORD_TYPE_NAME
 	};
 
+	struct WordType {
+		WORD_TYPE m_type = WORD_TYPE_NONE;
+		const char *m_name = "WORD_TYPE_NONE";
+	};
+
+	WordType wordTypes[];
+
 }
 
 #endif

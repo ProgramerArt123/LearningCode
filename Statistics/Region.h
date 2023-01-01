@@ -14,7 +14,7 @@ namespace code_learning {
 	namespace statistics {
 		class Region : public Element {
 		public:
-			explicit Region(const std::string &content, Config &cfg);
+			explicit Region(const std::string &content, Glob &glob);
 			void Statistics(code::Region &region);
 			void Summary()const override;
 		private:

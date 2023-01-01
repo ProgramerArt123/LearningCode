@@ -4,7 +4,7 @@
 #include <memory>
 #include <map>
 #include <string>
-#include "Config.h"
+#include "Glob.h"
 #include "Statistics/Region.h"
 #include "Frequency.hpp"
 #include "ListMap.hpp"
@@ -50,6 +50,8 @@ namespace code_learning {
 		uint64_t m_file_count = 0;
 		
 		Config m_cfg;
+
+		Glob m_glob;
 
 		ListMap<Frequency<statistics::Region>> m_regions;
 	};

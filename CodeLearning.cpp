@@ -8,15 +8,13 @@
 
 namespace code_learning {
 
-	CodeLearning::CodeLearning():m_regions(m_cfg) {
+	CodeLearning::CodeLearning():m_glob(m_cfg), m_regions(m_glob) {
 
 	}
 
 	void CodeLearning::Learning(SourceFile &source) {
 		m_file_count++;
-		source.Scan(m_cfg);
-		//StatisticsWords(source);
-		//m_words.Sort();
+		source.Scan(m_glob.m_cfg);
 		Statistics(source);
 		m_regions.Sort();
 	}
