@@ -12,9 +12,15 @@ namespace code_learning {
 			for (auto &line : region.m_children) {
 				auto &result = m_lines.Get(line->GetSignature(), line->GetContent());
 				result.m_element.Statistics(*line);
-				result++;
+				result++; 
 			}
 			m_lines.Sort();
+
+			for (auto &line : m_lines) {
+				for (auto &symmetry : line->m_element.m_symmetries) {
+					m_symmetries[symmetry.first] += symmetry.second;
+				}
+			}
 		}
 		void Region::Summary()const {
 			std::cout << "============================================================" << std::endl;

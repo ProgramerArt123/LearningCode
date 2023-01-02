@@ -9,6 +9,7 @@ namespace code_learning {
 	public:
 		std::set<char> ignores;
 		std::set<char> splits;
+		uint8_t symmetry_percent = 90;
 	};
 }
 

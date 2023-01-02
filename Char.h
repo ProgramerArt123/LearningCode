@@ -13,6 +13,8 @@ namespace code_learning{
 		CHAR_TYPE_ALPHABET
 	};
 
+	bool IsSymmetry(char c);
+
 	bool IsReLine(char c);
 
 	CHAR_TYPE JudgeCharType(char c);

@@ -17,6 +17,7 @@ namespace code_learning {
 		source.Scan(m_glob.m_cfg);
 		Statistics(source);
 		m_regions.Sort();
+		ProcessSymmetries();
 	}
 
 	void CodeLearning::Learning(SourceFileBatch &sources) {
@@ -31,10 +32,47 @@ namespace code_learning {
 		for (const auto &region : m_regions) {
 			region->Summary();
 		}
+		
+		std::cout << "#################################################" << std::endl;
+		std::cout << "Symmetries:" << std::endl;
+		for (auto &symmetry : m_symmetries) {
+			std::cout << symmetry.first << ":" << symmetry.second << std::endl;
+		}
 	}
 
 	void CodeLearning::Statistics(const SourceFile &source) {
 		source.Statistics(m_regions);
+		for (auto &region : m_regions) {
+			for (auto &symmetry : region->m_element.m_symmetries) {
+				m_symmetries[symmetry.first] += symmetry.second;
+			}
+		}
+	}
+
+	void CodeLearning::ProcessSymmetries() {
+		ProcessSymmetry('(', ')');
+		ProcessSymmetry('{', '}');
+		ProcessSymmetry('[', ']');
+		ProcessSymmetry('<', '>');
+	}
+
+	void CodeLearning::ProcessSymmetry(char left, char right) {
+		if (m_symmetries[left] && m_symmetries[right]) {
+			if (m_symmetries[left] == m_symmetries[right]) {
+				m_glob.m_generate.symmetries.insert(std::make_pair(left, Symmetry(left, right)));
+			}
+			else if (m_symmetries[left] > m_symmetries[right] &&
+				(float)(m_symmetries[right] * 100) / m_symmetries[left] >= m_cfg.symmetry_percent) {
+				m_glob.m_generate.symmetries.insert(std::make_pair(left, Symmetry(left, right)));
+			}
+			else if (m_symmetries[right] > m_symmetries[left] &&
+				(float)(m_symmetries[left] * 100) / m_symmetries[right] >= m_cfg.symmetry_percent) {
+				m_glob.m_generate.symmetries.insert(std::make_pair(left, Symmetry(left, right)));
+			}
+			else {
+				m_glob.m_generate.symmetries.erase(left);
+			}
+		}
 	}
 
 }

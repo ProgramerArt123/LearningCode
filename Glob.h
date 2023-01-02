@@ -9,7 +9,6 @@ namespace code_learning {
 	class Glob {
 	public:
 		explicit Glob(const Config &cfg):m_cfg(cfg){
-
 		}
 		const Config &m_cfg;
 		Generate m_generate;

@@ -38,12 +38,11 @@ namespace code_learning {
 					continue;
 				}
 
-				const Wrapper &wrapper = PeekWrap(lexis, line.end());
-				if (!wrapper.m_prefix.empty()) {
-					m_words[wrapper.m_prefix]++;
+				if (PeekWrap(lexis, line.end())) {
+					m_words[m_wrapper.m_prefix]++;
 					if (!preWord.empty()) {
-						m_words[wrapper.m_prefix].m_front.Count(preWord);
-						m_words[preWord].m_back.Count(wrapper.m_prefix);
+						m_words[m_wrapper.m_prefix].m_front.Count(preWord);
+						m_words[preWord].m_back.Count(m_wrapper.m_prefix);
 					}
 					while (true) {
 						description.append(std::string((*lexis)->begin(), (*lexis)->end()));
@@ -51,17 +50,20 @@ namespace code_learning {
 						if (lexis == line.end()) {
 							return;
 						}
-						if (PeekWrap(lexis, wrapper.m_suffix, line.end())) {
+						if (PeekWrap(lexis, line.end())) {
 							m_descs.AddDescription(description);
 							break;
 						}
 					}
-					m_words[preWord = wrapper.m_suffix]++;
+					m_words[preWord = m_wrapper.m_suffix]++;
 					continue;
 				}
 
 				const std::string lexisContent((*lexis)->begin(), (*lexis)->end());
 				m_words[lexisContent]++;
+				if (1 == lexisContent.size() && IsSymmetry(lexisContent.front())) {
+					m_symmetries[lexisContent.front()] ++;
+				}
 				if (!preWord.empty()) {
 					m_words[lexisContent].m_front.Count(preWord);
 					m_words[preWord].m_back.Count(lexisContent);
@@ -70,8 +72,8 @@ namespace code_learning {
 				lexis++;
 			}
 		}
-		Wrapper Line::PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, 
-			std::list<std::unique_ptr<Lexis>>::const_iterator end) const {
+		bool Line::PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis,
+			std::list<std::unique_ptr<Lexis>>::const_iterator end)  {
 			for (const auto &wrap : m_glob.m_generate.wrappers) {
 				bool isMatching = true;
 				auto cursor = lexis;
@@ -82,21 +84,22 @@ namespace code_learning {
 					}
 					cursor++;
 					if (cursor == end) {
-						return Wrapper();
+						return false;
 					}
 				}
 				if (isMatching) {
 					lexis = cursor;
-					return wrap;
+					m_wrapper = wrap;
+					return true;
 				}
 			}
-			return Wrapper();
+			return false;
 		}
 		bool Line::PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis,
-			const std::string &wrap, std::list<std::unique_ptr<Lexis>>::const_iterator end)const {
+			std::list<std::unique_ptr<Lexis>>::const_iterator end)const {
 			bool isMatching = true;
 			auto cursor = lexis;
-			for (const auto &c : wrap) {
+			for (const auto &c : m_wrapper.m_suffix) {
 				if (cursor == end) {
 					throw "SourceFile::PeekWrap";
 				}

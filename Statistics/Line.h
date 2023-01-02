@@ -22,14 +22,17 @@ namespace code_learning {
 			void Statistics(code::Line &line);
 			void Summary()const override;
 		private:
-			Wrapper PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, 
-				std::list<std::unique_ptr<Lexis>>::const_iterator end)const;
+			bool PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis,
+				std::list<std::unique_ptr<Lexis>>::const_iterator end);
 			bool PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, 
-				const std::string &wrap, std::list<std::unique_ptr<Lexis>>::const_iterator end)const;
+				std::list<std::unique_ptr<Lexis>>::const_iterator end) const;
 
 		private:
 			ListMap<Frequency<Word>> m_words;
 			Descriptions m_descs;
+			Wrapper m_wrapper;
+		public:
+			std::map<char, uint64_t> m_symmetries;
 		};
 	}
 }

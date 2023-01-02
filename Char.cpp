@@ -1,6 +1,11 @@
 #include "Char.h"
 
 namespace code_learning {
+	bool IsSymmetry(char c) {
+		return '(' == c || ')' == c || '{' == c || '}' == c ||
+			'[' == c || ']' == c || '<' == c || '>' == c;
+	}
+
 	bool IsReLine(char c) {
 		return '\n' == c || '\r' == c;
 	}

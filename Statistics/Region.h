@@ -19,6 +19,8 @@ namespace code_learning {
 			void Summary()const override;
 		private:
 			ListMap<Frequency<statistics::Line>> m_lines;
+		public:
+			std::map<char, uint64_t> m_symmetries;
 		};
 	}
 }

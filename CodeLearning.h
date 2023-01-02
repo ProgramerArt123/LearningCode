@@ -46,6 +46,8 @@ namespace code_learning {
 		void Summary();
 	private:
 		void Statistics(const SourceFile &source);
+		void ProcessSymmetries();
+		void ProcessSymmetry(char left, char right);
 	private:
 		uint64_t m_file_count = 0;
 		
@@ -54,6 +56,8 @@ namespace code_learning {
 		Glob m_glob;
 
 		ListMap<Frequency<statistics::Region>> m_regions;
+	
+		std::map<char, uint64_t> m_symmetries;
 	};
 }
 
