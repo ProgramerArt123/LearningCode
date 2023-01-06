@@ -5,9 +5,7 @@
 #include "Generate.h"
 #include "Word.h"
 #include "Adjacencies.hpp"
-#include "ListMap.hpp"
-#include "Frequency.hpp"
-#include "Element.h"
+#include "Composite.hpp"
 #include "Lexis.h"
 #include "Descriptions.h"
 
@@ -16,7 +14,7 @@ namespace code_learning {
 		class Line;
 	}
 	namespace statistics {
-		class Line : public Element {
+		class Line : public Composite<statistics::Word> {
 		public:
 			explicit Line(const std::string &content, Glob &glob);
 			void Statistics(code::Line &line);
@@ -28,11 +26,8 @@ namespace code_learning {
 				std::list<std::unique_ptr<Lexis>>::const_iterator end) const;
 
 		private:
-			ListMap<Frequency<Word>> m_words;
 			Descriptions m_descs;
 			Wrapper m_wrapper;
-		public:
-			std::map<char, uint64_t> m_symmetries;
 		};
 	}
 }

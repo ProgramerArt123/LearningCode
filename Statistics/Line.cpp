@@ -8,7 +8,7 @@
 namespace code_learning {
 	namespace statistics {
 		Line::Line(const std::string &content, Glob &glob) :
-			Element(content, glob), m_words(glob) {
+			Composite<statistics::Word>(content, glob) {
 		}
 		void Line::Statistics(code::Line &line) {
 			m_signature = line.GetSignature();
@@ -39,10 +39,10 @@ namespace code_learning {
 				}
 
 				if (PeekWrap(lexis, line.end())) {
-					m_words[m_wrapper.m_prefix]++;
+					m_children[m_wrapper.m_prefix]++;
 					if (!preWord.empty()) {
-						m_words[m_wrapper.m_prefix].m_front.Count(preWord);
-						m_words[preWord].m_back.Count(m_wrapper.m_prefix);
+						m_children[m_wrapper.m_prefix].m_front.Count(preWord);
+						m_children[preWord].m_back.Count(m_wrapper.m_prefix);
 					}
 					while (true) {
 						description.append(std::string((*lexis)->begin(), (*lexis)->end()));
@@ -55,18 +55,18 @@ namespace code_learning {
 							break;
 						}
 					}
-					m_words[preWord = m_wrapper.m_suffix]++;
+					m_children[preWord = m_wrapper.m_suffix]++;
 					continue;
 				}
 
 				const std::string lexisContent((*lexis)->begin(), (*lexis)->end());
-				m_words[lexisContent]++;
+				m_children[lexisContent]++;
 				if (1 == lexisContent.size() && IsSymmetry(lexisContent.front())) {
 					m_symmetries[lexisContent.front()] ++;
 				}
 				if (!preWord.empty()) {
-					m_words[lexisContent].m_front.Count(preWord);
-					m_words[preWord].m_back.Count(lexisContent);
+					m_children[lexisContent].m_front.Count(preWord);
+					m_children[preWord].m_back.Count(lexisContent);
 				}
 				preWord = lexisContent;
 				lexis++;
@@ -121,7 +121,7 @@ namespace code_learning {
 			std::cout << "Key:" << m_signature << std::endl;
 			std::cout << "Content:" << m_content << std::endl;
 			std::cout << "Words:[";
-			for (const auto &word : m_words) {
+			for (const auto &word : m_children) {
 				std::cout << word->m_element.GetContent() << ':' << word->GetCount() << '\t';
 			}
 			std::cout << "]";

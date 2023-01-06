@@ -5,18 +5,18 @@
 namespace code_learning {
 	namespace statistics {
 		Region::Region(const std::string &content, Glob &glob) :
-			Element(content, glob), m_lines(glob) {
+			Composite<statistics::Line>(content, glob) {
 		}
 		void Region::Statistics(code::Region &region) {
 			m_signature = region.GetSignature();
 			for (auto &line : region.m_children) {
-				auto &result = m_lines.Get(line->GetSignature(), line->GetContent());
+				auto &result = m_children.Get(line->GetSignature(), line->GetContent());
 				result.m_element.Statistics(*line);
 				result++; 
 			}
-			m_lines.Sort();
+			m_children.Sort();
 
-			for (auto &line : m_lines) {
+			for (auto &line : m_children) {
 				for (auto &symmetry : line->m_element.m_symmetries) {
 					m_symmetries[symmetry.first] += symmetry.second;
 				}
@@ -25,7 +25,7 @@ namespace code_learning {
 		void Region::Summary()const {
 			std::cout << "============================================================" << std::endl;
 			std::cout << "Region:" << m_signature << std::endl;
-			for (auto &line : m_lines) {
+			for (auto &line : m_children) {
 				line->Summary();
 			}
 			std::cout << "============================================================" << std::endl;

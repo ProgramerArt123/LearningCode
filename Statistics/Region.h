@@ -12,15 +12,11 @@ namespace code_learning {
 		class Region;
 	};
 	namespace statistics {
-		class Region : public Element {
+		class Region : public Composite<statistics::Line>{
 		public:
 			explicit Region(const std::string &content, Glob &glob);
 			void Statistics(code::Region &region);
 			void Summary()const override;
-		private:
-			ListMap<Frequency<statistics::Line>> m_lines;
-		public:
-			std::map<char, uint64_t> m_symmetries;
 		};
 	}
 }
