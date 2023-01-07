@@ -16,7 +16,6 @@ namespace code_learning {
 			virtual void Summary()const;
 		protected:
 			const std::string m_content;
-			std::string m_signature;
 			Glob &m_glob;
 		};
 

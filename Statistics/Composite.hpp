@@ -13,6 +13,7 @@ namespace code_learning {
 			explicit Composite(const std::string &content, Glob &glob):
 				Element(content, glob), m_children(glob){}
 		protected:
+			std::string m_signature;
 			ListMap<Frequency<Child>> m_children;
 		public:
 			std::map<char, uint64_t> m_symmetries;

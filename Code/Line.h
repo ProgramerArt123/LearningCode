@@ -1,9 +1,7 @@
 #ifndef __CODE_LEARNING_CODE_LINE_H__
 #define __CODE_LEARNING_CODE_LINE_H__
 
-#include <list>
-#include <memory>
-#include "Element.hpp"
+#include "Block.h"
 
 namespace code_learning {
 
@@ -12,13 +10,7 @@ namespace code_learning {
 
 	namespace code {
 
-		class Line : public Element<Lexis>{
-		public:
-			void Decomposition(const Config &cfg) override;
-			bool ContentAppend(char c)override;
-			std::string GetPattern(const Config &cfg) const override;
-		private:
-			bool CheckEncoding(const char *content, size_t &index);
+		class Line : public Block{
 		};
 
 	}

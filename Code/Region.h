@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "Code/Line.h"
+#include "Code/Block.h"
 
 namespace code_learning {
 
@@ -15,7 +16,7 @@ namespace code_learning {
 	}
 	namespace code {
 
-		class Region : public Element<code::Line> {
+		class Region : public Element<code::Block, code::Line> {
 		public:
 			bool ContentAppend(char c)override;
 			std::string GetPattern(const Config &cfg) const override;

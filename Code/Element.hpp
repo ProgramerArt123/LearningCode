@@ -13,8 +13,9 @@ namespace code_learning {
 
 	namespace code {
 
-		template<typename Child>
-		class Element {
+		template<typename ...Children> class Element;
+
+		template<typename Child> class Element<Child>{
 		public:
 			typename std::list<std::unique_ptr<Child>>::const_iterator begin() const {
 				return m_children.begin();
@@ -33,7 +34,7 @@ namespace code_learning {
 			const std::string &GetContent() const {
 				return m_content;
 			}
-		protected:
+		public:
 			std::string m_content;
 			std::list<std::unique_ptr<Child>> m_children;
 		private:
@@ -49,10 +50,11 @@ namespace code_learning {
 				m_signature = result;
 			}
 			std::string m_signature;
-
-
 		};
 
+		template<typename Child, typename ...Children>
+		class Element<Child, Children...> : public Element <Children...>{
+		};
 	}
 }
 
