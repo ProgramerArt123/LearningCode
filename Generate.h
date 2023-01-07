@@ -3,6 +3,8 @@
 
 #include <set>
 #include <map>
+#include <iostream>
+#include "Char.h"
 
 namespace code_learning {
 	
@@ -39,34 +41,19 @@ namespace code_learning {
 		std::string m_suffix;
 	};
 
-	class Symmetry {
-	public:
-		explicit Symmetry(char left, char right) :
-			m_left(left), m_right(right) {
-		}
-		bool operator<(const Symmetry &other) const {
-			if (m_left < other.m_left) {
-				return true;
-			}
-			if (m_left > other.m_left) {
-				return false;
-			}
-			if (m_right < other.m_right) {
-				return true;
-			}
-			if (m_right > other.m_right) {
-				return false;
-			}
-			return false;
-		}
-		char m_left;
-		char m_right;
-	};
-	
 	class Generate {
 	public:
 		std::set<Wrapper> wrappers;
-		std::map<char, Symmetry> symmetries;
+		std::set<Symmetry> symmetries;
+		void Summary()const {
+			if (!symmetries.empty()) {
+				std::cout << "#################################################" << std::endl;
+				std::cout << "Symmetries:" << std::endl;
+				for (auto &symmetry : symmetries) {
+					std::cout << symmetry.m_left << ":" << symmetry.m_right << std::endl;
+				}
+			}
+		}
 	};
 }
 

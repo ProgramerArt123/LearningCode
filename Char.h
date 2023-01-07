@@ -13,6 +13,28 @@ namespace code_learning{
 		CHAR_TYPE_ALPHABET
 	};
 
+	struct Symmetry{
+		bool operator<(const Symmetry &other) const {
+			if (m_left < other.m_left) {
+				return true;
+			}
+			if (m_left > other.m_left) {
+				return false;
+			}
+			if (m_right < other.m_right) {
+				return true;
+			}
+			if (m_right > other.m_right) {
+				return false;
+			}
+			return false;
+		}
+		char m_left = ' ';
+		char m_right = ' ';
+	};
+
+	extern Symmetry symmetries[4];
+
 	bool IsSymmetry(char c);
 
 	bool IsReLine(char c);

@@ -5,6 +5,7 @@
 #include "SourceFileBatch.hpp"
 #include "Description.h"
 #include "CodeLearning.h"
+#include "Char.h"
 
 namespace code_learning {
 
@@ -33,11 +34,7 @@ namespace code_learning {
 			region->Summary();
 		}
 		
-		std::cout << "#################################################" << std::endl;
-		std::cout << "Symmetries:" << std::endl;
-		for (auto &symmetry : m_symmetries) {
-			std::cout << symmetry.first << ":" << symmetry.second << std::endl;
-		}
+		m_glob.m_generate.Summary();
 	}
 
 	void CodeLearning::Statistics(const SourceFile &source) {
@@ -50,27 +47,27 @@ namespace code_learning {
 	}
 
 	void CodeLearning::ProcessSymmetries() {
-		ProcessSymmetry('(', ')');
-		ProcessSymmetry('{', '}');
-		ProcessSymmetry('[', ']');
-		ProcessSymmetry('<', '>');
+		const int count = sizeof(symmetries) / sizeof(Symmetry);
+		for (int index = 0; index < count; index ++) {
+			ProcessSymmetry(symmetries[index]);
+		}
 	}
 
-	void CodeLearning::ProcessSymmetry(char left, char right) {
-		if (m_symmetries[left] && m_symmetries[right]) {
-			if (m_symmetries[left] == m_symmetries[right]) {
-				m_glob.m_generate.symmetries.insert(std::make_pair(left, Symmetry(left, right)));
+	void CodeLearning::ProcessSymmetry(const Symmetry &symmetry) {
+		if (m_symmetries[symmetry.m_left] && m_symmetries[symmetry.m_right]) {
+			if (m_symmetries[symmetry.m_left] == m_symmetries[symmetry.m_right]) {
+				m_glob.m_generate.symmetries.insert(symmetry);
 			}
-			else if (m_symmetries[left] > m_symmetries[right] &&
-				(float)(m_symmetries[right] * 100) / m_symmetries[left] >= m_cfg.symmetry_percent) {
-				m_glob.m_generate.symmetries.insert(std::make_pair(left, Symmetry(left, right)));
+			else if (m_symmetries[symmetry.m_left] > m_symmetries[symmetry.m_right] &&
+				(float)(m_symmetries[symmetry.m_right] * 100) / m_symmetries[symmetry.m_left] >= m_cfg.symmetry_percent) {
+				m_glob.m_generate.symmetries.insert(symmetry);
 			}
-			else if (m_symmetries[right] > m_symmetries[left] &&
-				(float)(m_symmetries[left] * 100) / m_symmetries[right] >= m_cfg.symmetry_percent) {
-				m_glob.m_generate.symmetries.insert(std::make_pair(left, Symmetry(left, right)));
+			else if (m_symmetries[symmetry.m_right] > m_symmetries[symmetry.m_left] &&
+				(float)(m_symmetries[symmetry.m_left] * 100) / m_symmetries[symmetry.m_right] >= m_cfg.symmetry_percent) {
+				m_glob.m_generate.symmetries.insert(symmetry);
 			}
 			else {
-				m_glob.m_generate.symmetries.erase(left);
+				m_glob.m_generate.symmetries.erase(symmetry);
 			}
 		}
 	}

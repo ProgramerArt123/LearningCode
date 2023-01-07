@@ -1,6 +1,14 @@
 #include "Char.h"
 
 namespace code_learning {
+
+	Symmetry symmetries[] = {
+		{'(', ')'},
+		{'{', '}'},
+		{'[', ']'},
+		{'<', '>'}
+	};
+
 	bool IsSymmetry(char c) {
 		return '(' == c || ')' == c || '{' == c || '}' == c ||
 			'[' == c || ']' == c || '<' == c || '>' == c;

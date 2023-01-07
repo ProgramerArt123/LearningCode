@@ -47,7 +47,7 @@ namespace code_learning {
 	private:
 		void Statistics(const SourceFile &source);
 		void ProcessSymmetries();
-		void ProcessSymmetry(char left, char right);
+		void ProcessSymmetry(const Symmetry &symmetry);
 	private:
 		uint64_t m_file_count = 0;
 		
