@@ -10,17 +10,21 @@ namespace code_learning {
 			m_last = JudgeCharType(first);
 		}
 
-		bool Lexis::TryAppendChar(char next) {
+		ELEMENT_TYPE Lexis::GetType() const {
+			return ELEMENT_TYPE_LEXIS;
+		}
+
+		bool Lexis::TryAppendChar(char next, const Glob &glob) {
 			if (IsDisconnection(next)) {
 				return false;
 			}
 			else {
-				ContentAppend(next);
+				ContentAppend(next, glob);
 				return true;
 			}
 		}
 
-		bool Lexis::ContentAppend(char next) {
+		bool Lexis::ContentAppend(char next, const Glob &glob) {
 			m_content.push_back(next);
 			m_last = JudgeCharType(next);
 			return false;

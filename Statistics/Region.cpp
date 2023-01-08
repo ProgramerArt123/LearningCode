@@ -10,9 +10,13 @@ namespace code_learning {
 		void Region::Statistics(code::Region &region) {
 			m_signature = region.GetSignature();
 			for (auto &line : region.m_children.front()) {
-				auto &result = m_children.Get(line->GetSignature(), line->GetContent());
-				result.m_element.Statistics(*(code::Line*)(line.get()));
+				auto &result = m_children.Get(dynamic_cast<code::Line*>(line.get())->GetSignature(), 
+					dynamic_cast<code::Line*>(line.get())->GetContent());
+				result.m_element.Statistics(*dynamic_cast<code::Line*>(line.get()));
 				result++; 
+			}
+			for (auto &block : region.m_children.back()) {
+				
 			}
 			m_children.Sort();
 

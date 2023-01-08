@@ -44,13 +44,13 @@ namespace code_learning {
 	class Generate {
 	public:
 		std::set<Wrapper> wrappers;
-		std::set<Symmetry> symmetries;
+		std::map<char, Symmetry> symmetries;
 		void Summary()const {
 			if (!symmetries.empty()) {
 				std::cout << "#################################################" << std::endl;
 				std::cout << "Symmetries:" << std::endl;
 				for (auto &symmetry : symmetries) {
-					std::cout << symmetry.m_left << ":" << symmetry.m_right << std::endl;
+					std::cout << symmetry.second.m_left << ":" << symmetry.second.m_right << std::endl;
 				}
 			}
 		}

@@ -7,10 +7,11 @@
 #include <boost/uuid/detail/md5.hpp>
 #include <boost/algorithm/hex.hpp>
 
+#include "Glob.h"
 #include "Element.h"
 
 namespace code_learning {
-	class Config;
+	class Glob;
 
 	namespace code {
 
@@ -22,10 +23,10 @@ namespace code_learning {
 			Composite() {
 				m_children.resize(m_children.size() + 1);
 			}
-			virtual void Decomposition(const Config &cfg)  {
-				CalculateSignature(cfg);
+			virtual void Decomposition(const Glob &glob)  {
+				CalculateSignature(glob);
 			}
-			virtual std::string GetPattern(const Config &cfg) const = 0;
+			virtual std::string GetPattern(const Glob &glob) const = 0;
 			const std::string &GetSignature() const {
 				return m_signature;
 			}
@@ -33,8 +34,8 @@ namespace code_learning {
 		public:
 			std::vector<std::list<std::shared_ptr<Type>>> m_children;
 		private:
-			void CalculateSignature(const Config &cfg) {
-				const std::string &pattern = GetPattern(cfg);
+			void CalculateSignature(const Glob &glob) {
+				const std::string &pattern = GetPattern(glob);
 				boost::uuids::detail::md5 md5;
 				boost::uuids::detail::md5::digest_type digest;
 				md5.process_bytes(pattern.c_str(), pattern.length());

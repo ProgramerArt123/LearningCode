@@ -7,20 +7,23 @@
 
 namespace code_learning {
 	namespace code {
-		
-		bool Region::ContentAppend(char c) {
-			ContentAppendBlock(c);
-			return ContentAppendLine(c);
+		ELEMENT_TYPE Region::GetType() const {
+			return ELEMENT_TYPE_REGION;
 		}
-		std::string Region::GetPattern(const Config &cfg)const {
+		bool Region::ContentAppend(char c, const Glob &glob) {
+			ContentAppendBlock(c, glob);
+			return ContentAppendLine(c, glob);
+		}
+		std::string Region::GetPattern(const Glob &glob)const {
 			std::string pattern;
 			pattern.append("[");
 			for (auto &line : m_children.front()) {
 				if (1 < pattern.length()) {
 					pattern.append(",");
 				}
-				line->Decomposition(cfg);
-				pattern.append(line->GetSignature());
+				
+				dynamic_cast<Line*>(line.get())->Decomposition(glob);
+				pattern.append(dynamic_cast<Line*>(line.get())->GetSignature());
 			}
 			pattern.append("]");
 			return pattern;
@@ -33,11 +36,25 @@ namespace code_learning {
 				m_content.append(child->GetContent());
 			}
 		}
-		void Region::ContentAppendBlock(char c) {
-
+		void Region::ContentAppendBlock(char next, const Glob &glob) {
+			if (m_children.back().empty()) {
+				if (glob.m_generate.symmetries.find(next) !=
+					glob.m_generate.symmetries.end()) {
+					m_children.back().push_back(std::shared_ptr<Element>(new Block(next)));
+				}
+			}
+			else {
+				auto &lastBlock = m_children.back().back();
+				if (!lastBlock->TryAppendChar(next, glob)) {
+					if (glob.m_generate.symmetries.find(next) !=
+						glob.m_generate.symmetries.end()) {
+						m_children.back().push_back(std::shared_ptr<Element>(new Block(next)));
+					}
+				}
+			}
 		}
-		bool Region::ContentAppendLine(char c) {
-			if (IsReLine(c)) {
+		bool Region::ContentAppendLine(char next, const Glob &glob) {
+			if (IsReLine(next)) {
 				re_line_count++;
 				if (!m_children.front().empty()) {
 					if (re_line_count >= 2) {
@@ -46,7 +63,7 @@ namespace code_learning {
 						return true;
 					}
 					else {
-						m_children.front().push_back(std::unique_ptr<Line>(new Line()));
+						m_children.front().push_back(std::shared_ptr<Line>(new Line()));
 					}
 				}
 			}
@@ -56,7 +73,7 @@ namespace code_learning {
 					m_children.front().push_back(std::shared_ptr<Line>(new Line()));
 				}
 				auto &lastLine = m_children.front().back();
-				lastLine->ContentAppend(c);
+				lastLine->ContentAppend(next, glob);
 			}
 			return false;
 		}

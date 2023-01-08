@@ -18,9 +18,9 @@ namespace code_learning {
 			std::cerr << m_file_name << " open failed!" << std::endl;
 		}
 	}
-	void SourceFile::Scan(const Config &cfg) {
+	void SourceFile::Scan(const Glob &glob) {
 		if (m_code)
-			m_code->Decomposition(cfg);
+			m_code->Decomposition(glob);
 	}
 	void SourceFile::Statistics(ListMap<Frequency<statistics::Region>> &regions)const {
 		if (m_code)

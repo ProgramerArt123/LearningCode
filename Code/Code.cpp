@@ -10,19 +10,8 @@
 
 namespace code_learning {
 	namespace code {
-		Code::Code(const char *content)  {
+		Code::Code(const char *content):m_content(content){
 			"代码学习";
-			size_t length = strlen(content);
-			for (size_t index = 0; index < length; index++) {
-				if (m_regions.empty()) {
-					m_regions.push_back(std::unique_ptr<Region>(new Region()));
-				}
-				char c = content[index];
-				auto &lastRegion = m_regions.back();
-				if (lastRegion->ContentAppend(c)) {
-					m_regions.push_back(std::unique_ptr<Region>(new Region()));
-				}
-			}
 			
 		}
 
@@ -35,9 +24,19 @@ namespace code_learning {
 			regions.Sort();
 		}
 
-		void Code::Decomposition(const Config &cfg) {
+		void Code::Decomposition(const Glob &glob) {
+			for (const auto &c : m_content) {
+				if (m_regions.empty()) {
+					m_regions.push_back(std::unique_ptr<Region>(new Region()));
+				}
+				auto &lastRegion = m_regions.back();
+				if (lastRegion->ContentAppend(c, glob)) {
+					m_regions.push_back(std::unique_ptr<Region>(new Region()));
+				}
+			}
+
 			for (auto &region : m_regions) {
-				region->Decomposition(cfg);
+				region->Decomposition(glob);
 			}
 		}
 

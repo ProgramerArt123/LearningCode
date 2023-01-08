@@ -17,8 +17,9 @@ namespace code_learning {
 		public:
 			explicit Code(const char *content);
 			void Statistics(ListMap<Frequency<statistics::Region>> &regions)const;
-			void Decomposition(const Config &cfg);
+			void Decomposition(const Glob &glob);
 		private:
+			std::string m_content;
 			std::list<std::unique_ptr<code::Region>> m_regions;
 		};
 	}

@@ -15,7 +15,7 @@ namespace code_learning {
 
 	void CodeLearning::Learning(SourceFile &source) {
 		m_file_count++;
-		source.Scan(m_glob.m_cfg);
+		source.Scan(m_glob);
 		Statistics(source);
 		m_regions.Sort();
 		ProcessSymmetries();
@@ -56,18 +56,18 @@ namespace code_learning {
 	void CodeLearning::ProcessSymmetry(const Symmetry &symmetry) {
 		if (m_symmetries[symmetry.m_left] && m_symmetries[symmetry.m_right]) {
 			if (m_symmetries[symmetry.m_left] == m_symmetries[symmetry.m_right]) {
-				m_glob.m_generate.symmetries.insert(symmetry);
+				m_glob.m_generate.symmetries[symmetry.m_left] = symmetry;
 			}
 			else if (m_symmetries[symmetry.m_left] > m_symmetries[symmetry.m_right] &&
 				(float)(m_symmetries[symmetry.m_right] * 100) / m_symmetries[symmetry.m_left] >= m_cfg.symmetry_percent) {
-				m_glob.m_generate.symmetries.insert(symmetry);
+				m_glob.m_generate.symmetries[symmetry.m_left] = symmetry;
 			}
 			else if (m_symmetries[symmetry.m_right] > m_symmetries[symmetry.m_left] &&
 				(float)(m_symmetries[symmetry.m_left] * 100) / m_symmetries[symmetry.m_right] >= m_cfg.symmetry_percent) {
-				m_glob.m_generate.symmetries.insert(symmetry);
+				m_glob.m_generate.symmetries[symmetry.m_left] = symmetry;
 			}
 			else {
-				m_glob.m_generate.symmetries.erase(symmetry);
+				m_glob.m_generate.symmetries.erase(symmetry.m_left);
 			}
 		}
 	}

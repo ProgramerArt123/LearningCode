@@ -14,11 +14,12 @@ namespace code_learning {
 		class Lexis;
 		class Line : public Composite<Lexis, Lexis>{
 		public:
-			void Decomposition(const Config &cfg) override;
-			bool ContentAppend(char c)override;
-			std::string GetPattern(const Config &cfg) const override;
+			ELEMENT_TYPE GetType() const override;
+			void Decomposition(const Glob &glob) override;
+			bool ContentAppend(char next, const Glob &glob)override;
+			std::string GetPattern(const Glob &glob) const override;
 		private:
-			bool CheckEncoding(const char *content, size_t &index);
+			bool CheckEncoding(const char *content, size_t &index, const Glob &glob);
 		};
 
 	}

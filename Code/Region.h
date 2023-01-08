@@ -11,21 +11,22 @@
 
 namespace code_learning {
 
-	class Config;
+	class Glob;
 	namespace statistics {
 		class Region;
 	}
 	namespace code {
 
 		class Lexis;
-		class Region : public Composite<code::Line, code::Block, Composite<Lexis, Lexis>> {
+		class Region : public Composite<code::Line, code::Block, Element> {
 		public:
-			bool ContentAppend(char c)override;
-			std::string GetPattern(const Config &cfg) const override;
+			ELEMENT_TYPE GetType() const override;
+			bool ContentAppend(char next, const Glob &glob)override;
+			std::string GetPattern(const Glob &glob) const override;
 			friend class statistics::Region;
 		private:
-			void ContentAppendBlock(char c);
-			bool ContentAppendLine(char c);
+			void ContentAppendBlock(char next, const Glob &glob);
+			bool ContentAppendLine(char next, const Glob &glob);
 			void SetContent();
 			int re_line_count = 0;
 		};

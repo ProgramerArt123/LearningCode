@@ -3,6 +3,9 @@
 
 namespace code_learning {
 	namespace code {
+		bool Element::TryAppendChar(char next, const Glob &glob) {
+			return false;
+		}
 		const std::string &Element::GetContent() const {
 			return m_content;
 		}
