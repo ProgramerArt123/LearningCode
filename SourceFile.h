@@ -4,7 +4,7 @@
 #include <memory>
 #include "Config.h"
 #include "Code/Code.h"
-#include "Lexis.h"
+#include "Code/Lexis.h"
 #include "Statistics/Region.h"
 #include "Frequency.hpp"
 

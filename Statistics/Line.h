@@ -6,7 +6,7 @@
 #include "Word.h"
 #include "Adjacencies.hpp"
 #include "Composite.hpp"
-#include "Lexis.h"
+#include "Code/Lexis.h"
 #include "Descriptions.h"
 
 namespace code_learning {
@@ -20,10 +20,10 @@ namespace code_learning {
 			void Statistics(code::Line &line);
 			void Summary()const override;
 		private:
-			bool PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis,
-				std::list<std::unique_ptr<Lexis>>::const_iterator end);
-			bool PeekWrap(std::list<std::unique_ptr<Lexis>>::const_iterator &lexis, 
-				std::list<std::unique_ptr<Lexis>>::const_iterator end) const;
+			bool PeekWrap(std::list<std::shared_ptr<code::Lexis>>::const_iterator &lexis,
+				std::list<std::shared_ptr<code::Lexis>>::const_iterator end);
+			bool PeekWrap(std::list<std::shared_ptr<code::Lexis>>::const_iterator &lexis,
+				std::list<std::shared_ptr<code::Lexis>>::const_iterator end) const;
 
 		private:
 			Descriptions m_descs;

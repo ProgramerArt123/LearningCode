@@ -1,42 +1,37 @@
-#ifndef __CODE_LEARNING_CODE_ELEMENT_HPP__
-#define __CODE_LEARNING_CODE_ELEMENT_HPP__
+#ifndef __CODE_LEARNING_CODE_COMPOSITE_HPP__
+#define __CODE_LEARNING_CODE_COMPOSITE_HPP__
 
 #include <list>
+#include <vector>
 #include <memory>
 #include <boost/uuid/detail/md5.hpp>
 #include <boost/algorithm/hex.hpp>
 
-namespace code_learning {
+#include "Element.h"
 
-	class Lexis;
+namespace code_learning {
 	class Config;
 
 	namespace code {
 
-		template<typename ...Children> class Element;
+		template<typename ...Children> class Composite;
 
-		template<typename Child> class Element<Child>{
+		template<typename Child, typename Type> 
+		class Composite<Child, Type> : public Element {
 		public:
-			typename std::list<std::unique_ptr<Child>>::const_iterator begin() const {
-				return m_children.begin();
+			Composite() {
+				m_children.resize(m_children.size() + 1);
 			}
-			typename std::list<std::unique_ptr<Child>>::const_iterator end() const {
-				return m_children.end();
-			}
-			virtual void Decomposition(const Config &cfg) {
+			virtual void Decomposition(const Config &cfg)  {
 				CalculateSignature(cfg);
 			}
-			virtual bool ContentAppend(char c) = 0;
 			virtual std::string GetPattern(const Config &cfg) const = 0;
 			const std::string &GetSignature() const {
 				return m_signature;
 			}
-			const std::string &GetContent() const {
-				return m_content;
-			}
+			
 		public:
-			std::string m_content;
-			std::list<std::unique_ptr<Child>> m_children;
+			std::vector<std::list<std::shared_ptr<Type>>> m_children;
 		private:
 			void CalculateSignature(const Config &cfg) {
 				const std::string &pattern = GetPattern(cfg);
@@ -53,7 +48,11 @@ namespace code_learning {
 		};
 
 		template<typename Child, typename ...Children>
-		class Element<Child, Children...> : public Element <Children...>{
+		class Composite<Child, Children...> : public Composite<Children...>{
+		public:
+			Composite() {
+				Composite<Children...>::m_children.resize(Composite<Children...>::m_children.size() + 1);
+			}
 		};
 	}
 }

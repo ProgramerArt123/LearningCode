@@ -9,9 +9,9 @@ namespace code_learning {
 		}
 		void Region::Statistics(code::Region &region) {
 			m_signature = region.GetSignature();
-			for (auto &line : region.m_children) {
+			for (auto &line : region.m_children.front()) {
 				auto &result = m_children.Get(line->GetSignature(), line->GetContent());
-				result.m_element.Statistics(*line);
+				result.m_element.Statistics(*(code::Line*)(line.get()));
 				result++; 
 			}
 			m_children.Sort();

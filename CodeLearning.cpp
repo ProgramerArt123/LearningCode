@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-#include "Lexis.h"
+#include "Code/Lexis.h"
 #include "SourceFile.h"
 #include "SourceFileBatch.hpp"
 #include "Description.h"

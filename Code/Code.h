@@ -8,12 +8,11 @@
 #include "Frequency.hpp"
 
 namespace code_learning {
-
-	class Lexis;
 	class Config;
 
 	namespace code {
 
+		class Lexis;
 		class Code {
 		public:
 			explicit Code(const char *content);

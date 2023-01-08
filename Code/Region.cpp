@@ -9,33 +9,13 @@ namespace code_learning {
 	namespace code {
 		
 		bool Region::ContentAppend(char c) {
-			if (IsReLine(c)) {
-				re_line_count++;
-				if (!m_children.empty()) {
-					if (re_line_count >= 2) {
-						m_children.pop_back();
-						SetContent();
-						return true;
-					}
-					else {
-						m_children.push_back(std::unique_ptr<Line>(new Line()));
-					}
-				}
-			}
-			else {
-				re_line_count = 0;
-				if (m_children.empty()) {
-					m_children.push_back(std::unique_ptr<Line>(new Line()));
-				}
-				auto &lastLine = m_children.back();
-				lastLine->ContentAppend(c);
-			}
-			return false;
+			ContentAppendBlock(c);
+			return ContentAppendLine(c);
 		}
 		std::string Region::GetPattern(const Config &cfg)const {
 			std::string pattern;
 			pattern.append("[");
-			for (auto &line : m_children) {
+			for (auto &line : m_children.front()) {
 				if (1 < pattern.length()) {
 					pattern.append(",");
 				}
@@ -46,12 +26,39 @@ namespace code_learning {
 			return pattern;
 		}
 		void Region::SetContent() {
-			for (const auto &child : m_children) {
+			for (const auto &child : m_children.front()) {
 				if (!m_content.empty()) {
 					m_content.append("\n");
 				}
 				m_content.append(child->GetContent());
 			}
+		}
+		void Region::ContentAppendBlock(char c) {
+
+		}
+		bool Region::ContentAppendLine(char c) {
+			if (IsReLine(c)) {
+				re_line_count++;
+				if (!m_children.front().empty()) {
+					if (re_line_count >= 2) {
+						m_children.front().pop_back();
+						SetContent();
+						return true;
+					}
+					else {
+						m_children.front().push_back(std::unique_ptr<Line>(new Line()));
+					}
+				}
+			}
+			else {
+				re_line_count = 0;
+				if (m_children.front().empty()) {
+					m_children.front().push_back(std::shared_ptr<Line>(new Line()));
+				}
+				auto &lastLine = m_children.front().back();
+				lastLine->ContentAppend(c);
+			}
+			return false;
 		}
 	}
 }

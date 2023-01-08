@@ -3,16 +3,16 @@
 
 #include <list>
 #include <memory>
-#include "Element.hpp"
+#include "Element.h"
+#include "Composite.hpp"
 
 namespace code_learning {
-
-	class Lexis;
 	class Config;
 
 	namespace code {
 
-		class Block : public Element<Lexis>{
+		class Lexis;
+		class Block : public Composite<Element, Element>{
 		public:
 			void Decomposition(const Config &cfg) override;
 			bool ContentAppend(char c)override;

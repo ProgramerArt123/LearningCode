@@ -16,18 +16,18 @@ namespace code_learning {
 					break;
 				}
 				char c = m_content[index];
-				if (!isPreSplit && !m_children.empty()) {
-					std::unique_ptr<Lexis> &last = m_children.back();
-					if (!last->TryAppendChar(c)) {
-						m_children.push_back(std::unique_ptr<Lexis>(new Lexis(c)));
-					}
+				if (!isPreSplit && !m_children.front().empty()) {
+					std::shared_ptr<Element> &last = m_children.front().back();
+					//if (!last->TryAppendChar(c)) {
+					//	m_children.front().push_back(std::unique_ptr<Lexis>(new Lexis(c)));
+					//}
 				}
 				else {
-					m_children.push_back(std::unique_ptr<Lexis>(new Lexis(c)));
+					m_children.front().push_back(std::unique_ptr<Lexis>(new Lexis(c)));
 				}
 				isPreSplit = cfg.splits.end() != cfg.splits.find(c);
 			}
-			Element<Lexis>::Decomposition(cfg);
+			Composite<Element, Element>::Decomposition(cfg);
 		}
 		bool Block::ContentAppend(char c) {
 			m_content += c;
@@ -36,7 +36,7 @@ namespace code_learning {
 		std::string Block::GetPattern(const Config &cfg) const {
 			std::string pattern;
 			pattern.append("[");
-			for (const auto &lexis : m_children) {
+			for (const auto &lexis : m_children.front()) {
 				WORD_TYPE type = statistics::Word::JudgeWordType(std::string(lexis->begin(), lexis->end()));
 				if (code_learning::WORD_TYPE_SPACE != type) {
 					if (1 < pattern.length()) {
@@ -52,10 +52,10 @@ namespace code_learning {
 			uint8_t highOne = CharHighOne(content[index]);
 			bool isMulti = highOne;
 			if (highOne) {//描述性对象
-				m_children.push_back(std::unique_ptr<Lexis>(new Lexis()));
-				std::unique_ptr<Lexis> &last = m_children.back();
+				m_children.front().push_back(std::unique_ptr<Lexis>(new Lexis()));
+				std::shared_ptr<Element> &last = m_children.front().back();
 				for (uint8_t one = 0; one < highOne; one++) {
-					last->AppendChar(content[index++]);
+					last->ContentAppend(content[index++]);
 				}
 			}
 			return isMulti;
