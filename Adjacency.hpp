@@ -2,7 +2,7 @@
 #define __CODE_LEARNING_ADJACENCY_HPP__
 
 #include <string>
-#include "WordType.h"
+#include "LexisType.h"
 namespace code_learning {
 
 	class Glob;

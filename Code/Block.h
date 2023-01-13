@@ -12,7 +12,7 @@ namespace code_learning {
 	namespace code {
 
 		class Lexis;
-		class Block : public Composite<Element, Element>{
+		class Block : public Composite<code::Element, code::Element>{
 		public:
 			explicit Block(char first);
 			ELEMENT_TYPE GetType() const override;

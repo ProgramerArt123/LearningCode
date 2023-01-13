@@ -18,7 +18,7 @@ namespace code_learning {
 	namespace code {
 
 		class Lexis;
-		class Region : public Composite<code::Line, code::Block, Element> {
+		class Region : public Composite<code::Line, code::Block, code::Element> {
 		public:
 			ELEMENT_TYPE GetType() const override;
 			bool ContentAppend(char next, const Glob &glob)override;

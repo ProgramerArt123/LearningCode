@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Glob.h"
 #include "Lexis.h"
-#include "Statistics/Word.h"
+#include "Statistics/Lexis.h"
 #include "Char.h"
 #include "Block.h"
 
@@ -58,12 +58,12 @@ namespace code_learning {
 			std::string pattern;
 			pattern.append("[");
 			for (const auto &lexis : m_children.front()) {
-				WORD_TYPE type = statistics::Word::JudgeWordType(std::string(lexis->begin(), lexis->end()));
-				if (code_learning::WORD_TYPE_SPACE != type) {
+				LEXIS_TYPE type = statistics::Lexis::JudgeLexisType(std::string(lexis->begin(), lexis->end()));
+				if (code_learning::LEXIS_TYPE_SPACE != type) {
 					if (1 < pattern.length()) {
 						pattern.append(",");
 					}
-					pattern.append(wordTypes[type].m_name);
+					pattern.append(lexisTypes[type].m_name);
 				}
 			}
 			pattern.append("]");

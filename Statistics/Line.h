@@ -3,7 +3,7 @@
 
 #include "Config.h"
 #include "Generate.h"
-#include "Word.h"
+#include "Lexis.h"
 #include "Adjacencies.hpp"
 #include "Composite.hpp"
 #include "Code/Lexis.h"
@@ -14,7 +14,7 @@ namespace code_learning {
 		class Line;
 	}
 	namespace statistics {
-		class Line : public Composite<statistics::Word> {
+		class Line : public Composite<statistics::Lexis, statistics::Lexis> {
 		public:
 			explicit Line(const std::string &content, Glob &glob);
 			void Statistics(code::Line &line);

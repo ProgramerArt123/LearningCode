@@ -17,8 +17,8 @@ namespace code_learning {
 
 		template<typename ...Children> class Composite;
 
-		template<typename Child, typename Type> 
-		class Composite<Child, Type> : public Element {
+		template<typename Child, typename Base> 
+		class Composite<Child, Base> : public code::Element {
 		public:
 			Composite() {
 				m_children.resize(m_children.size() + 1);
@@ -32,7 +32,7 @@ namespace code_learning {
 			}
 			
 		public:
-			std::vector<std::list<std::shared_ptr<Type>>> m_children;
+			std::vector<std::list<std::shared_ptr<Base>>> m_children;
 		private:
 			void CalculateSignature(const Glob &glob) {
 				const std::string &pattern = GetPattern(glob);

@@ -12,7 +12,7 @@ namespace code_learning {
 		class Region;
 	};
 	namespace statistics {
-		class Region : public Composite<statistics::Line>{
+		class Region : public Composite<statistics::Line, statistics::Line>{
 		public:
 			explicit Region(const std::string &content, Glob &glob);
 			void Statistics(code::Region &region);

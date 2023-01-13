@@ -1,23 +1,23 @@
 #include <iostream>
 #include "Char.h"
-#include "Word.h"
+#include "Lexis.h"
 
 namespace code_learning {
 	namespace statistics {
-		Word::Word(const std::string &content, Glob &glob) :
+		Lexis::Lexis(const std::string &content, Glob &glob) :
 			Element(content, glob), m_content(content) {
-			m_type = JudgeWordType(content);
+			m_type = JudgeLexisType(content);
 		}
 
-		const std::string &Word::GetContent()const {
+		const std::string &Lexis::GetContent()const {
 			return m_content;
 		}
 
-		WORD_TYPE Word::GetType()const {
+		LEXIS_TYPE Lexis::GetType()const {
 			return m_type;
 		}
 
-		WORD_TYPE Word::JudgeWordType(const std::string &content) {
+		LEXIS_TYPE Lexis::JudgeLexisType(const std::string &content) {
 			char preChar = 0;
 			CHAR_TYPE preType = CHAR_TYPE_NONE;
 			for (const auto &c : content) {
@@ -25,10 +25,10 @@ namespace code_learning {
 				switch (type)
 				{
 				case CHAR_TYPE_SPACE:
-					return WORD_TYPE_SPACE;
+					return LEXIS_TYPE_SPACE;
 					break;
 				case CHAR_TYPE_SYMBOL:
-					return WORD_TYPE_SYMBOL;
+					return LEXIS_TYPE_SYMBOL;
 					break;
 				case CHAR_TYPE_DIGITAL:
 					switch (preType)
@@ -37,11 +37,11 @@ namespace code_learning {
 					case CHAR_TYPE_DIGITAL:
 						break;
 					case CHAR_TYPE_ALPHABET:
-						return WORD_TYPE_NAME;
+						return LEXIS_TYPE_NAME;
 						break;
 					default:
 						if ('_' == preChar) {
-							return WORD_TYPE_NAME;
+							return LEXIS_TYPE_NAME;
 						}
 						break;
 					}
@@ -53,17 +53,17 @@ namespace code_learning {
 					case CHAR_TYPE_ALPHABET:
 						break;
 					case CHAR_TYPE_DIGITAL:
-						return WORD_TYPE_NAME;
+						return LEXIS_TYPE_NAME;
 						break;
 					default:
 						if ('_' == preChar) {
-							return WORD_TYPE_NAME;
+							return LEXIS_TYPE_NAME;
 						}
 						break;
 					}
 					break;
 				default:
-					return WORD_TYPE_NONE;
+					return LEXIS_TYPE_NONE;
 					break;
 				}
 				preChar = c;
@@ -72,19 +72,19 @@ namespace code_learning {
 			switch (preType)
 			{
 			case code_learning::CHAR_TYPE_SPACE:
-				return WORD_TYPE_SPACE;
+				return LEXIS_TYPE_SPACE;
 				break;
 			case code_learning::CHAR_TYPE_SYMBOL:
-				return WORD_TYPE_SYMBOL;
+				return LEXIS_TYPE_SYMBOL;
 				break;
 			case code_learning::CHAR_TYPE_DIGITAL:
-				return WORD_TYPE_DIGITAL;
+				return LEXIS_TYPE_DIGITAL;
 				break;
 			case code_learning::CHAR_TYPE_ALPHABET:
-				return WORD_TYPE_ALPHABET;
+				return LEXIS_TYPE_ALPHABET;
 				break;
 			default:
-				return WORD_TYPE_NONE;
+				return LEXIS_TYPE_NONE;
 				break;
 			}
 		}

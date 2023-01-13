@@ -24,18 +24,18 @@ namespace code_learning {
 		}
 		Element &operator[](const std::string &key) {
 			if (m_map.end() == m_map.find(key)) {
-				std::shared_ptr<Element> word(new Element(key, m_glob));
-				m_map.insert(std::make_pair(key, word));
-				m_list.push_back(word);
+				std::shared_ptr<Element> lexis(new Element(key, m_glob));
+				m_map.insert(std::make_pair(key, lexis));
+				m_list.push_back(lexis);
 			}
 			return *m_map[key];
 		}
 
 		Element &Get(const std::string &key, const std::string &content) {
 			if (m_map.end() == m_map.find(key)) {
-				std::shared_ptr<Element> word(new Element(content, m_glob));
-				m_map.insert(std::make_pair(key, word));
-				m_list.push_back(word);
+				std::shared_ptr<Element> lexis(new Element(content, m_glob));
+				m_map.insert(std::make_pair(key, lexis));
+				m_list.push_back(lexis);
 			}
 			return *m_map[key];
 		}
