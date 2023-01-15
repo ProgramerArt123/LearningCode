@@ -11,30 +11,28 @@ namespace code_learning {
 
 		template<typename ...Children> class Composite;
 
-		template<typename Child, typename Base>
-		class Composite<Child, Base> : public statistics::Element {
+		template<typename Base, typename Child>
+		class Composite<Base, Child> : public statistics::Element {
 		public:
 			explicit Composite(const std::string &content, Glob &glob):
 				Element(content, glob){
-				for (int index = 0; index < m_children_count; index ++) {
-					std::shared_ptr<ListMap<Frequency<Base>>> child(new ListMap<Frequency<Base>>(glob));
-					m_children.push_back(child);
-				}
+				std::shared_ptr<ListMapBase> child(new ListMap<Frequency<Base, Child>>(glob));
+				m_children.push_back(child);
 			}
 		protected:
-			int m_children_count = 1;
 			std::string m_signature;
-			std::vector<std::shared_ptr<ListMap<Frequency<Base>>>> m_children;
+			std::vector<std::shared_ptr<ListMapBase>> m_children;
 		public:
 			std::map<char, uint64_t> m_symmetries;
 		};
 
-		template<typename Child, typename ...Children>
-		class Composite<Child, Children...> : public Composite<Children...> {
+		template<typename Base, typename Child, typename ...Children>
+		class Composite<Base, Child, Children...> : public Composite<Base, Children...> {
 		public:
 			Composite(const std::string &content, Glob &glob):
-				Composite<Children...>(content, glob){
-				Composite<Children...>::m_children_count ++;
+				Composite<Base, Children...>(content, glob){
+				std::shared_ptr<ListMapBase> child(new ListMap<Frequency<Base, Child>>(glob));
+				Composite<Base, Children...>::m_children.push_back(child);
 			}
 		};
 	}

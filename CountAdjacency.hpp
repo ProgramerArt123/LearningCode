@@ -9,19 +9,19 @@ namespace code_learning {
 	
 	class Glob;
 
-	template<typename Element>
+	template<typename Base, typename Element>
 	class CountAdjacency {
 	public:
-		CountAdjacency(LEXIS_TYPE type, Glob &glob) :
-			m_type(type), m_adjacencies(glob) {
+		CountAdjacency(/*LEXIS_TYPE type, */Glob &glob) :
+			/*m_type(type), */m_adjacencies(glob) {
 
 		}
-		CountAdjacency(const CountAdjacency<Element>& other) :
-			m_type(other.m_type), m_adjacencies(other.m_adjacencies.m_cfg) {
+		CountAdjacency(const CountAdjacency<Base, Element>& other) :
+			/*m_type(other.m_type), */m_adjacencies(other.m_adjacencies.m_cfg) {
 		}
 		uint64_t m_total_count = 0;
-		const LEXIS_TYPE m_type = LEXIS_TYPE_NONE;
-		ListMap<Adjacency<Element>> m_adjacencies;
+		//const LEXIS_TYPE m_type = LEXIS_TYPE_NONE;
+		ListMap<Adjacency<Base, Element>> m_adjacencies;
 	};
 
 }

@@ -7,11 +7,11 @@ namespace code_learning {
 
 	class Glob;
 
-	template<typename Element>
+	template<typename Base, typename Element>
 	class Adjacency {
 	public:
 		Adjacency(const std::string &content, Glob &glob) :
-			m_element(content, glob) {
+			m_element(new Element(content, glob)) {
 		}
 		Adjacency &operator++(int) {
 			m_count++;
@@ -20,7 +20,7 @@ namespace code_learning {
 		uint64_t GetCount()const {
 			return m_count;
 		}
-		Element m_element;
+		std::shared_ptr<Base> m_element;
 	protected:
 		uint64_t m_count = 0;
 	};

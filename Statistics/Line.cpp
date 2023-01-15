@@ -12,7 +12,8 @@ namespace code_learning {
 		}
 		void Line::Statistics(code::Line &line) {
 			m_signature = line.GetSignature();
-			const std::shared_ptr<ListMap<Frequency<statistics::Lexis>>> &lexes = m_children.front();
+			ListMap<Frequency<statistics::Lexis, statistics::Lexis>> *lexes = 
+				(ListMap<Frequency<statistics::Lexis, statistics::Lexis>>*)(m_children.front().get());
 			std::string preLexis;
 			for (auto lexis = line.m_children.front().begin(); lexis != line.m_children.front().end(); ) {
 				if ((*lexis)->IsSpace()) {
@@ -122,8 +123,10 @@ namespace code_learning {
 			std::cout << "Key:" << m_signature << std::endl;
 			std::cout << "Content:" << m_content << std::endl;
 			std::cout << "Lexiss:[";
-			for (const auto &lexis : *m_children.front()) {
-				std::cout << lexis->m_element.GetContent() << ':' << lexis->GetCount() << '\t';
+			ListMap<Frequency<statistics::Lexis, statistics::Lexis>> *lexes =
+				(ListMap<Frequency<statistics::Lexis, statistics::Lexis>>*)(m_children.front().get());
+			for (const auto &lexis : *lexes) {
+				std::cout << lexis->m_element->GetContent() << ':' << lexis->GetCount() << '\t';
 			}
 			std::cout << "]";
 			std::cout << std::endl << "-------------------------------------------------" << std::endl;

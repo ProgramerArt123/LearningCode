@@ -10,32 +10,34 @@ namespace code_learning {
 	
 	class Config;
 	
-	template<typename Element>
+	template<typename Base, typename Element>
 	class Adjacencies {
 	public:
 		Adjacencies(Glob &glob) :
 			m_glob(glob) {
 
 		}
-		CountAdjacency<Element> &operator[](const std::string &content) {
-			LEXIS_TYPE type = Element::JudgeLexisType(content);
-			for (auto &frequency : m_lexiss) {
-				if (frequency->m_type == type) {
-					return *frequency;
-				}
-			}
-			m_lexiss.push_back(std::shared_ptr<CountAdjacency<Element>>(new CountAdjacency<Element>(type, m_glob)));
+		CountAdjacency<Base, Element> &operator[](const std::string &content) {
+			//LEXIS_TYPE type/* = Child::JudgeLexisType(content)*/;
+			//for (auto &frequency : m_lexiss) {
+			//	if (frequency->m_type == type) {
+			//		return *frequency;
+			//	}
+			//}
+			m_lexiss.push_back(std::shared_ptr<CountAdjacency<Base, Element>>(
+				new CountAdjacency<Base, Element>(/*type, */m_glob)));
 			return *m_lexiss.back();
 		}
 
-		Adjacency<Element> &Count(const std::string &content) {
-			CountAdjacency<Element> &lexiss = (*this)[content];
+		Adjacency<Base, Element> &Count(const std::string &content) {
+			CountAdjacency<Base, Element> &lexiss = (*this)[content];
 			lexiss.m_adjacencies[content]++;
 			lexiss.m_total_count++;
 			return lexiss.m_adjacencies[content];
 		}
 
-		static bool compare(const std::shared_ptr<CountAdjacency<Element>> &one, const std::shared_ptr<CountAdjacency<Element>> &other) {
+		static bool compare(const std::shared_ptr<CountAdjacency<Base, Element>> &one,
+			const std::shared_ptr<CountAdjacency<Base, Element>> &other) {
 			return one->m_total_count > other->m_total_count;
 		}
 		void Sort() {
@@ -45,7 +47,7 @@ namespace code_learning {
 			m_lexiss.sort(compare);
 		}
 	private:
-		std::list<std::shared_ptr<CountAdjacency<Element>>> m_lexiss;
+		std::list<std::shared_ptr<CountAdjacency<Base, Element>>> m_lexiss;
 		Glob &m_glob;
 	};
 

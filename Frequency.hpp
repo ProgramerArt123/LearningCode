@@ -8,11 +8,11 @@ namespace code_learning {
 
 	class Glob;
 
-	template<typename Element>
-	class Frequency : public Adjacency<Element> {
+	template<typename Base, typename Element>
+	class Frequency : public Adjacency<Base, Element> {
 	public:
 		Frequency(const std::string &content, Glob &glob) :
-			Adjacency<Element>(content, glob), m_front(glob), m_back(glob) {
+			Adjacency<Base, Element>(content, glob), m_front(glob), m_back(glob) {
 
 		}
 		void Sort() {
@@ -20,10 +20,10 @@ namespace code_learning {
 			m_back.Sort();
 		}
 		void Summary()const {
-			Adjacency<Element>::m_element.Summary();
+			Adjacency<Base, Element>::m_element->Summary();
 		}
-		Adjacencies<Element> m_front;
-		Adjacencies<Element> m_back;
+		Adjacencies<Base, Element> m_front;
+		Adjacencies<Base, Element> m_back;
 	};
 }
 

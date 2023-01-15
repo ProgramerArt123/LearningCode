@@ -17,8 +17,8 @@ namespace code_learning {
 
 		template<typename ...Children> class Composite;
 
-		template<typename Child, typename Base> 
-		class Composite<Child, Base> : public code::Element {
+		template<typename Base, typename Child>
+		class Composite<Base, Child> : public code::Element {
 		public:
 			Composite() {
 				m_children.resize(m_children.size() + 1);
@@ -48,11 +48,11 @@ namespace code_learning {
 			std::string m_signature;
 		};
 
-		template<typename Child, typename ...Children>
-		class Composite<Child, Children...> : public Composite<Children...>{
+		template<typename Base, typename Child, typename ...Children>
+		class Composite<Base, Child, Children...> : public Composite<Base, Children...>{
 		public:
 			Composite() {
-				Composite<Children...>::m_children.resize(Composite<Children...>::m_children.size() + 1);
+				Composite<Base, Children...>::m_children.resize(Composite<Base, Children...>::m_children.size() + 1);
 			}
 		};
 	}

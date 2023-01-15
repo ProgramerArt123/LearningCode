@@ -40,7 +40,7 @@ namespace code_learning {
 	void CodeLearning::Statistics(const SourceFile &source) {
 		source.Statistics(m_regions);
 		for (auto &region : m_regions) {
-			for (auto &symmetry : region->m_element.m_symmetries) {
+			for (auto &symmetry : region->m_element->m_symmetries) {
 				m_symmetries[symmetry.first] += symmetry.second;
 			}
 		}

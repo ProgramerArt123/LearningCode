@@ -17,13 +17,14 @@ namespace code_learning {
 		std::string Region::GetPattern(const Glob &glob)const {
 			std::string pattern;
 			pattern.append("[");
-			for (auto &line : m_children.front()) {
+			for (auto &child : m_children.front()) {
 				if (1 < pattern.length()) {
 					pattern.append(",");
 				}
-				
-				dynamic_cast<Line*>(line.get())->Decomposition(glob);
-				pattern.append(dynamic_cast<Line*>(line.get())->GetSignature());
+				const std::shared_ptr<code::Line> &line = 
+					std::dynamic_pointer_cast<code::Line>(child);
+				line->Decomposition(glob);
+				pattern.append(line->GetSignature());
 			}
 			pattern.append("]");
 			return pattern;
