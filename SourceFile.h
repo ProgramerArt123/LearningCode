@@ -15,7 +15,7 @@ namespace code_learning {
 	public:
 		explicit SourceFile(const char *fileName);
 		void Scan(const Glob &glob);
-		void Statistics(ListMap<Frequency<statistics::Region, statistics::Region>> &regions)const;
+		void Statistics(ListMap &regions)const;
 		
 		std::unique_ptr<code::Code> m_code;
 		std::string m_content;

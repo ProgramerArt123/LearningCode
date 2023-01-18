@@ -4,6 +4,9 @@
 #include <string>
 #include "LexisType.h"
 #include "Element.h"
+#include "ListMap.hpp"
+#include "Frequency.hpp"
+#include "FrequenciesFacade.h"
 
 namespace code_learning {
 
@@ -12,12 +15,22 @@ namespace code_learning {
 		class Lexis : public Element {
 		public:
 			explicit Lexis(const std::string &content, Glob &glob);
-			const std::string &GetContent()const;
 			LEXIS_TYPE GetType() const;
 			static LEXIS_TYPE JudgeLexisType(const std::string &content);
+			void Statistics(code::Element &element) override{
+			}
 		protected:
-			const std::string m_content;
 			LEXIS_TYPE m_type = LEXIS_TYPE_NONE;
+		};
+
+
+		class LexisFacade : public FrequenciesFacade {
+		public:
+			explicit LexisFacade(Glob &glob);
+			void Count(const std::string &key) override;
+			void FrontCount(const std::string &key, const std::string &next) override;
+			void BackCount(const std::string &key, const std::string &pre) override;
+
 		};
 	}
 

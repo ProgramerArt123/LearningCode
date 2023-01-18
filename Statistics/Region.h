@@ -3,7 +3,7 @@
 
 #include "Line.h"
 #include "Block.h"
-#include "Adjacencies.hpp"
+#include "CountAdjacencies.hpp"
 #include "ListMap.hpp"
 #include "Frequency.hpp"
 #include "Element.h"
@@ -13,10 +13,10 @@ namespace code_learning {
 		class Region;
 	};
 	namespace statistics {
-		class Region : public Composite<statistics::Element, statistics::Line, statistics::Block>{
+		class Region : public Composite<statistics::LineFacade, statistics::BlockFacade>{
 		public:
 			explicit Region(const std::string &content, Glob &glob);
-			void Statistics(code::Region &region);
+			void Statistics(code::Element &element) override;
 			void Summary()const override;
 		private:
 			void StatisticsLines(code::Region &region);

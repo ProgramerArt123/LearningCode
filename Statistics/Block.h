@@ -4,20 +4,21 @@
 #include "Config.h"
 #include "Generate.h"
 #include "Lexis.h"
-#include "Adjacencies.hpp"
+#include "CountAdjacencies.hpp"
 #include "Composite.hpp"
 #include "Code/Lexis.h"
 #include "Descriptions.h"
+#include "FrequenciesFacade.h"
 
 namespace code_learning {
 	namespace code {
 		class Block;
 	}
 	namespace statistics {
-		class Block : public Composite<statistics::Element, statistics::Element> {
+		class Block : public Composite<statistics::LexisFacade> {
 		public:
 			explicit Block(const std::string &content, Glob &glob);
-			void Statistics(code::Block &block);
+			void Statistics(code::Element &element)override;
 			void Summary()const override;
 		private:
 			bool PeekWrap(std::list<std::shared_ptr<code::Element>>::const_iterator &lexis,
@@ -28,6 +29,17 @@ namespace code_learning {
 		private:
 			Descriptions m_descs;
 			Wrapper m_wrapper;
+		};
+
+
+		class BlockFacade : public FrequenciesFacade {
+		public:
+			explicit BlockFacade(Glob &glob);
+			void Count(const std::string &key) override;
+			void FrontCount(const std::string &key, const std::string &next);
+			void BackCount(const std::string &key, const std::string &pre);
+
+
 		};
 	}
 }

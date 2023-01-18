@@ -8,17 +8,15 @@
 namespace code_learning {
 	namespace statistics {
 		Block::Block(const std::string &content, Glob &glob) :
-			Composite<statistics::Element, statistics::Element>(content, glob) {
+			Composite<statistics::LexisFacade>(content, glob) {
 		}
-		void Block::Statistics(code::Block &block) {
+		void Block::Statistics(code::Element &element) {
+			code::Block &block = static_cast<code::Block&>(element);
 			m_signature = block.GetSignature();
-			ListMap<Frequency<statistics::Element, statistics::Element>> *lexes =
-				(ListMap<Frequency<statistics::Element, statistics::Element>>*)(m_children.front().get());
 			std::string preLexis;
 			for (auto child = block.m_children.front().begin(); child != block.m_children.front().end(); ) {
 
 				if (code::ELEMENT_TYPE_BLOCK == (*child)->GetType()) {
-					const std::shared_ptr<code::Block> &block = std::dynamic_pointer_cast<code::Block>(*child);
 					
 					child++;
 					continue;
@@ -51,10 +49,10 @@ namespace code_learning {
 				}
 
 				if (PeekWrap(child, block.m_children.front().end())) {
-					(*lexes)[m_wrapper.m_prefix]++;
+					m_children.front()->Count(m_wrapper.m_prefix);
 					if (!preLexis.empty()) {
-						(*lexes)[m_wrapper.m_prefix].m_front.Count(preLexis);
-						(*lexes)[preLexis].m_back.Count(m_wrapper.m_prefix);
+						m_children.front()->FrontCount(m_wrapper.m_prefix, preLexis);
+						m_children.front()->BackCount(preLexis, m_wrapper.m_prefix);
 					}
 					while (true) {
 						description.append(std::string(lexis->begin(), lexis->end()));
@@ -67,18 +65,18 @@ namespace code_learning {
 							break;
 						}
 					}
-					(*lexes)[preLexis = m_wrapper.m_suffix]++;
+					m_children.front()->Count(preLexis = m_wrapper.m_suffix);
 					continue;
 				}
 
 				const std::string lexisContent(lexis->begin(), lexis->end());
-				(*lexes)[lexisContent]++;
+				m_children.front()->Count(lexisContent);
 				if (1 == lexisContent.size() && IsSymmetry(lexisContent.front())) {
 					m_symmetries[lexisContent.front()] ++;
 				}
 				if (!preLexis.empty()) {
-					(*lexes)[lexisContent].m_front.Count(preLexis);
-					(*lexes)[preLexis].m_back.Count(lexisContent);
+					m_children.front()->FrontCount(lexisContent, preLexis);
+					m_children.front()->BackCount(preLexis, lexisContent);
 				}
 				preLexis = lexisContent;
 				child++;
@@ -130,5 +128,19 @@ namespace code_learning {
 		void Block::Summary()const {
 			
 		}
+		
+		BlockFacade::BlockFacade(Glob &glob) :FrequenciesFacade(glob){
+		}
+		void BlockFacade::Count(const std::string &key) {
+			m_children.Get<Frequency<statistics::Block>>(key)++;
+		}
+		void BlockFacade::FrontCount(const std::string &key, const std::string &next) {
+			m_children.Get<Frequency<statistics::Block>>(key).FrontCount(next);
+		}
+		void BlockFacade::BackCount(const std::string &key, const std::string &pre) {
+			m_children.Get<Frequency<statistics::Block>>(key).BackCount(pre);
+		}
+
+
 	}
 }

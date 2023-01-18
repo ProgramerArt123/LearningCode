@@ -5,13 +5,10 @@
 namespace code_learning {
 	namespace statistics {
 		Lexis::Lexis(const std::string &content, Glob &glob) :
-			Element(content, glob), m_content(content) {
+			Element(content, glob) {
 			m_type = JudgeLexisType(content);
 		}
 
-		const std::string &Lexis::GetContent()const {
-			return m_content;
-		}
 
 		LEXIS_TYPE Lexis::GetType()const {
 			return m_type;
@@ -88,5 +85,19 @@ namespace code_learning {
 				break;
 			}
 		}
+
+		LexisFacade::LexisFacade(Glob &glob) : FrequenciesFacade(glob) {
+
+		}
+		void LexisFacade::Count(const std::string &key)  {
+			m_children.Get<Frequency<statistics::Lexis>>(key)++;
+		}
+		void LexisFacade::FrontCount(const std::string &key, const std::string &next)  {
+			m_children.Get<Frequency<statistics::Lexis>>(key).FrontCount(next);
+		}
+		void LexisFacade::BackCount(const std::string &key, const std::string &pre)  {
+			m_children.Get<Frequency<statistics::Lexis>>(key).BackCount(pre);
+		}
+
 	}
 }

@@ -9,30 +9,31 @@
 namespace code_learning {
 	namespace statistics {
 
-		template<typename ...Children> class Composite;
+		class FrequenciesFacade;
 
-		template<typename Base, typename Child>
-		class Composite<Base, Child> : public statistics::Element {
+		template<typename ...ConcreteFacades> class Composite;
+
+		template<typename ConcreteFacade>
+		class Composite<ConcreteFacade> : public statistics::Element {
 		public:
 			explicit Composite(const std::string &content, Glob &glob):
 				Element(content, glob){
-				std::shared_ptr<ListMapBase> child(new ListMap<Frequency<Base, Child>>(glob));
+				std::shared_ptr<FrequenciesFacade> child(new ConcreteFacade(glob));
 				m_children.push_back(child);
 			}
 		protected:
 			std::string m_signature;
-			std::vector<std::shared_ptr<ListMapBase>> m_children;
-		public:
-			std::map<char, uint64_t> m_symmetries;
+			std::vector<std::shared_ptr<FrequenciesFacade>> m_children;
+		
 		};
 
-		template<typename Base, typename Child, typename ...Children>
-		class Composite<Base, Child, Children...> : public Composite<Base, Children...> {
+		template<typename ConcreteFacade, typename ...ConcreteFacades>
+		class Composite<ConcreteFacade, ConcreteFacades...> : public Composite<ConcreteFacades...> {
 		public:
 			Composite(const std::string &content, Glob &glob):
-				Composite<Base, Children...>(content, glob){
-				std::shared_ptr<ListMapBase> child(new ListMap<Frequency<Base, Child>>(glob));
-				Composite<Base, Children...>::m_children.push_back(child);
+				Composite<ConcreteFacades...>(content, glob){
+				std::shared_ptr<FrequenciesFacade> child(new ConcreteFacade(glob));
+				Composite<ConcreteFacades...>::m_children.push_back(child);
 			}
 		};
 	}

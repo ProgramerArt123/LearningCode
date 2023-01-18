@@ -22,7 +22,7 @@ namespace code_learning {
 		if (m_code)
 			m_code->Decomposition(glob);
 	}
-	void SourceFile::Statistics(ListMap<Frequency<statistics::Region, statistics::Region>> &regions)const {
+	void SourceFile::Statistics(ListMap &regions)const {
 		if (m_code)
 			m_code->Statistics(regions);
 	}

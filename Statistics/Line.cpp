@@ -8,12 +8,11 @@
 namespace code_learning {
 	namespace statistics {
 		Line::Line(const std::string &content, Glob &glob) :
-			Composite<statistics::Lexis, statistics::Lexis>(content, glob) {
+			Composite<statistics::LexisFacade>(content, glob) {
 		}
-		void Line::Statistics(code::Line &line) {
+		void Line::Statistics(code::Element &element) {
+			code::Line &line = static_cast<code::Line&>(element);
 			m_signature = line.GetSignature();
-			ListMap<Frequency<statistics::Lexis, statistics::Lexis>> *lexes = 
-				(ListMap<Frequency<statistics::Lexis, statistics::Lexis>>*)(m_children.front().get());
 			std::string preLexis;
 			for (auto lexis = line.m_children.front().begin(); lexis != line.m_children.front().end(); ) {
 				if ((*lexis)->IsSpace()) {
@@ -41,10 +40,10 @@ namespace code_learning {
 				}
 
 				if (PeekWrap(lexis, line.m_children.front().end())) {
-					(*lexes)[m_wrapper.m_prefix]++;
+					m_children.front()->Count(m_wrapper.m_prefix);
 					if (!preLexis.empty()) {
-						(*lexes)[m_wrapper.m_prefix].m_front.Count(preLexis);
-						(*lexes)[preLexis].m_back.Count(m_wrapper.m_prefix);
+						m_children.front()->FrontCount(m_wrapper.m_prefix, preLexis);
+						m_children.front()->BackCount(preLexis, m_wrapper.m_prefix);
 					}
 					while (true) {
 						description.append(std::string((*lexis)->begin(), (*lexis)->end()));
@@ -57,18 +56,18 @@ namespace code_learning {
 							break;
 						}
 					}
-					(*lexes)[preLexis = m_wrapper.m_suffix]++;
+					m_children.front()->Count(preLexis = m_wrapper.m_suffix);
 					continue;
 				}
 
 				const std::string lexisContent((*lexis)->begin(), (*lexis)->end());
-				(*lexes)[lexisContent]++;
+				m_children.front()->Count(lexisContent);
 				if (1 == lexisContent.size() && IsSymmetry(lexisContent.front())) {
 					m_symmetries[lexisContent.front()] ++;
 				}
 				if (!preLexis.empty()) {
-					(*lexes)[lexisContent].m_front.Count(preLexis);
-					(*lexes)[preLexis].m_back.Count(lexisContent);
+					m_children.front()->FrontCount(lexisContent, preLexis);
+					m_children.front()->BackCount(preLexis, lexisContent);
 				}
 				preLexis = lexisContent;
 				lexis++;
@@ -123,10 +122,8 @@ namespace code_learning {
 			std::cout << "Key:" << m_signature << std::endl;
 			std::cout << "Content:" << m_content << std::endl;
 			std::cout << "Lexiss:[";
-			ListMap<Frequency<statistics::Lexis, statistics::Lexis>> *lexes =
-				(ListMap<Frequency<statistics::Lexis, statistics::Lexis>>*)(m_children.front().get());
-			for (const auto &lexis : *lexes) {
-				std::cout << lexis->m_element->GetContent() << ':' << lexis->GetCount() << '\t';
+			for (const auto &lexis : *m_children.front()) {
+				std::cout << lexis->GetContent() << ':' << lexis->GetCount() << '\t';
 			}
 			std::cout << "]";
 			std::cout << std::endl << "-------------------------------------------------" << std::endl;
@@ -138,6 +135,18 @@ namespace code_learning {
 				std::cout << ">";
 			}
 			std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+		}
+		LineFacade:: LineFacade(Glob &glob) :FrequenciesFacade(glob) {
+
+		}
+		void LineFacade::Count(const std::string &key) {
+			m_children.Get<Frequency<statistics::Line>>(key)++;
+		}
+		void LineFacade::FrontCount(const std::string &key, const std::string &next) {
+			m_children.Get<Frequency<statistics::Line>>(key).FrontCount(next);
+		}
+		void LineFacade::BackCount(const std::string &key, const std::string &pre) {
+			m_children.Get<Frequency<statistics::Line>>(key).BackCount(pre);
 		}
 	}
 }

@@ -15,12 +15,10 @@ namespace code_learning {
 			
 		}
 
-		void Code::Statistics(ListMap<Frequency<statistics::Region, statistics::Region>> &regions)const {
+		void Code::Statistics(ListMap &regions)const {
 			for (auto &region : m_regions) {
-				auto &result = regions.Get(region->GetSignature(), region->GetContent());
-				const std::shared_ptr<statistics::Region> &element = 
-					std::dynamic_pointer_cast<statistics::Region>(result.m_element);
-				element->Statistics(*region);
+				auto &result = regions.Get<Frequency<statistics::Region >>(region->GetSignature(), region->GetContent());
+				result.Statistics(*region);
 				result++;
 			}
 			regions.Sort();

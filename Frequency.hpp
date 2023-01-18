@@ -2,17 +2,17 @@
 #define __CODE_LEARNING_FREQUENCY_HPP__
 
 #include "Adjacency.hpp"
-#include "Adjacencies.hpp"
+#include "CountAdjacencies.hpp"
 
 namespace code_learning {
 
 	class Glob;
 
-	template<typename Base, typename Element>
-	class Frequency : public Adjacency<Base, Element> {
+	template<typename Element>
+	class Frequency : public Adjacency<Element> {
 	public:
 		Frequency(const std::string &content, Glob &glob) :
-			Adjacency<Base, Element>(content, glob), m_front(glob), m_back(glob) {
+			Adjacency<Element>(content, glob), m_front(glob), m_back(glob) {
 
 		}
 		void Sort() {
@@ -20,10 +20,16 @@ namespace code_learning {
 			m_back.Sort();
 		}
 		void Summary()const {
-			Adjacency<Base, Element>::m_element->Summary();
+			Adjacency<Element>::m_element->Summary();
 		}
-		Adjacencies<Base, Element> m_front;
-		Adjacencies<Base, Element> m_back;
+		void FrontCount(const std::string &next) override{
+			m_front.Count(next);
+		}
+		void BackCount(const std::string &pre) override {
+			m_back.Count(pre);
+		}
+		CountAdjacencies<Element> m_front;
+		CountAdjacencies<Element> m_back;
 	};
 }
 

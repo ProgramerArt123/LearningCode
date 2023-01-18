@@ -55,7 +55,7 @@ namespace code_learning {
 
 		Glob m_glob;
 
-		ListMap<Frequency<statistics::Region, statistics::Region>> m_regions;
+		ListMap m_regions;
 	
 		std::map<char, uint64_t> m_symmetries;
 	};
