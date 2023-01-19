@@ -18,9 +18,6 @@ namespace code_learning {
 			explicit Region(const std::string &content, Glob &glob);
 			void Statistics(code::Element &element) override;
 			void Summary()const override;
-		private:
-			void StatisticsLines(code::Region &region);
-			void StatisticsBlocks(code::Region &region);
 		};
 	}
 }

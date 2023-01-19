@@ -9,6 +9,9 @@ namespace code_learning {
 		const std::string &Element::GetContent() const {
 			return m_content;
 		}
+		const std::string &Element::GetSignature() const {
+			return m_signature;
+		}
 		std::string::const_iterator Element::begin() const {
 			return m_content.begin();
 		}

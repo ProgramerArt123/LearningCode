@@ -32,15 +32,7 @@ namespace code_learning {
 		};
 
 
-		class BlockFacade : public FrequenciesFacade {
-		public:
-			explicit BlockFacade(Glob &glob);
-			void Count(const std::string &key) override;
-			void FrontCount(const std::string &key, const std::string &next);
-			void BackCount(const std::string &key, const std::string &pre);
-
-
-		};
+		typedef ConcreteFacade<statistics::Block> BlockFacade;
 	}
 }
 

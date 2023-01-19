@@ -27,9 +27,7 @@ namespace code_learning {
 				CalculateSignature(glob);
 			}
 			virtual std::string GetPattern(const Glob &glob) const = 0;
-			const std::string &GetSignature() const {
-				return m_signature;
-			}
+			
 			
 		public:
 			std::vector<std::list<std::shared_ptr<Base>>> m_children;
@@ -45,7 +43,6 @@ namespace code_learning {
 				boost::algorithm::hex(charDigest, charDigest + sizeof(boost::uuids::detail::md5::digest_type), result);
 				m_signature = result;
 			}
-			std::string m_signature;
 		};
 
 		template<typename Base, typename Child, typename ...Children>

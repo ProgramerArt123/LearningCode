@@ -10,8 +10,20 @@ namespace code_learning {
 		void Region::Statistics(code::Element &element) {
 			code::Region &region = static_cast<code::Region&>(element);
 			m_signature = region.GetSignature();
-			StatisticsLines(region);
-			StatisticsBlocks(region);
+			for (size_t index = 0; index < m_children.size(); index ++) {
+				for (auto &child : region.m_children[index]) {
+					auto &result = m_children[index]->Get(
+						child->GetSignature(), child->GetContent());
+					result.Statistics(*child);
+					result++;
+				}
+				m_children[index]->m_children.Sort();
+				for (auto &child : *m_children[index]) {
+					for (auto &symmetry : child->GetSymmetries()) {
+						m_symmetries[symmetry.first] += symmetry.second;
+					}
+				}
+			}
 		}
 		void Region::Summary()const {
 			std::cout << "============================================================" << std::endl;
@@ -22,39 +34,5 @@ namespace code_learning {
 			std::cout << "============================================================" << std::endl;
 		}
 
-		void Region::StatisticsLines(code::Region &region) {
-			for (auto &child : region.m_children.front()) {
-				const std::shared_ptr<code::Line> &line = std::dynamic_pointer_cast<code::Line>(child);
-				auto &result = m_children.front()->m_children.Get<Frequency<statistics::Line>>(
-					line->GetSignature(), line->GetContent());
-				result.m_element->Statistics(*line);
-				result++;
-			}
-			m_children.front()->m_children.Sort();
-
-			for (auto &line : *m_children.front()) {
-				for (auto &symmetry : line->GetSymmetries()) {
-					m_symmetries[symmetry.first] += symmetry.second;
-				}
-			}
-		}
-
-		void Region::StatisticsBlocks(code::Region &region) {
-			
-			for (auto &child : region.m_children.back()) {
-				const std::shared_ptr<code::Block> &line = std::dynamic_pointer_cast<code::Block>(child);
-				auto &result = m_children.front()->m_children.Get<Frequency<statistics::Block>>(
-					line->GetSignature(), line->GetContent());
-				result.m_element->Statistics(*line);
-				result++;
-			}
-			m_children.back()->m_children.Sort();
-
-			for (auto &block : *m_children.back()) {
-				for (auto &symmetry : block->GetSymmetries()) {
-					m_symmetries[symmetry.first] += symmetry.second;
-				}
-			}
-		}
 	}
 }

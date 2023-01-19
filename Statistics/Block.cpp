@@ -129,18 +129,5 @@ namespace code_learning {
 			
 		}
 		
-		BlockFacade::BlockFacade(Glob &glob) :FrequenciesFacade(glob){
-		}
-		void BlockFacade::Count(const std::string &key) {
-			m_children.Get<Frequency<statistics::Block>>(key)++;
-		}
-		void BlockFacade::FrontCount(const std::string &key, const std::string &next) {
-			m_children.Get<Frequency<statistics::Block>>(key).FrontCount(next);
-		}
-		void BlockFacade::BackCount(const std::string &key, const std::string &pre) {
-			m_children.Get<Frequency<statistics::Block>>(key).BackCount(pre);
-		}
-
-
 	}
 }

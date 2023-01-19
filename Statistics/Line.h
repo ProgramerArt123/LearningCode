@@ -32,16 +32,8 @@ namespace code_learning {
 		};
 
 
-
-		class LineFacade : public FrequenciesFacade {
-		public:
-			explicit LineFacade(Glob &glob);
-			void Count(const std::string &key);
-			void FrontCount(const std::string &key, const std::string &next);
-			void BackCount(const std::string &key, const std::string &pre);
-
-
-		};
+		typedef ConcreteFacade<statistics::Line> LineFacade;
+		
 	}
 }
 

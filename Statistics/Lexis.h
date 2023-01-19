@@ -24,14 +24,7 @@ namespace code_learning {
 		};
 
 
-		class LexisFacade : public FrequenciesFacade {
-		public:
-			explicit LexisFacade(Glob &glob);
-			void Count(const std::string &key) override;
-			void FrontCount(const std::string &key, const std::string &next) override;
-			void BackCount(const std::string &key, const std::string &pre) override;
-
-		};
+		typedef ConcreteFacade<statistics::Lexis> LexisFacade;
 	}
 
 }

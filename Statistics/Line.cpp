@@ -136,17 +136,6 @@ namespace code_learning {
 			}
 			std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
 		}
-		LineFacade:: LineFacade(Glob &glob) :FrequenciesFacade(glob) {
-
-		}
-		void LineFacade::Count(const std::string &key) {
-			m_children.Get<Frequency<statistics::Line>>(key)++;
-		}
-		void LineFacade::FrontCount(const std::string &key, const std::string &next) {
-			m_children.Get<Frequency<statistics::Line>>(key).FrontCount(next);
-		}
-		void LineFacade::BackCount(const std::string &key, const std::string &pre) {
-			m_children.Get<Frequency<statistics::Line>>(key).BackCount(pre);
-		}
+		
 	}
 }

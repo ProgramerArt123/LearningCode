@@ -23,10 +23,12 @@ namespace code_learning {
 			virtual bool TryAppendChar(char next, const Glob &glob);
 			virtual bool ContentAppend(char next, const Glob &glob) = 0;
 			const std::string &GetContent() const;
+			const std::string &GetSignature() const;
 			std::string::const_iterator begin() const;
 			std::string::const_iterator end() const;
 		protected:
 			std::string m_content;
+			std::string m_signature;
 		};
 
 	}
