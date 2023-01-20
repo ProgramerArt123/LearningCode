@@ -4,8 +4,6 @@
 #include <list>
 #include <memory>
 #include "Region.h"
-#include "Statistics/Region.h"
-#include "Frequency.hpp"
 
 namespace code_learning {
 	class Config;
@@ -16,11 +14,10 @@ namespace code_learning {
 		class Code {
 		public:
 			explicit Code(const char *content);
-			void Statistics(ListMap &regions)const;
 			void Decomposition(const Glob &glob);
+			std::list<std::unique_ptr<code::Region>> m_regions;
 		private:
 			std::string m_content;
-			std::list<std::unique_ptr<code::Region>> m_regions;
 		};
 	}
 }

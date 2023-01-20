@@ -2,7 +2,6 @@
 #include <iostream>
 #include "Config.h"
 #include "Lexis.h"
-#include "Statistics/Lexis.h"
 #include "Region.h"
 
 namespace code_learning {

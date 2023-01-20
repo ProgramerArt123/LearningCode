@@ -4,8 +4,8 @@
 #include <list>
 #include <memory>
 
-#include "Code/Line.h"
-#include "Code/Block.h"
+#include "Line.h"
+#include "Block.h"
 
 #include "Composite.hpp"
 

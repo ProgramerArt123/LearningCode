@@ -11,7 +11,7 @@
 namespace code_learning {
 
 	class Glob;
-
+	namespace statistics {
 		class ListMap {
 		public:
 			explicit ListMap(Glob &glob) :
@@ -58,7 +58,7 @@ namespace code_learning {
 		protected:
 			Glob &m_glob;
 		};
-
+	}
 
 }
 

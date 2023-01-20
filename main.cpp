@@ -1,20 +1,23 @@
 
-#include "CodeLearning.h"
-#include "SourceFile.h"
-#include "SourceFileBatch.hpp"
+#include "Statistics/CodeLearning.h"
+#include "Code/SourceFile.h"
+#include "Code/SourceFileBatch.hpp"
 
 using namespace code_learning;
 
 int main() {
-	CodeLearning student;
+	statistics::CodeLearning student;
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
 	student.SetIgnores(' ', '\n', '\r', '\t');
-	SourceFileBatch samples("Adjacency.hpp", "CountAdjacencies.hpp", "Char.h", "Code/Code.h", "Code/Line.h", "Code/Region.h",
-		"CodeLearning.h", "Config.h", "CountAdjacency.hpp", "Description.h", "Descriptions.h",
-		"Frequency.hpp", "Code/Lexis.h", "SourceFile.h", "SourceFileBatch.hpp", "ListMap.hpp", "LexisType.h",
-		 "Char.cpp", "Code/Code.cpp", "Code/Line.cpp", "Code/Region.cpp", "Code/Composite.hpp", "CodeLearning.cpp", "Config.cpp",
-		"Description.cpp", "Descriptions.cpp", "Code/Lexis.cpp",
-		"main.cpp", "SourceFile.cpp");
+	code::SourceFileBatch samples("Statistics/Adjacency.hpp", 
+		"Statistics/CountAdjacencies.hpp", "Code/Char.h", "Code/Code.h",
+		"Code/Line.h", "Code/Region.h", "Statistics/CodeLearning.h", 
+		"Config.h", "Statistics/CountAdjacency.hpp",  "Statistics/Description.h", "Statistics/Descriptions.h",
+		"Statistics/Frequency.hpp", "Code/Lexis.h", "Code/SourceFile.h", "Code/SourceFileBatch.hpp",
+		"Statistics/ListMap.hpp", "Code/LexisType.h", "Code/Char.cpp", "Code/Code.cpp", "Code/Line.cpp", 
+		"Code/Region.cpp", "Code/Composite.hpp", "Statistics/CodeLearning.cpp", "Config.cpp",
+		"Statistics/Description.cpp", "Statistics/Descriptions.cpp", "Code/Lexis.cpp",
+		"main.cpp", "Code/SourceFile.cpp");
 	student.Learning(samples);
 	student.Summary();
 	getchar();

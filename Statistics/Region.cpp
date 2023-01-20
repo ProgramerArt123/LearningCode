@@ -8,8 +8,7 @@ namespace code_learning {
 			Composite(content, glob) {
 		}
 		void Region::Statistics(code::Element &element) {
-			m_signature = element.GetSignature();
-			SetChildrenCount(element.GetChildrenCount());
+			Composite::Statistics(element);
 			for (size_t index = 0; index < m_children.size(); index ++) {
 				for (auto &child : *element.GetChild(index)) {
 					auto &result = m_children[index]->Get(*child,
@@ -18,11 +17,6 @@ namespace code_learning {
 					result++;
 				}
 				m_children[index]->m_children.Sort();
-				for (auto &child : *m_children[index]) {
-					for (auto &symmetry : child->GetSymmetries()) {
-						m_symmetries[symmetry.first] += symmetry.second;
-					}
-				}
 			}
 		}
 		void Region::Summary()const {

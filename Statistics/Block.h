@@ -9,6 +9,7 @@
 #include "Code/Lexis.h"
 #include "Descriptions.h"
 #include "FrequenciesFacade.h"
+#include "Line.h"
 
 namespace code_learning {
 	namespace code {

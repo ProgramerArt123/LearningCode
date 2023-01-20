@@ -4,6 +4,7 @@
 #include <list>
 #include "Char.h"
 #include "Element.h"
+#include "LexisType.h"
 
 namespace code_learning {
 
@@ -20,6 +21,7 @@ namespace code_learning {
 			bool IsMulti()const override;
 			bool IsSpace()const override;
 			bool IsNewLine()const;
+			static LEXIS_TYPE JudgeLexisType(const std::string &content);
 		private:
 			bool IsDisconnection(char next);
 		private:

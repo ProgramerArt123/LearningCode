@@ -12,17 +12,6 @@ namespace code_learning {
 	namespace code {
 		Code::Code(const char *content):m_content(content){
 			"代码学习";
-			
-		}
-
-		void Code::Statistics(ListMap &regions)const {
-			for (auto &region : m_regions) {
-				auto &result = regions.Get<Frequency<statistics::Region>>(
-					region->GetSignature(), region->GetContent());
-				result.Statistics(*region);
-				result++;
-			}
-			regions.Sort();
 		}
 
 		void Code::Decomposition(const Glob &glob) {

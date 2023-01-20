@@ -2,8 +2,8 @@
 #include <iostream>
 #include "Glob.h"
 #include "Lexis.h"
-#include "Statistics/Lexis.h"
 #include "Char.h"
+#include "LexisType.h"
 #include "Block.h"
 
 namespace code_learning {
@@ -58,8 +58,8 @@ namespace code_learning {
 			std::string pattern;
 			pattern.append("[");
 			for (const auto &lexis : m_children.front()) {
-				LEXIS_TYPE type = statistics::Lexis::JudgeLexisType(std::string(lexis->begin(), lexis->end()));
-				if (code_learning::LEXIS_TYPE_SPACE != type) {
+				LEXIS_TYPE type = Lexis::JudgeLexisType(std::string(lexis->begin(), lexis->end()));
+				if (code_learning::code::LEXIS_TYPE_SPACE != type) {
 					if (1 < pattern.length()) {
 						pattern.append(",");
 					}

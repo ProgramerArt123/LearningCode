@@ -12,6 +12,7 @@ namespace code_learning {
 	namespace code {
 
 		class Lexis;
+
 		class Block : public Composite<code::Element>{
 		public:
 			explicit Block(char first);

@@ -2,7 +2,7 @@
 #define __CODE_LEARNING_GLOB_H__
 
 #include "Config.h"
-#include "Generate.h"
+#include "Statistics/Generate.h"
 
 namespace code_learning {
 	
@@ -11,7 +11,7 @@ namespace code_learning {
 		explicit Glob(const Config &cfg):m_cfg(cfg){
 		}
 		const Config &m_cfg;
-		Generate m_generate;
+		statistics::Generate m_generate;
 	};
 }
 

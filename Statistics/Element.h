@@ -19,9 +19,7 @@ namespace code_learning {
 			explicit Element(const std::string &content, Glob &glob);
 			virtual void Sort();
 			virtual void Summary()const;
-			const std::string &GetContent()const {
-				return m_content;
-			}
+			const std::string &GetContent()const;
 			virtual void Statistics(code::Element &element) = 0;
 		protected:
 			const std::string m_content;

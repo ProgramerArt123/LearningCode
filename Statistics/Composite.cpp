@@ -14,5 +14,16 @@ namespace code_learning {
 				}
 			}
 		}
+		void Composite::Statistics(code::Element &element) {
+			m_signature = element.GetSignature();
+			SetChildrenCount(element.GetChildrenCount());
+			for (auto &child : m_children) {
+				for (auto &element : *child) {
+					for (auto &symmetry : element->GetSymmetries()) {
+						m_symmetries[symmetry.first] += symmetry.second;
+					}
+				}
+			}
+		}
 	}
 }

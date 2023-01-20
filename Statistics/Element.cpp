@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Code/Element.h"
 #include "Element.h"
 
 namespace code_learning {
@@ -11,5 +12,9 @@ namespace code_learning {
 		void Element::Summary()const {
 
 		}
+		const std::string &Element::GetContent()const {
+			return m_content;
+		}
+		
 	}
 }

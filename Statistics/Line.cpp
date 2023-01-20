@@ -63,7 +63,7 @@ namespace code_learning {
 
 				const std::string lexisContent((*child)->begin(), (*child)->end());
 				m_children.front()->Count(**child, lexisContent);
-				if (1 == lexisContent.size() && IsSymmetry(lexisContent.front())) {
+				if (1 == lexisContent.size() && code::IsSymmetry(lexisContent.front())) {
 					m_symmetries[lexisContent.front()] ++;
 				}
 				if (!preLexis.empty()) {

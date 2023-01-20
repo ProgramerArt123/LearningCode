@@ -13,6 +13,7 @@ namespace code_learning {
 		public:
 			explicit Composite(const std::string &content, Glob &glob);
 			void SetChildrenCount(size_t count);
+			void Statistics(code::Element &element) override;
 		protected:
 			std::string m_signature;
 			std::vector<std::shared_ptr<FrequenciesFacade>> m_children;
