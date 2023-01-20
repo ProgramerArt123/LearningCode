@@ -9,6 +9,7 @@
 
 namespace code_learning {
 	namespace code {
+		class Source;
 		class SourceFile;
 		class SourceFileBatch;
 	}
@@ -41,11 +42,9 @@ namespace code_learning {
 				SetSplits(splits...);
 			}
 
-			void Learning(code::SourceFile &source);
-			void Learning(code::SourceFileBatch &sources);
+			void Learning(code::Source &source);
 			void Summary() const override;
 		private:
-			void Statistics(const code::SourceFile &source);
 			void ProcessSymmetries();
 			void ProcessSymmetry(const code::Symmetry &symmetry);
 		private:

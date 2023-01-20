@@ -16,32 +16,25 @@ namespace code_learning {
 
 		}
 
-		void CodeLearning::Learning(code::SourceFile &source) {
-			m_file_count++;
-			source.Scan(m_glob);
-			Statistics(source);
+		void CodeLearning::Learning(code::Source &source) {
+			m_file_count += source.Scan(m_glob);
+			source.Foreach([&](const std::list<std::unique_ptr<code::Region>> &regions) {
+				for (const auto &region : regions) {
+					Region::Statistics(*region);
+				}
+			});
 			ProcessSymmetries();
-		}
-
-		void CodeLearning::Learning(code::SourceFileBatch &sources) {
-			for (auto &source : sources) {
-				Learning(*source);
-			}
 		}
 
 		void CodeLearning::Summary() const {
 			std::cout << "learn file[" << m_file_count << "]" << std::endl;
 			std::cout << "learn lexis:" << std::endl;
-			for (const auto &region : *m_children.front()) {
-				region->Summary();
+			for (const auto &child : m_children) {
+				for (const auto &region : *child) {
+					region->Summary();
+				}
 			}
 			m_glob.m_generate.Summary();
-		}
-
-		void CodeLearning::Statistics(const code::SourceFile &source) {
-			if (source.m_code) {
-				Region::Statistics(*source.m_code->m_regions.front());
-			}
 		}
 
 		void CodeLearning::ProcessSymmetries() {

@@ -18,9 +18,15 @@ namespace code_learning {
 				std::cerr << m_file_name << " open failed!" << std::endl;
 			}
 		}
-		void SourceFile::Scan(const Glob &glob) {
+		uint64_t SourceFile::Scan(const Glob &glob) {
 			if (m_code)
 				m_code->Decomposition(glob);
+			return 1;
+		}
+		void SourceFile::Foreach(std::function<void(const std::list<std::unique_ptr<code::Region>> &)> factor) const {
+			if (m_code) {
+				factor(m_code->m_regions);
+			}
 		}
 	}
 }

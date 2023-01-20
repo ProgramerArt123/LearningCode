@@ -7,8 +7,11 @@
 
 namespace code_learning {
 	namespace code {
-		class SourceFileBatch {
+		class SourceFileBatch : public Source {
 		public:
+			SourceFileBatch() {
+			}
+
 			template<typename T>
 			SourceFileBatch(T file) {
 				AddSourceFiles(file);
@@ -30,11 +33,17 @@ namespace code_learning {
 				AddSourceFiles(files...);
 			}
 
-			std::list<std::unique_ptr<SourceFile>>::const_iterator begin() const {
-				return m_files.begin();
+			uint64_t Scan(const Glob &glob) override {
+				for (auto &file : m_files) {
+					file->Scan(glob);
+				}
+				return m_files.size();
 			}
-			std::list<std::unique_ptr<SourceFile>>::const_iterator end() const {
-				return m_files.end();
+
+			void Foreach(std::function<void(const std::list<std::unique_ptr<code::Region>> &)> factor) const override {
+				for (const auto &file : m_files) {
+					file->Foreach(factor);
+				}
 			}
 
 		private:
