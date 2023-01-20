@@ -6,6 +6,21 @@ namespace code_learning {
 		bool Element::TryAppendChar(char next, const Glob &glob) {
 			return false;
 		}
+		bool Element::IsSpace()const {
+			 return false;
+		}
+		bool Element::IsMulti()const {
+			return false;
+		}
+		void Element::Decomposition(const Glob &glob) {
+
+		}
+		size_t Element::GetChildrenCount()const {
+			return 0;
+		}
+		const std::list<std::shared_ptr<Element>> *Element::GetChild(size_t index) const {
+			return NULL;
+		}
 		const std::string &Element::GetContent() const {
 			return m_content;
 		}

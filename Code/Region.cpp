@@ -21,10 +21,8 @@ namespace code_learning {
 				if (1 < pattern.length()) {
 					pattern.append(",");
 				}
-				const std::shared_ptr<code::Line> &line = 
-					std::dynamic_pointer_cast<code::Line>(child);
-				line->Decomposition(glob);
-				pattern.append(line->GetSignature());
+				child->Decomposition(glob);
+				pattern.append(child->GetSignature());
 			}
 			pattern.append("]");
 			return pattern;

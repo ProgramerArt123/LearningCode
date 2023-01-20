@@ -5,14 +5,14 @@
 namespace code_learning {
 	namespace statistics {
 		Region::Region(const std::string &content, Glob &glob) :
-			Composite<statistics::LineFacade, statistics::BlockFacade>(content, glob) {
+			Composite(content, glob) {
 		}
 		void Region::Statistics(code::Element &element) {
-			code::Region &region = static_cast<code::Region&>(element);
-			m_signature = region.GetSignature();
+			m_signature = element.GetSignature();
+			SetChildrenCount(element.GetChildrenCount());
 			for (size_t index = 0; index < m_children.size(); index ++) {
-				for (auto &child : region.m_children[index]) {
-					auto &result = m_children[index]->Get(
+				for (auto &child : *element.GetChild(index)) {
+					auto &result = m_children[index]->Get(*child,
 						child->GetSignature(), child->GetContent());
 					result.Statistics(*child);
 					result++;

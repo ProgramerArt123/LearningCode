@@ -13,7 +13,7 @@ namespace code_learning {
 		class Region;
 	};
 	namespace statistics {
-		class Region : public Composite<statistics::LineFacade, statistics::BlockFacade>{
+		class Region : public Composite{
 		public:
 			explicit Region(const std::string &content, Glob &glob);
 			void Statistics(code::Element &element) override;

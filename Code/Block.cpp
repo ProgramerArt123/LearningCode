@@ -48,7 +48,7 @@ namespace code_learning {
 				}
 				isPreSplit = glob.m_cfg.splits.end() != glob.m_cfg.splits.find(c);
 			}
-			Composite<Element, Element>::Decomposition(glob);
+			Composite<Element>::Decomposition(glob);
 		}
 		bool Block::ContentAppend(char next, const Glob &glob) {
 			m_content += next;

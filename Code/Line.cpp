@@ -20,9 +20,8 @@ namespace code_learning {
 				}
 				char c = m_content[index];
 				if (!isPreSplit && !m_children.front().empty()) {
-					std::shared_ptr<Lexis> &last = m_children.front().back();
+					const std::shared_ptr<code::Element> &last = m_children.front().back();
 					if (!last->TryAppendChar(c, glob)) {
-
 						m_children.front().push_back(std::unique_ptr<Lexis>(new Lexis(c)));
 					}
 				}
@@ -31,7 +30,7 @@ namespace code_learning {
 				}
 				isPreSplit = glob.m_cfg.splits.end() != glob.m_cfg.splits.find(c);
 			}
-			Composite<Lexis, Lexis>::Decomposition(glob);
+			Composite<Lexis>::Decomposition(glob);
 		}
 		bool Line::ContentAppend(char next, const Glob &glob) {
 			m_content += next;
@@ -57,7 +56,7 @@ namespace code_learning {
 			bool isMulti = highOne;
 			if (highOne) {//描述性对象
 				m_children.front().push_back(std::unique_ptr<Lexis>(new Lexis()));
-				std::shared_ptr<Lexis> &last = m_children.front().back();
+				const std::shared_ptr<code::Element> &last = m_children.front().back();
 				for (uint8_t one = 0; one < highOne; one++) {
 					last->ContentAppend(content[index++], glob);
 				}

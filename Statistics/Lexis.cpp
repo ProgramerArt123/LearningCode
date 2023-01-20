@@ -86,6 +86,7 @@ namespace code_learning {
 			}
 		}
 
-
+		void Lexis::Statistics(code::Element &element)  {
+		}
 	}
 }

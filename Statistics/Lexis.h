@@ -17,14 +17,11 @@ namespace code_learning {
 			explicit Lexis(const std::string &content, Glob &glob);
 			LEXIS_TYPE GetType() const;
 			static LEXIS_TYPE JudgeLexisType(const std::string &content);
-			void Statistics(code::Element &element) override{
-			}
+			void Statistics(code::Element &element) override;
 		protected:
 			LEXIS_TYPE m_type = LEXIS_TYPE_NONE;
 		};
 
-
-		typedef ConcreteFacade<statistics::Lexis> LexisFacade;
 	}
 
 }

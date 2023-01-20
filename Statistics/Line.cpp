@@ -8,30 +8,31 @@
 namespace code_learning {
 	namespace statistics {
 		Line::Line(const std::string &content, Glob &glob) :
-			Composite<statistics::LexisFacade>(content, glob) {
+			Composite(content, glob) {
 		}
 		void Line::Statistics(code::Element &element) {
-			code::Line &line = static_cast<code::Line&>(element);
-			m_signature = line.GetSignature();
+			m_signature = element.GetSignature();
+			SetChildrenCount(element.GetChildrenCount());
 			std::string preLexis;
-			for (auto lexis = line.m_children.front().begin(); lexis != line.m_children.front().end(); ) {
-				if ((*lexis)->IsSpace()) {
-					lexis++;
+			for (auto child = element.GetChild(0)->begin(); child != element.GetChild(0)->end(); ) {
+				
+				if ((*child)->IsSpace()) {
+					child++;
 					continue;
 				}
 
 				std::string description;
-				while ((*lexis)->IsMulti()) {
-					description.append(std::string((*lexis)->begin(), (*lexis)->end()));
-					if (++lexis == line.m_children.front().end()) {
+				while ((*child)->IsMulti()) {
+					description.append(std::string((*child)->begin(), (*child)->end()));
+					if (++child == element.GetChild(0)->end()) {
 						break;
 					}
 				}
 				if (!description.empty()) {
 					m_descs.AddDescription(description);
-					if (lexis != line.m_children.front().end()) {
-						m_glob.m_generate.wrappers.insert(Wrapper(preLexis, std::string((*lexis)->begin(), (*lexis)->end())));
-						lexis++;
+					if (child != element.GetChild(0)->end()) {
+						m_glob.m_generate.wrappers.insert(Wrapper(preLexis, std::string((*child)->begin(), (*child)->end())));
+						child++;
 					}
 					else {
 						m_glob.m_generate.wrappers.insert(Wrapper(preLexis));
@@ -39,42 +40,42 @@ namespace code_learning {
 					continue;
 				}
 
-				if (PeekWrap(lexis, line.m_children.front().end())) {
-					m_children.front()->Count(m_wrapper.m_prefix);
+				if (PeekWrap(child, element.GetChild(0)->end())) {
+					m_children.front()->Count(**child, m_wrapper.m_prefix);
 					if (!preLexis.empty()) {
-						m_children.front()->FrontCount(m_wrapper.m_prefix, preLexis);
-						m_children.front()->BackCount(preLexis, m_wrapper.m_prefix);
+						m_children.front()->FrontCount(**child, m_wrapper.m_prefix, preLexis);
+						m_children.front()->BackCount(**child, preLexis, m_wrapper.m_prefix);
 					}
 					while (true) {
-						description.append(std::string((*lexis)->begin(), (*lexis)->end()));
-						lexis++;
-						if (lexis == line.m_children.front().end()) {
+						description.append(std::string((*child)->begin(), (*child)->end()));
+						child++;
+						if (child == element.GetChild(0)->end()) {
 							return;
 						}
-						if (PeekWrap(lexis, line.m_children.front().end())) {
+						if (PeekWrap(child, element.GetChild(0)->end())) {
 							m_descs.AddDescription(description);
 							break;
 						}
 					}
-					m_children.front()->Count(preLexis = m_wrapper.m_suffix);
+					m_children.front()->Count(**child, preLexis = m_wrapper.m_suffix);
 					continue;
 				}
 
-				const std::string lexisContent((*lexis)->begin(), (*lexis)->end());
-				m_children.front()->Count(lexisContent);
+				const std::string lexisContent((*child)->begin(), (*child)->end());
+				m_children.front()->Count(**child, lexisContent);
 				if (1 == lexisContent.size() && IsSymmetry(lexisContent.front())) {
 					m_symmetries[lexisContent.front()] ++;
 				}
 				if (!preLexis.empty()) {
-					m_children.front()->FrontCount(lexisContent, preLexis);
-					m_children.front()->BackCount(preLexis, lexisContent);
+					m_children.front()->FrontCount(**child, lexisContent, preLexis);
+					m_children.front()->BackCount(**child, preLexis, lexisContent);
 				}
 				preLexis = lexisContent;
-				lexis++;
+				child++;
 			}
 		}
-		bool Line::PeekWrap(std::list<std::shared_ptr<code::Lexis>>::const_iterator &lexis,
-			std::list<std::shared_ptr<code::Lexis>>::const_iterator end)  {
+		bool Line::PeekWrap(std::list<std::shared_ptr<code::Element>>::const_iterator &lexis,
+			std::list<std::shared_ptr<code::Element>>::const_iterator end)  {
 			for (const auto &wrap : m_glob.m_generate.wrappers) {
 				bool isMatching = true;
 				auto cursor = lexis;
@@ -96,8 +97,8 @@ namespace code_learning {
 			}
 			return false;
 		}
-		bool Line::PeekWrap(std::list<std::shared_ptr<code::Lexis>>::const_iterator &lexis,
-			std::list<std::shared_ptr<code::Lexis>>::const_iterator end)const {
+		bool Line::PeekWrap(std::list<std::shared_ptr<code::Element>>::const_iterator &lexis,
+			std::list<std::shared_ptr<code::Element>>::const_iterator end)const {
 			bool isMatching = true;
 			auto cursor = lexis;
 			for (const auto &c : m_wrapper.m_suffix) {

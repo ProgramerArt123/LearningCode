@@ -17,8 +17,8 @@ namespace code_learning {
 			ELEMENT_TYPE GetType() const override;
 			bool TryAppendChar(char next, const Glob &glob) override;
 			bool ContentAppend(char next, const Glob &glob) override;
-			bool IsMulti()const;
-			bool IsSpace()const;
+			bool IsMulti()const override;
+			bool IsSpace()const override;
 			bool IsNewLine()const;
 		private:
 			bool IsDisconnection(char next);

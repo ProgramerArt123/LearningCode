@@ -17,20 +17,25 @@ namespace code_learning {
 
 		template<typename ...Children> class Composite;
 
-		template<typename Base, typename Child>
-		class Composite<Base, Child> : public code::Element {
+		template<typename Child>
+		class Composite<Child> : public code::Element {
 		public:
 			Composite() {
 				m_children.resize(m_children.size() + 1);
 			}
-			virtual void Decomposition(const Glob &glob)  {
+			
+			virtual std::string GetPattern(const Glob &glob) const = 0;
+
+			void Decomposition(const Glob &glob) override {
 				CalculateSignature(glob);
 			}
-			virtual std::string GetPattern(const Glob &glob) const = 0;
-			
-			
-		public:
-			std::vector<std::list<std::shared_ptr<Base>>> m_children;
+			size_t GetChildrenCount()const override {
+				return m_children.size();
+			}
+			const std::list<std::shared_ptr<Element>> *GetChild(size_t index)const override {
+				return &m_children[index];
+			}
+
 		private:
 			void CalculateSignature(const Glob &glob) {
 				const std::string &pattern = GetPattern(glob);
@@ -43,13 +48,15 @@ namespace code_learning {
 				boost::algorithm::hex(charDigest, charDigest + sizeof(boost::uuids::detail::md5::digest_type), result);
 				m_signature = result;
 			}
+		public:
+			std::vector<std::list<std::shared_ptr<Element>>> m_children;
 		};
 
-		template<typename Base, typename Child, typename ...Children>
-		class Composite<Base, Child, Children...> : public Composite<Base, Children...>{
+		template<typename Child, typename ...Children>
+		class Composite<Child, Children...> : public Composite<Children...>{
 		public:
 			Composite() {
-				Composite<Base, Children...>::m_children.resize(Composite<Base, Children...>::m_children.size() + 1);
+				Composite<Children...>::m_children.resize(Composite<Children...>::m_children.size() + 1);
 			}
 		};
 	}

@@ -13,7 +13,7 @@ namespace code_learning {
 
 		class Lexis;
 
-		class Line : public Composite<code::Lexis, code::Lexis>{
+		class Line : public Composite<code::Lexis>{
 		public:
 			ELEMENT_TYPE GetType() const override;
 			void Decomposition(const Glob &glob) override;

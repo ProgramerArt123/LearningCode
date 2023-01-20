@@ -5,7 +5,7 @@
 #include "Generate.h"
 #include "Lexis.h"
 #include "CountAdjacencies.hpp"
-#include "Composite.hpp"
+#include "Composite.h"
 #include "Code/Lexis.h"
 #include "Descriptions.h"
 #include "FrequenciesFacade.h"
@@ -15,24 +15,13 @@ namespace code_learning {
 		class Block;
 	}
 	namespace statistics {
-		class Block : public Composite<statistics::LexisFacade> {
+		class Block : public Line {
 		public:
 			explicit Block(const std::string &content, Glob &glob);
-			void Statistics(code::Element &element)override;
-			void Summary()const override;
-		private:
-			bool PeekWrap(std::list<std::shared_ptr<code::Element>>::const_iterator &lexis,
-				std::list<std::shared_ptr<code::Element>>::const_iterator end);
-			bool PeekWrap(std::list<std::shared_ptr<code::Element>>::const_iterator &lexis,
-				std::list<std::shared_ptr<code::Element>>::const_iterator end) const;
-
-		private:
-			Descriptions m_descs;
-			Wrapper m_wrapper;
+			void Statistics(code::Element &element) override;
 		};
 
 
-		typedef ConcreteFacade<statistics::Block> BlockFacade;
 	}
 }
 
