@@ -40,7 +40,7 @@ namespace code_learning {
 				return m_files.size();
 			}
 
-			void Foreach(std::function<void(const std::list<std::unique_ptr<code::Region>> &)> factor) const override {
+			void Foreach(std::function<void(const std::string &, const std::list<std::unique_ptr<code::Region>> &)> factor) const override {
 				for (const auto &file : m_files) {
 					file->Foreach(factor);
 				}

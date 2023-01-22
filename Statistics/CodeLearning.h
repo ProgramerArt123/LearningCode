@@ -18,7 +18,7 @@ namespace code_learning {
 
 		class CodeLearning : public Region {
 		public:
-			explicit CodeLearning();
+			explicit CodeLearning(const char *name);
 
 			template<typename T>
 			void SetIgnores(T ignore) {

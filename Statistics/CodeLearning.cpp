@@ -11,17 +11,20 @@
 
 namespace code_learning {
 	namespace statistics {
-		CodeLearning::CodeLearning() :
-			m_glob(m_cfg), Region("", m_glob){
+		CodeLearning::CodeLearning(const char *name) :
+			m_glob(name, m_cfg), Region("", m_glob){
 
 		}
 
 		void CodeLearning::Learning(code::Source &source) {
 			m_file_count += source.Scan(m_glob);
-			source.Foreach([&](const std::list<std::unique_ptr<code::Region>> &regions) {
+			m_glob.m_board.m_total_files_count = m_file_count;
+			source.Foreach([&](const std::string &fileName, const std::list<std::unique_ptr<code::Region>> &regions) {
 				for (const auto &region : regions) {
 					Region::Statistics(*region);
 				}
+				m_glob.m_board.UpdateProcessing(fileName);
+				m_glob.m_board.m_finished_files_count++;
 			});
 			ProcessSymmetries();
 		}

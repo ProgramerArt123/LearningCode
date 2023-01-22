@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <list>
-#include <memory>
+#include <string>
 #include <functional>
 
 namespace code_learning {
@@ -13,7 +13,7 @@ namespace code_learning {
 		class Source {
 		public:
 			virtual uint64_t Scan(const Glob &glob) = 0;
-			virtual void Foreach(std::function<void(const std::list<std::unique_ptr<code::Region>> &)> factor) const = 0;
+			virtual void Foreach(std::function<void(const std::string &, const std::list<std::unique_ptr<code::Region>> &)> factor) const = 0;
 		};
 	}
 }

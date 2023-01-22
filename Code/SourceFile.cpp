@@ -23,9 +23,9 @@ namespace code_learning {
 				m_code->Decomposition(glob);
 			return 1;
 		}
-		void SourceFile::Foreach(std::function<void(const std::list<std::unique_ptr<code::Region>> &)> factor) const {
+		void SourceFile::Foreach(std::function<void(const std::string &, const std::list<std::unique_ptr<code::Region>> &)> factor) const {
 			if (m_code) {
-				factor(m_code->m_regions);
+				factor(m_file_name, m_code->m_regions);
 			}
 		}
 	}

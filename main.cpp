@@ -6,13 +6,13 @@
 using namespace code_learning;
 
 int main() {
-	statistics::CodeLearning student;
+	statistics::CodeLearning student("CPP");
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
 	student.SetIgnores(' ', '\n', '\r', '\t');
 	code::SourcePath samples(".");
 	samples.AddSuffixNames(".h", ".hpp", ".cpp", ".cc", ".cxx", ".c++", ".cp", ".c");
 	student.Learning(samples);
-	student.Summary();
+	//student.Summary();
 	getchar();
 	return 0;
 }
