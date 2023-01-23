@@ -5,7 +5,8 @@
 #include <map>
 #include <string>
 #include "Glob.h"
-#include "Statistics/Region.h"
+#include "Region.h"
+#include "SummaryBoard.h"
 
 namespace code_learning {
 	namespace code {
@@ -53,6 +54,8 @@ namespace code_learning {
 			Config m_cfg;
 
 			Glob m_glob;
+
+			SummaryBoard m_board;
 		};
 	}
 }

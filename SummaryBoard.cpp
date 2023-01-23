@@ -44,7 +44,12 @@ namespace code_learning {
 		boost::progress_display progress(m_total_files_count, std::cout, "percent: ", "         ", "progress:");
 		progress += m_finished_files_count;
 		std::cout << std::endl << std::endl;
-		std::lock_guard<std::mutex> lock(m_disply_mutex);
-		std::cout << "processing:" << m_processing << std::endl << std::endl;
+		if (0 == m_total_files_count || m_finished_files_count < m_total_files_count) {
+			std::lock_guard<std::mutex> lock(m_disply_mutex);
+			std::cout << "processing:" << m_processing << std::endl << std::endl;
+		}
+		else {
+			std::cout << "completed!" << std::endl << std::endl;
+		}
 	}
 }

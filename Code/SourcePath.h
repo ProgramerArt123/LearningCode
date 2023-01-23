@@ -3,18 +3,19 @@
 
 #include <memory>
 #include <algorithm>
+#include <boost/filesystem.hpp>
 #include "Config.h"
 #include "Code.h"
 #include "Lexis.h"
-#include "SourceFileBatch.hpp"
+#include "Source.h"
 
 namespace code_learning {
 	namespace code {
-		class SourcePath : public SourceFileBatch {
+		class SourcePath : public Source {
 		public:
 			explicit SourcePath(const char *path);
 			uint64_t Scan(const Glob &glob) override;
-
+			void Foreach(std::function<void(const std::string &, const std::list<std::unique_ptr<code::Region>> &)> factor) const override;
 			template<typename T>
 			void AddSuffixNames(T name) {
 				m_suffix_names.insert(name);
@@ -26,12 +27,14 @@ namespace code_learning {
 				AddSuffixNames(names...);
 			}
 
+			void AddSourceFile(const char *fileName, SourcePath &source, const Glob &glob);
+			void SearchFiles(const char *path, SourcePath &source, const Glob &glob);
 		private:
 			bool IsValidName(const std::string &name) const;
-
 		private:
 			const std::string m_path;
 			std::set<std::string> m_suffix_names;
+			std::map<std::string, std::shared_ptr<Source>> m_files;
 		};
 	}
 }

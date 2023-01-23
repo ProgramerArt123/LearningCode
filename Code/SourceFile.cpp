@@ -6,7 +6,8 @@
 
 namespace code_learning {
 	namespace code {
-		SourceFile::SourceFile(const char *fileName) :m_file_name(fileName) {
+		SourceFile::SourceFile(const char *fileName) :Source(fileName),
+			m_file_name(fileName) {
 			std::ifstream source(m_file_name);
 			if (source.is_open()) {
 				std::stringstream buffer;
@@ -17,11 +18,12 @@ namespace code_learning {
 			else {
 				std::cerr << m_file_name << " open failed!" << std::endl;
 			}
+			m_file_count = 1;
 		}
 		uint64_t SourceFile::Scan(const Glob &glob) {
 			if (m_code)
 				m_code->Decomposition(glob);
-			return 1;
+			return m_file_count;
 		}
 		void SourceFile::Foreach(std::function<void(const std::string &, const std::list<std::unique_ptr<code::Region>> &)> factor) const {
 			if (m_code) {

@@ -12,19 +12,19 @@
 namespace code_learning {
 	namespace statistics {
 		CodeLearning::CodeLearning(const char *name) :
-			m_glob(name, m_cfg), Region("", m_glob){
+			m_glob(m_cfg), Region("", m_glob),m_board(name){
 
 		}
 
 		void CodeLearning::Learning(code::Source &source) {
 			m_file_count += source.Scan(m_glob);
-			m_glob.m_board.m_total_files_count = m_file_count;
+			m_board.m_total_files_count = m_file_count;
 			source.Foreach([&](const std::string &fileName, const std::list<std::unique_ptr<code::Region>> &regions) {
 				for (const auto &region : regions) {
 					Region::Statistics(*region);
 				}
-				m_glob.m_board.UpdateProcessing(fileName);
-				m_glob.m_board.m_finished_files_count++;
+				m_board.UpdateProcessing(fileName);
+				m_board.m_finished_files_count++;
 			});
 			ProcessSymmetries();
 		}
@@ -53,11 +53,13 @@ namespace code_learning {
 					m_glob.m_generate.symmetries[symmetry.m_left] = symmetry;
 				}
 				else if (m_symmetries[symmetry.m_left] > m_symmetries[symmetry.m_right] &&
-					(float)(m_symmetries[symmetry.m_right] * 100) / m_symmetries[symmetry.m_left] >= m_cfg.symmetry_percent) {
+					m_symmetries[symmetry.m_right] * m_cfg.m_symmetry.denominator() >
+					m_symmetries[symmetry.m_left] * m_cfg.m_symmetry.numerator()) {
 					m_glob.m_generate.symmetries[symmetry.m_left] = symmetry;
 				}
 				else if (m_symmetries[symmetry.m_right] > m_symmetries[symmetry.m_left] &&
-					(float)(m_symmetries[symmetry.m_left] * 100) / m_symmetries[symmetry.m_right] >= m_cfg.symmetry_percent) {
+					m_symmetries[symmetry.m_left] * m_cfg.m_symmetry.denominator() >
+					m_symmetries[symmetry.m_right] * m_cfg.m_symmetry.numerator()) {
 					m_glob.m_generate.symmetries[symmetry.m_left] = symmetry;
 				}
 				else {

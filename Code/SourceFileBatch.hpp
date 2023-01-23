@@ -9,7 +9,7 @@ namespace code_learning {
 	namespace code {
 		class SourceFileBatch : public Source {
 		public:
-			SourceFileBatch() {
+			SourceFileBatch():Source(".") {
 			}
 
 			template<typename T>
