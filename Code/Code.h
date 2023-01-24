@@ -3,21 +3,41 @@
 
 #include <list>
 #include <memory>
+
+#include "Block.h"
+
 #include "Region.h"
+
+#include "Composite.hpp"
 
 namespace code_learning {
 	class Config;
 
 	namespace code {
 
-		class Lexis;
-		class Code {
+		class Code : public code::Composite<code::Region, code::Block> {
 		public:
 			explicit Code(const char *content);
-			void Decomposition(const Glob &glob);
-			std::list<std::unique_ptr<code::Region>> m_regions;
-		private:
-			std::string m_content;
+			void Decomposition(const Glob &glob) override;
+			ELEMENT_TYPE GetType() const override {
+				return ELEMENT_TYPE_FILE;
+			}
+			bool ContentAppend(char next, const Glob &glob) override {
+				return false;
+			}
+			std::string GetPattern(const Glob &glob)const override {
+				std::string pattern;
+				pattern.append("[");
+				for (auto &child : m_children.front()) {
+					if (1 < pattern.length()) {
+						pattern.append(",");
+					}
+					child->Decomposition(glob);
+					pattern.append(child->GetSignature());
+				}
+				pattern.append("]");
+				return pattern;
+			}
 		};
 	}
 }

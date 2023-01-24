@@ -14,7 +14,7 @@ namespace code_learning {
 			return m_file_count;
 		}
 
-		void SourcePath::Foreach(std::function<void(const std::string &, const std::list<std::unique_ptr<code::Region>> &)> factor) const {
+		void SourcePath::Foreach(std::function<void(const std::string &, const std::vector<std::list<std::shared_ptr<code::Element>>> &)> factor) const {
 			for (const auto &file : m_files) {
 				file.second->Foreach(factor);
 			}

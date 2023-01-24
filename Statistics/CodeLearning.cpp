@@ -12,15 +12,15 @@
 namespace code_learning {
 	namespace statistics {
 		CodeLearning::CodeLearning(const char *name) :
-			m_glob(m_cfg), Region("", m_glob),m_board(name){
+			m_glob(m_cfg), File("", m_glob),m_board(name){
 
 		}
 
 		void CodeLearning::Learning(code::Source &source) {
 			m_file_count += source.Scan(m_glob);
 			m_board.m_total_files_count = m_file_count;
-			source.Foreach([&](const std::string &fileName, const std::list<std::unique_ptr<code::Region>> &regions) {
-				for (const auto &region : regions) {
+			source.Foreach([&](const std::string &fileName, const std::vector<std::list<std::shared_ptr<code::Element>>> &children) {
+				for (const auto &region : children.front()) {
 					Region::Statistics(*region);
 				}
 				m_board.UpdateProcessing(fileName);

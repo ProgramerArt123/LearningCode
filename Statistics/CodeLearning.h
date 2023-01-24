@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 #include "Glob.h"
-#include "Region.h"
+#include "File.h"
 #include "SummaryBoard.h"
 
 namespace code_learning {
@@ -17,7 +17,7 @@ namespace code_learning {
 
 	namespace statistics {
 
-		class CodeLearning : public Region {
+		class CodeLearning : public File {
 		public:
 			explicit CodeLearning(const char *name);
 

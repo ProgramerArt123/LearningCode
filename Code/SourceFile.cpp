@@ -25,9 +25,9 @@ namespace code_learning {
 				m_code->Decomposition(glob);
 			return m_file_count;
 		}
-		void SourceFile::Foreach(std::function<void(const std::string &, const std::list<std::unique_ptr<code::Region>> &)> factor) const {
+		void SourceFile::Foreach(std::function<void(const std::string &, const std::vector<std::list<std::shared_ptr<code::Element>>> &)> factor) const {
 			if (m_code) {
-				factor(m_file_name, m_code->m_regions);
+				factor(m_file_name, m_code->m_children);
 			}
 		}
 	}

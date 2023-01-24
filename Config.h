@@ -13,7 +13,7 @@ namespace code_learning {
 		std::set<char> ignores;
 		std::set<char> splits;
 
-		const boost::rational<uint16_t> m_symmetry;
+		const boost::rational<uint8_t> m_symmetry;
 	};
 }
 

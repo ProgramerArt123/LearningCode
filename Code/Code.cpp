@@ -10,22 +10,23 @@
 
 namespace code_learning {
 	namespace code {
-		Code::Code(const char *content):m_content(content){
+		Code::Code(const char *content){
+			m_content = content;
 			"代码学习";
 		}
 
 		void Code::Decomposition(const Glob &glob) {
 			for (const auto &c : m_content) {
-				if (m_regions.empty()) {
-					m_regions.push_back(std::unique_ptr<Region>(new Region()));
+				if (m_children.front().empty()) {
+					m_children.front().push_back(std::shared_ptr<Region>(new Region()));
 				}
-				auto &lastRegion = m_regions.back();
+				auto &lastRegion = m_children.front().back();
 				if (lastRegion->ContentAppend(c, glob)) {
-					m_regions.push_back(std::unique_ptr<Region>(new Region()));
+					m_children.front().push_back(std::shared_ptr<Region>(new Region()));
 				}
 			}
 
-			for (auto &region : m_regions) {
+			for (auto &region : m_children.front()) {
 				region->Decomposition(glob);
 			}
 		}

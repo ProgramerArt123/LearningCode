@@ -14,7 +14,7 @@ namespace code_learning {
 		public:
 			explicit SourceFile(const char *fileName);
 			uint64_t Scan(const Glob &glob) override;
-			void Foreach(std::function<void(const std::string &, const std::list<std::unique_ptr<code::Region>> &)> factor) const override;
+			void Foreach(std::function<void(const std::string &, const std::vector<std::list<std::shared_ptr<code::Element>>> &)> factor) const override;
 
 			std::unique_ptr<code::Code> m_code;
 			std::string m_content;

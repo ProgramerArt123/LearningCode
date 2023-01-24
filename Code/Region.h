@@ -5,7 +5,6 @@
 #include <memory>
 
 #include "Line.h"
-#include "Block.h"
 
 #include "Composite.hpp"
 
@@ -18,7 +17,7 @@ namespace code_learning {
 	namespace code {
 
 		class Lexis;
-		class Region : public Composite<code::Line, code::Block> {
+		class Region : public Composite<code::Line> {
 		public:
 			ELEMENT_TYPE GetType() const override;
 			bool ContentAppend(char next, const Glob &glob)override;

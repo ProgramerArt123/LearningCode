@@ -15,7 +15,7 @@ namespace code_learning {
 		public:
 			explicit SourcePath(const char *path);
 			uint64_t Scan(const Glob &glob) override;
-			void Foreach(std::function<void(const std::string &, const std::list<std::unique_ptr<code::Region>> &)> factor) const override;
+			void Foreach(std::function<void(const std::string &, const std::vector<std::list<std::shared_ptr<code::Element>>> &)> factor) const override;
 			template<typename T>
 			void AddSuffixNames(T name) {
 				m_suffix_names.insert(name);
