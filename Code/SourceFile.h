@@ -5,11 +5,11 @@
 #include "Config.h"
 #include "Code.h"
 #include "Lexis.h"
-#include "Source.h"
+#include "SourcePath.h"
 
 namespace code_learning {
 	namespace code {
-		class SourceFile : public Source {
+		class SourceFile : public SourcePath {
 
 		public:
 			explicit SourceFile(const char *fileName);
@@ -18,7 +18,7 @@ namespace code_learning {
 
 			std::unique_ptr<code::Code> m_code;
 			std::string m_content;
-			std::string m_file_name;
+			
 		};
 	}
 }

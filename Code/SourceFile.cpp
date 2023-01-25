@@ -1,13 +1,14 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <boost/filesystem.hpp>
 #include "Config.h"
 #include "SourceFile.h"
 
 namespace code_learning {
 	namespace code {
-		SourceFile::SourceFile(const char *fileName) :Source(fileName),
-			m_file_name(fileName) {
+		SourceFile::SourceFile(const char *fileName):
+			SourcePath(fileName){
 			std::ifstream source(m_file_name);
 			if (source.is_open()) {
 				std::stringstream buffer;
@@ -22,8 +23,8 @@ namespace code_learning {
 		}
 		uint64_t SourceFile::Scan(const Glob &glob) {
 			if (m_code)
-				m_code->Decomposition(glob);
-			return m_file_count;
+				return m_code->Scan(glob);
+			return 0;
 		}
 		void SourceFile::Foreach(std::function<void(const std::string &, const std::vector<std::list<std::shared_ptr<code::Element>>> &)> factor) const {
 			if (m_code) {

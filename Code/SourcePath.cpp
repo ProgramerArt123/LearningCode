@@ -4,13 +4,14 @@
 #include "SourcePath.h"
 namespace code_learning {
 	namespace code {
-		SourcePath::SourcePath(const char *path):Source(path),
-			m_path(path){
-			
+		SourcePath::SourcePath(const char *path):
+			m_file_name(path) {
+			const boost::filesystem::path dir(m_file_name);
+			m_name = dir.filename().string();
 		}
 
 		uint64_t SourcePath::Scan(const Glob &glob) {
-			SearchFiles(m_path.c_str(), *this, glob);
+			SearchFiles(m_file_name.c_str(), *this, glob);
 			return m_file_count;
 		}
 

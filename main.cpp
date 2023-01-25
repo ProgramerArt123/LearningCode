@@ -3,6 +3,7 @@
 #include "Code/SourceFile.h"
 #include "Code/SourceFileBatch.hpp"
 #include "Code/SourcePath.h"
+#include "Code/Code.h"
 using namespace code_learning;
 
 int main() {
@@ -12,7 +13,8 @@ int main() {
 	code::SourcePath samples(".");
 	samples.AddSuffixNames(".h", ".hpp", ".cpp", ".cc", ".cxx", ".c++", ".cp", ".c");
 	student.Learning(samples);
-	//student.Summary();
+	code::Code code("int main(){return 0;}");
+	student.Learning(code);
 	getchar();
 	return 0;
 }

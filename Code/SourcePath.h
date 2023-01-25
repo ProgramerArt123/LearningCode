@@ -29,10 +29,12 @@ namespace code_learning {
 
 			void AddSourceFile(const char *fileName, SourcePath &source, const Glob &glob);
 			void SearchFiles(const char *path, SourcePath &source, const Glob &glob);
+		protected:
+			std::string m_file_name;
+			std::string m_name;
 		private:
 			bool IsValidName(const std::string &name) const;
 		private:
-			const std::string m_path;
 			std::set<std::string> m_suffix_names;
 			std::map<std::string, std::shared_ptr<Source>> m_files;
 		};

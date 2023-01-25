@@ -16,6 +16,7 @@ namespace code_learning {
 			ELEMENT_TYPE_BLOCK,
 			ELEMENT_TYPE_LINE,
 			ELEMENT_TYPE_REGION,
+			ELEMENT_TYPE_CODE,
 			ELEMENT_TYPE_FILE
 		};
 

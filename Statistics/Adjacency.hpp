@@ -33,24 +33,24 @@ namespace code_learning {
 		class Adjacency : public AdjacencyBase {
 		public:
 			Adjacency(const std::string &content, Glob &glob) :
-				m_element(new Element(content, glob)) {
+				m_element(content, glob) {
 			}
 			void Sort() override {
-				m_element->Sort();
+				m_element.Sort();
 			}
 			void Summary() override {
-				m_element->Summary();
+				m_element.Summary();
 			}
 			std::map<char, uint64_t> &GetSymmetries() override {
-				return m_element->m_symmetries;
+				return m_element.m_symmetries;
 			}
 			void Statistics(code::Element &element) override {
-				m_element->Statistics(element);
+				m_element.Statistics(element);
 			}
 			const std::string &GetContent()const override {
-				return m_element->GetContent();
+				return m_element.GetContent();
 			}
-			std::shared_ptr<Element> m_element;
+			Element m_element;
 
 		};
 	}

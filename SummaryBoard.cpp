@@ -39,8 +39,8 @@ namespace code_learning {
 		}
 		std::cout << "+" << std::endl;
 		std::cout << frame << std::endl << std::endl;
-		std::cout << "total files:" << m_total_files_count << std::endl << std::endl;
-		std::cout << "finish files:" << m_finished_files_count << std::endl << std::endl;
+		std::cout << "total codes:" << m_total_files_count << std::endl << std::endl;
+		std::cout << "finish codes:" << m_finished_files_count << std::endl << std::endl;
 		boost::progress_display progress(m_total_files_count, std::cout, "percent: ", "         ", "progress:");
 		progress += m_finished_files_count;
 		std::cout << std::endl << std::endl;

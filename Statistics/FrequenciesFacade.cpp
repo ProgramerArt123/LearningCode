@@ -4,7 +4,7 @@
 #include "Line.h"
 #include "Block.h"
 #include "Region.h"
-#include "File.h"
+#include "Code.h"
 #include "FrequenciesFacade.h"
 
 namespace code_learning {
@@ -31,7 +31,7 @@ namespace code_learning {
 			case code::ELEMENT_TYPE_REGION:
 				return m_children.Get<Frequency<statistics::Region>>(key, content);
 			case code::ELEMENT_TYPE_FILE:
-				return m_children.Get<Frequency<statistics::File>>(key, content);
+				return m_children.Get<Frequency<statistics::Code>>(key, content);
 			default:
 				break;
 			}
@@ -52,7 +52,7 @@ namespace code_learning {
 				m_children.Get<Frequency<statistics::Region>>(key)++;
 				break;
 			case code::ELEMENT_TYPE_FILE:
-				m_children.Get<Frequency<statistics::File>>(key)++;
+				m_children.Get<Frequency<statistics::Code>>(key)++;
 			default:
 				break;
 			}
@@ -73,7 +73,7 @@ namespace code_learning {
 				m_children.Get<Frequency<statistics::Region>>(key).FrontCount(next);
 				break;
 			case code::ELEMENT_TYPE_FILE:
-				m_children.Get<Frequency<statistics::File>>(key).FrontCount(next);
+				m_children.Get<Frequency<statistics::Code>>(key).FrontCount(next);
 			default:
 				break;
 			}
@@ -94,7 +94,7 @@ namespace code_learning {
 				m_children.Get<Frequency<statistics::Region>>(key).BackCount(pre);
 				break;
 			case code::ELEMENT_TYPE_FILE:
-				m_children.Get<Frequency<statistics::File>>(key).BackCount(pre);
+				m_children.Get<Frequency<statistics::Code>>(key).BackCount(pre);
 			default:
 				break;
 			}

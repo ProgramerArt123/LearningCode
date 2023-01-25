@@ -12,6 +12,7 @@ namespace code_learning {
 	namespace code {
 		Code::Code(const char *content){
 			m_content = content;
+			m_file_count = 1;
 			"代码学习";
 		}
 
@@ -31,5 +32,31 @@ namespace code_learning {
 			}
 		}
 
+		ELEMENT_TYPE Code::GetType() const {
+			return ELEMENT_TYPE_CODE;
+		}
+		bool Code::ContentAppend(char next, const Glob &glob) {
+			return false;
+		}
+		std::string Code::GetPattern(const Glob &glob)const {
+			std::string pattern;
+			pattern.append("[");
+			for (auto &child : m_children.front()) {
+				if (1 < pattern.length()) {
+					pattern.append(",");
+				}
+				child->Decomposition(glob);
+				pattern.append(child->GetSignature());
+			}
+			pattern.append("]");
+			return pattern;
+		}
+		uint64_t Code::Scan(const Glob &glob) {
+			Decomposition(glob);
+			return m_file_count;
+		}
+		void Code::Foreach(std::function<void(const std::string &, const std::vector<std::list<std::shared_ptr<code::Element>>> &)> factor) const {
+			factor("[code]", m_children);
+		}
 	}
 }

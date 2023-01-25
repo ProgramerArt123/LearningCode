@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 #include "Glob.h"
-#include "File.h"
+#include "Code.h"
 #include "SummaryBoard.h"
 
 namespace code_learning {
@@ -17,7 +17,7 @@ namespace code_learning {
 
 	namespace statistics {
 
-		class CodeLearning : public File {
+		class CodeLearning  {
 		public:
 			explicit CodeLearning(const char *name);
 
@@ -44,16 +44,15 @@ namespace code_learning {
 			}
 
 			void Learning(code::Source &source);
-			void Summary() const override;
-		private:
-			void ProcessSymmetries();
-			void ProcessSymmetry(const code::Symmetry &symmetry);
+		
 		private:
 			uint64_t m_file_count = 0;
 
 			Config m_cfg;
 
 			Glob m_glob;
+
+			Code m_code;
 
 			SummaryBoard m_board;
 		};
