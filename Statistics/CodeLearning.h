@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 #include "Glob.h"
-#include "Code.h"
+#include "Path.h"
 #include "SummaryBoard.h"
 
 namespace code_learning {
@@ -46,15 +46,14 @@ namespace code_learning {
 			void Learning(code::Source &source);
 		
 		private:
-			uint64_t m_file_count = 0;
-
 			Config m_cfg;
+
+			SummaryBoard m_board;
 
 			Glob m_glob;
 
-			Code m_code;
+			std::list<std::shared_ptr<statistics::Element>> m_statistics;
 
-			SummaryBoard m_board;
 		};
 	}
 }

@@ -15,7 +15,7 @@ namespace code_learning {
 
 		class Line : public Composite<code::Lexis>{
 		public:
-			ELEMENT_TYPE GetType() const override;
+			explicit Line();
 			void Decomposition(const Glob &glob) override;
 			bool ContentAppend(char next, const Glob &glob)override;
 			std::string GetPattern(const Glob &glob) const override;

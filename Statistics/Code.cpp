@@ -1,15 +1,15 @@
 #include "Glob.h"
 #include "Code.h"
-
 namespace code_learning {
 	namespace statistics {
 		Code::Code(const std::string &content, Glob &glob):
 			Region(content, glob){
 
 		}
-		void Code::Statistics(code::Element &element) {
+		void Code::Statistics(const code::Element &element) {
 			Region::Statistics(element);
 			ProcessSymmetries();
+			m_glob.m_board.m_finished_files_count++;
 		}
 		void Code::ProcessSymmetries() {
 			const int count = sizeof(code::symmetries) / sizeof(code::Symmetry);

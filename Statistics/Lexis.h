@@ -16,7 +16,7 @@ namespace code_learning {
 		public:
 			explicit Lexis(const std::string &content, Glob &glob);
 			code::LEXIS_TYPE GetType() const;
-			void Statistics(code::Element &element) override;
+			void Statistics(const code::Element &element) override;
 		protected:
 			code::LEXIS_TYPE m_type = code::LEXIS_TYPE_NONE;
 		};

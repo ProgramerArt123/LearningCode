@@ -10,7 +10,7 @@ namespace code_learning {
 		Line::Line(const std::string &content, Glob &glob) :
 			Composite(content, glob) {
 		}
-		void Line::Statistics(code::Element &element) {
+		void Line::Statistics(const code::Element &element) {
 			m_signature = element.GetSignature();
 			SetChildrenCount(element.GetChildrenCount());
 			std::string preLexis;

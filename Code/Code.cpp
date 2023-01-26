@@ -10,20 +10,28 @@
 
 namespace code_learning {
 	namespace code {
-		Code::Code(const char *content){
-			m_content = content;
+		Code::Code(const char *content, const char *fileName) :Source(fileName) {
+			m_type = ELEMENT_TYPE_CODE;
+			m_file_count = 1;
+			"代码学习";
+			SetContent(content);
+		}
+		Code::Code(const char *fileName):Source(fileName){
+			m_type = ELEMENT_TYPE_CODE;
 			m_file_count = 1;
 			"代码学习";
 		}
-
+		void Code::SetContent(const char *content) {
+			m_content = content;
+		}
 		void Code::Decomposition(const Glob &glob) {
 			for (const auto &c : m_content) {
 				if (m_children.front().empty()) {
-					m_children.front().push_back(std::shared_ptr<Region>(new Region()));
+					m_children.front().push_back(std::shared_ptr<code::Region>(new code::Region()));
 				}
 				auto &lastRegion = m_children.front().back();
 				if (lastRegion->ContentAppend(c, glob)) {
-					m_children.front().push_back(std::shared_ptr<Region>(new Region()));
+					m_children.front().push_back(std::shared_ptr<code::Region>(new code::Region()));
 				}
 			}
 
@@ -32,9 +40,6 @@ namespace code_learning {
 			}
 		}
 
-		ELEMENT_TYPE Code::GetType() const {
-			return ELEMENT_TYPE_CODE;
-		}
 		bool Code::ContentAppend(char next, const Glob &glob) {
 			return false;
 		}
@@ -55,8 +60,8 @@ namespace code_learning {
 			Decomposition(glob);
 			return m_file_count;
 		}
-		void Code::Foreach(std::function<void(const std::string &, const std::vector<std::list<std::shared_ptr<code::Element>>> &)> factor) const {
-			factor("[code]", m_children);
+		void Code::Foreach(std::function<void(const code::Element &)> factor) const {
+			factor(*this);
 		}
 	}
 }

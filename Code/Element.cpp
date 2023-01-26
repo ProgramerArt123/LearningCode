@@ -3,6 +3,9 @@
 
 namespace code_learning {
 	namespace code {
+		ELEMENT_TYPE Element::GetType() const {
+			return m_type;
+		}
 		bool Element::TryAppendChar(char next, const Glob &glob) {
 			return false;
 		}

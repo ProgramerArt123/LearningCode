@@ -17,9 +17,10 @@ namespace code_learning {
 	namespace code {
 
 		class Lexis;
+
 		class Region : public Composite<code::Line> {
 		public:
-			ELEMENT_TYPE GetType() const override;
+			explicit Region();
 			bool ContentAppend(char next, const Glob &glob)override;
 			std::string GetPattern(const Glob &glob) const override;
 			friend class statistics::Region;

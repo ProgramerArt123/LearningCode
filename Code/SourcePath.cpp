@@ -1,30 +1,55 @@
-#include <boost/filesystem.hpp>
+
 #include "Config.h"
 #include "SourceFile.h"
 #include "SourcePath.h"
 namespace code_learning {
 	namespace code {
-		SourcePath::SourcePath(const char *path):
-			m_file_name(path) {
-			const boost::filesystem::path dir(m_file_name);
-			m_name = dir.filename().string();
+		SourcePath::SourcePath(const char *path) :
+			Source(path) {
+			m_type = ELEMENT_TYPE_PATH;
 		}
 
 		uint64_t SourcePath::Scan(const Glob &glob) {
 			SearchFiles(m_file_name.c_str(), *this, glob);
+			Decomposition(glob);
 			return m_file_count;
 		}
 
-		void SourcePath::Foreach(std::function<void(const std::string &, const std::vector<std::list<std::shared_ptr<code::Element>>> &)> factor) const {
-			for (const auto &file : m_files) {
-				file.second->Foreach(factor);
+		bool SourcePath::ContentAppend(char next, const Glob &glob) {
+			return false;
+		}
+
+		void SourcePath::Decomposition(const Glob &glob) {
+			for (auto &child : m_children.front()) {
+				child->Decomposition(glob);
+				const std::shared_ptr<code::Source> &path = 
+					std::dynamic_pointer_cast<code::Source>(child);
+				m_file_count += path->m_file_count;
 			}
+			Element::Decomposition(glob);
+		}
+
+		std::string SourcePath::GetPattern(const Glob &glob) const {
+			std::string pattern;
+			pattern.append("[");
+			for (auto &child : m_children.front()) {
+				if (1 < pattern.length()) {
+					pattern.append(",");
+				}
+				child->Decomposition(glob);
+				pattern.append(child->GetSignature());
+			}
+			pattern.append("]");
+			return pattern;
+		}
+
+		void SourcePath::Foreach(std::function<void(const code::Element &)> factor) const {
+			factor(*this);
 		}
 
 		void SourcePath::AddSourceFile(const char *fileName, SourcePath &source, const Glob &glob) {
-			SourceFile *file = new SourceFile(fileName);
-			source.m_files.insert(std::make_pair(file->m_name.c_str(), file));
-			source.m_file_count += file->Scan(glob);
+			m_children.front().push_back(std::shared_ptr<code::SourceFile>(
+				new code::SourceFile(fileName)));
 		}
 
 		void SourcePath::SearchFiles(const char *path, SourcePath &source, const Glob &glob) {
@@ -42,7 +67,8 @@ namespace code_learning {
 					std::shared_ptr<SourcePath> child(new SourcePath(iter->path().string().c_str()));
 					SearchFiles(iter->path().string().c_str(), *child, glob);
 					if (child->m_file_count) {
-						source.m_files.insert(std::make_pair(child->m_name, child));
+						m_children.front().push_back(std::shared_ptr<code::SourcePath>(
+							new code::SourcePath(iter->path().string().c_str())));
 						source.m_file_count += child->m_file_count;
 					}
 				}

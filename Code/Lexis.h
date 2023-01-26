@@ -15,7 +15,6 @@ namespace code_learning {
 		public:
 			explicit Lexis();
 			explicit Lexis(char first);
-			ELEMENT_TYPE GetType() const override;
 			bool TryAppendChar(char next, const Glob &glob) override;
 			bool ContentAppend(char next, const Glob &glob) override;
 			bool IsMulti()const override;

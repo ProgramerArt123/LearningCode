@@ -7,8 +7,8 @@
 
 namespace code_learning {
 	namespace code {
-		ELEMENT_TYPE Line::GetType() const {
-			return ELEMENT_TYPE_LINE;
+		Line::Line() {
+			m_type = ELEMENT_TYPE_LINE;
 		}
 		void Line::Decomposition(const Glob &glob) {
 			size_t length = m_content.length();

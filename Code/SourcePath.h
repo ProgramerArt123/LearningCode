@@ -8,14 +8,18 @@
 #include "Code.h"
 #include "Lexis.h"
 #include "Source.h"
+#include "Element.h"
 
 namespace code_learning {
 	namespace code {
-		class SourcePath : public Source {
+		class SourcePath : public code::Composite<code::Element>, public Source{
 		public:
 			explicit SourcePath(const char *path);
 			uint64_t Scan(const Glob &glob) override;
-			void Foreach(std::function<void(const std::string &, const std::vector<std::list<std::shared_ptr<code::Element>>> &)> factor) const override;
+			bool ContentAppend(char next, const Glob &glob) override;
+			void Decomposition(const Glob &glob) override;
+			std::string GetPattern(const Glob &glob) const override;
+			void Foreach(std::function<void(const code::Element &)> factor) const override;
 			template<typename T>
 			void AddSuffixNames(T name) {
 				m_suffix_names.insert(name);
@@ -29,14 +33,11 @@ namespace code_learning {
 
 			void AddSourceFile(const char *fileName, SourcePath &source, const Glob &glob);
 			void SearchFiles(const char *path, SourcePath &source, const Glob &glob);
-		protected:
-			std::string m_file_name;
-			std::string m_name;
+
 		private:
 			bool IsValidName(const std::string &name) const;
 		private:
 			std::set<std::string> m_suffix_names;
-			std::map<std::string, std::shared_ptr<Source>> m_files;
 		};
 	}
 }

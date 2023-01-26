@@ -15,7 +15,7 @@ namespace code_learning {
 		}
 
 		
-		void Lexis::Statistics(code::Element &element)  {
+		void Lexis::Statistics(const code::Element &element)  {
 		}
 	}
 }

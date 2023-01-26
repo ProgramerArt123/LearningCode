@@ -10,7 +10,7 @@ namespace code_learning {
 		Block::Block(const std::string &content, Glob &glob) :
 			Line(content, glob) {
 		}
-		void Block::Statistics(code::Element &element) {
+		void Block::Statistics(const code::Element &element) {
 			Line::Statistics(element);
 			for (auto &child : *element.GetChild(0)) {
 				if (code::ELEMENT_TYPE_BLOCK == child->GetType()) {

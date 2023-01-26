@@ -2,16 +2,12 @@
 namespace code_learning {
 	namespace code {
 		Lexis::Lexis() {
-
+			m_type = ELEMENT_TYPE_LEXIS;
 		}
 
 		Lexis::Lexis(char first) {
 			m_content.push_back(first);
 			m_last = JudgeCharType(first);
-		}
-
-		ELEMENT_TYPE Lexis::GetType() const {
-			return ELEMENT_TYPE_LEXIS;
 		}
 
 		bool Lexis::TryAppendChar(char next, const Glob &glob) {

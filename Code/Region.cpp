@@ -7,8 +7,8 @@
 
 namespace code_learning {
 	namespace code {
-		ELEMENT_TYPE Region::GetType() const {
-			return ELEMENT_TYPE_REGION;
+		Region::Region(){
+			m_type = ELEMENT_TYPE_REGION;
 		}
 		bool Region::ContentAppend(char c, const Glob &glob) {
 			ContentAppendBlock(c, glob);

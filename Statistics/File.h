@@ -8,6 +8,7 @@ namespace code_learning {
 		class File : public Code {
 		public:
 			explicit File(const std::string &content, Glob &glob);
+			void Statistics(const code::Element &element) override;
 		};
 	}
 }

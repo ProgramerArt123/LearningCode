@@ -17,12 +17,13 @@ namespace code_learning {
 			ELEMENT_TYPE_LINE,
 			ELEMENT_TYPE_REGION,
 			ELEMENT_TYPE_CODE,
-			ELEMENT_TYPE_FILE
+			ELEMENT_TYPE_FILE,
+			ELEMENT_TYPE_PATH
 		};
 
 		class Element{
 		public:
-			virtual ELEMENT_TYPE GetType() const = 0;
+			ELEMENT_TYPE GetType() const;
 			virtual bool ContentAppend(char next, const Glob &glob) = 0;
 			virtual bool TryAppendChar(char next, const Glob &glob);
 			virtual bool IsSpace()const;
@@ -38,6 +39,7 @@ namespace code_learning {
 		protected:
 			std::string m_content;
 			std::string m_signature;
+			ELEMENT_TYPE m_type = ELEMENT_TYPE_NONE;
 		};
 
 	}

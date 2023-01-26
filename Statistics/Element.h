@@ -20,7 +20,7 @@ namespace code_learning {
 			virtual void Sort();
 			virtual void Summary()const;
 			const std::string &GetContent()const;
-			virtual void Statistics(code::Element &element) = 0;
+			virtual void Statistics(const code::Element &element) = 0;
 		protected:
 			const std::string m_content;
 			Glob &m_glob;

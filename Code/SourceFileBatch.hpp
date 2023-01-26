@@ -9,7 +9,7 @@ namespace code_learning {
 	namespace code {
 		class SourceFileBatch : public Source {
 		public:
-			SourceFileBatch() {
+			SourceFileBatch():Source("[batch]"){
 			}
 
 			template<typename T>
@@ -40,7 +40,7 @@ namespace code_learning {
 				return m_files.size();
 			}
 
-			void Foreach(std::function<void(const std::string &, const std::vector<std::list<std::shared_ptr<code::Element>>> &)> factor) const override {
+			void Foreach(std::function<void(const code::Element &)> factor) const override {
 				for (const auto &file : m_files) {
 					file->Foreach(factor);
 				}

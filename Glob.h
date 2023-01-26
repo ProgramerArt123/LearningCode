@@ -3,16 +3,19 @@
 
 #include "Config.h"
 #include "Statistics/Generate.h"
+#include "SummaryBoard.h"
 
 namespace code_learning {
 	
 	class Glob {
 	public:
-		explicit Glob(const Config &cfg):
-			m_cfg(cfg){
+		explicit Glob(const Config &cfg, SummaryBoard &board):
+			m_cfg(cfg), m_board(board){
 		}
 		const Config &m_cfg;
+		SummaryBoard &m_board;
 		statistics::Generate m_generate;
+
 	};
 }
 

@@ -18,7 +18,7 @@ namespace code_learning {
 		class Line : public Composite {
 		public:
 			explicit Line(const std::string &content, Glob &glob);
-			void Statistics(code::Element &element) override;
+			void Statistics(const code::Element &element) override;
 			void Summary()const override;
 		private:
 			bool PeekWrap(std::list<std::shared_ptr<code::Element>>::const_iterator &lexis,

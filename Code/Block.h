@@ -16,7 +16,6 @@ namespace code_learning {
 		class Block : public Composite<code::Element>{
 		public:
 			explicit Block(char first);
-			ELEMENT_TYPE GetType() const override;
 			void Decomposition(const Glob &glob) override;
 			bool TryAppendChar(char next, const Glob &glob) override;
 			bool ContentAppend(char next, const Glob &glob)override;

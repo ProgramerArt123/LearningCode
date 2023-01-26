@@ -13,7 +13,7 @@ int main() {
 	code::SourcePath samples(".");
 	samples.AddSuffixNames(".h", ".hpp", ".cpp", ".cc", ".cxx", ".c++", ".cp", ".c");
 	student.Learning(samples);
-	code::Code code("int main(){return 0;}");
+	code::Code code("int main(){return 0;}","[code]");
 	student.Learning(code);
 	getchar();
 	return 0;

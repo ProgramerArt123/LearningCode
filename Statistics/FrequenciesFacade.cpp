@@ -5,6 +5,8 @@
 #include "Block.h"
 #include "Region.h"
 #include "Code.h"
+#include "File.h"
+#include "Path.h"
 #include "FrequenciesFacade.h"
 
 namespace code_learning {
@@ -30,8 +32,12 @@ namespace code_learning {
 				return m_children.Get<Frequency<statistics::Block>>(key, content);
 			case code::ELEMENT_TYPE_REGION:
 				return m_children.Get<Frequency<statistics::Region>>(key, content);
-			case code::ELEMENT_TYPE_FILE:
+			case code::ELEMENT_TYPE_CODE:
 				return m_children.Get<Frequency<statistics::Code>>(key, content);
+			case code::ELEMENT_TYPE_FILE:
+				return m_children.Get<Frequency<statistics::File>>(key, content);
+			case code::ELEMENT_TYPE_PATH:
+				return m_children.Get<Frequency<statistics::Path>>(key, content);
 			default:
 				break;
 			}
@@ -51,8 +57,15 @@ namespace code_learning {
 			case code::ELEMENT_TYPE_REGION:
 				m_children.Get<Frequency<statistics::Region>>(key)++;
 				break;
-			case code::ELEMENT_TYPE_FILE:
+			case code::ELEMENT_TYPE_CODE:
 				m_children.Get<Frequency<statistics::Code>>(key)++;
+				break;
+			case code::ELEMENT_TYPE_FILE:
+				m_children.Get<Frequency<statistics::File>>(key)++;
+				break;
+			case code::ELEMENT_TYPE_PATH:
+				m_children.Get<Frequency<statistics::Path>>(key)++;
+				break;
 			default:
 				break;
 			}
@@ -72,8 +85,15 @@ namespace code_learning {
 			case code::ELEMENT_TYPE_REGION:
 				m_children.Get<Frequency<statistics::Region>>(key).FrontCount(next);
 				break;
-			case code::ELEMENT_TYPE_FILE:
+			case code::ELEMENT_TYPE_CODE:
 				m_children.Get<Frequency<statistics::Code>>(key).FrontCount(next);
+				break;
+			case code::ELEMENT_TYPE_FILE:
+				m_children.Get<Frequency<statistics::File>>(key).FrontCount(next);
+				break;
+			case code::ELEMENT_TYPE_PATH:
+				m_children.Get<Frequency<statistics::Path>>(key).FrontCount(next);
+				break;
 			default:
 				break;
 			}
@@ -93,8 +113,15 @@ namespace code_learning {
 			case code::ELEMENT_TYPE_REGION:
 				m_children.Get<Frequency<statistics::Region>>(key).BackCount(pre);
 				break;
-			case code::ELEMENT_TYPE_FILE:
+			case code::ELEMENT_TYPE_CODE:
 				m_children.Get<Frequency<statistics::Code>>(key).BackCount(pre);
+				break;
+			case code::ELEMENT_TYPE_FILE:
+				m_children.Get<Frequency<statistics::File>>(key).BackCount(pre);
+				break;
+			case code::ELEMENT_TYPE_PATH:
+				m_children.Get<Frequency<statistics::Path>>(key).BackCount(pre);
+				break;
 			default:
 				break;
 			}

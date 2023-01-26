@@ -9,9 +9,7 @@
 namespace code_learning {
 	namespace code {
 		Block::Block(char first):m_wrapper(first){
-		}
-		ELEMENT_TYPE Block::GetType() const {
-			return ELEMENT_TYPE_BLOCK;
+			m_type = ELEMENT_TYPE_BLOCK;
 		}
 		void Block::Decomposition(const Glob &glob) {
 			size_t length = m_content.length();

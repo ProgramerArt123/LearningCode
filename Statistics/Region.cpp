@@ -7,7 +7,7 @@ namespace code_learning {
 		Region::Region(const std::string &content, Glob &glob) :
 			Composite(content, glob) {
 		}
-		void Region::Statistics(code::Element &element) {
+		void Region::Statistics(const code::Element &element) {
 			Composite::Statistics(element);
 			for (size_t index = 0; index < m_children.size(); index ++) {
 				for (auto &child : *element.GetChild(index)) {
