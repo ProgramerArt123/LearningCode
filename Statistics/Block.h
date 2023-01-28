@@ -18,7 +18,7 @@ namespace code_learning {
 	namespace statistics {
 		class Block : public Line {
 		public:
-			explicit Block(const std::string &content, Glob &glob);
+			Block(const std::string &content, Glob &glob);
 			void Statistics(const code::Element &element) override;
 		};
 

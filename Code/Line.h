@@ -15,7 +15,7 @@ namespace code_learning {
 
 		class Line : public Composite<code::Lexis>{
 		public:
-			explicit Line();
+			Line();
 			void Decomposition(const Glob &glob) override;
 			bool ContentAppend(char next, const Glob &glob)override;
 		private:

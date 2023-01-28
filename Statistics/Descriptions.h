@@ -12,7 +12,7 @@ namespace code_learning {
 	namespace statistics {
 		class Descriptions {
 		public:
-			explicit Descriptions();
+			Descriptions();
 			void AddDescription(const std::string &content);
 			Description &GetDescription(const std::string &content);
 			std::list<std::unique_ptr<Description>>::const_iterator begin() const {

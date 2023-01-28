@@ -10,12 +10,12 @@ namespace code_learning {
 	namespace statistics {
 		class Wrapper {
 		public:
-			explicit Wrapper() {
+			Wrapper() {
 			}
 			explicit Wrapper(const std::string &prefix) :
 				m_prefix(prefix) {
 			}
-			explicit Wrapper(const std::string &prefix, const std::string &suffix) :
+			Wrapper(const std::string &prefix, const std::string &suffix) :
 				m_prefix(prefix), m_suffix(suffix) {
 			}
 			bool operator<(const Wrapper &other) const {

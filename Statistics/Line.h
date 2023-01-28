@@ -17,7 +17,7 @@ namespace code_learning {
 	namespace statistics {
 		class Line : public Composite {
 		public:
-			explicit Line(const std::string &content, Glob &glob);
+			Line(const std::string &content, Glob &glob);
 			void Statistics(const code::Element &element) override;
 			void Summary()const override;
 		private:

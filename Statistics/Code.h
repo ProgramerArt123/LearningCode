@@ -7,7 +7,7 @@ namespace code_learning {
 	namespace statistics {
 		class Code : public Region {
 		public:
-			explicit Code(const std::string &content, Glob &glob);
+			Code(const std::string &content, Glob &glob);
 			void Statistics(const code::Element &element) override;
 		private:
 			void ProcessSymmetries();

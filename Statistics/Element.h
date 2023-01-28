@@ -16,7 +16,7 @@ namespace code_learning {
 
 		class Element {
 		public:
-			explicit Element(const std::string &content, Glob &glob);
+			Element(const std::string &content, Glob &glob);
 			virtual void Sort();
 			virtual void Summary()const;
 			const std::string &GetContent()const;

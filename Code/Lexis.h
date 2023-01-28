@@ -13,7 +13,7 @@ namespace code_learning {
 	namespace code {
 		class Lexis : public Element{
 		public:
-			explicit Lexis();
+			Lexis();
 			explicit Lexis(char first);
 			bool TryAppendChar(char next, const Glob &glob) override;
 			bool ContentAppend(char next, const Glob &glob) override;

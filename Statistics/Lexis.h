@@ -14,7 +14,7 @@ namespace code_learning {
 	namespace statistics {
 		class Lexis : public Element {
 		public:
-			explicit Lexis(const std::string &content, Glob &glob);
+			Lexis(const std::string &content, Glob &glob);
 			code::LEXIS_TYPE GetType() const;
 			void Statistics(const code::Element &element) override;
 		protected:

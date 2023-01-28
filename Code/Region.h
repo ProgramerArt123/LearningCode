@@ -20,7 +20,7 @@ namespace code_learning {
 
 		class Region : public Composite<code::Line> {
 		public:
-			explicit Region();
+			Region();
 			bool ContentAppend(char next, const Glob &glob)override;
 			friend class statistics::Region;
 		private:

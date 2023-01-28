@@ -11,7 +11,7 @@ namespace code_learning {
 
 		class Composite : public statistics::Element {
 		public:
-			explicit Composite(const std::string &content, Glob &glob);
+			Composite(const std::string &content, Glob &glob);
 			void SetChildrenCount(size_t count);
 			void Statistics(const code::Element &element) override;
 		protected:

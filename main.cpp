@@ -4,6 +4,9 @@
 #include "Code/SourceFileBatch.hpp"
 #include "Code/SourcePath.h"
 #include "Code/Code.h"
+#include "Algorithm/Set.h"
+#include "Algorithm/Event.h"
+
 using namespace code_learning;
 
 int main() {

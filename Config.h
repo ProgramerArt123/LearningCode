@@ -2,18 +2,18 @@
 #define __CODE_LEARNING_CONFIG_H__
 
 #include <set>
-#include <boost/rational.hpp>
+#include "Algorithm/Probability.h"
 
 namespace code_learning {
 	
 	class Config {
 	public:
-		explicit Config();
+		Config();
 
 		std::set<char> ignores;
 		std::set<char> splits;
 
-		const boost::rational<uint8_t> m_symmetry;
+		const algorithm::Probability m_symmetry;
 	};
 }
 

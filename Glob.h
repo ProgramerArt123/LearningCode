@@ -9,7 +9,7 @@ namespace code_learning {
 	
 	class Glob {
 	public:
-		explicit Glob(const Config &cfg, SummaryBoard &board):
+		Glob(const Config &cfg, SummaryBoard &board):
 			m_cfg(cfg), m_board(board){
 		}
 		const Config &m_cfg;

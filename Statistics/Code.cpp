@@ -24,13 +24,11 @@ namespace code_learning {
 					m_glob.m_generate.symmetries[symmetry.m_left] = symmetry;
 				}
 				else if (m_symmetries[symmetry.m_left] > m_symmetries[symmetry.m_right] &&
-					m_symmetries[symmetry.m_right] * m_glob.m_cfg.m_symmetry.denominator() >
-					m_symmetries[symmetry.m_left] * m_glob.m_cfg.m_symmetry.numerator()) {
+					m_glob.m_cfg.m_symmetry  < algorithm::Probability(m_symmetries[symmetry.m_right], m_symmetries[symmetry.m_left])) {
 					m_glob.m_generate.symmetries[symmetry.m_left] = symmetry;
 				}
 				else if (m_symmetries[symmetry.m_right] > m_symmetries[symmetry.m_left] &&
-					m_symmetries[symmetry.m_left] * m_glob.m_cfg.m_symmetry.denominator() >
-					m_symmetries[symmetry.m_right] * m_glob.m_cfg.m_symmetry.numerator()) {
+					m_glob.m_cfg.m_symmetry < algorithm::Probability(m_symmetries[symmetry.m_left], m_symmetries[symmetry.m_right])) {
 					m_glob.m_generate.symmetries[symmetry.m_left] = symmetry;
 				}
 				else {
