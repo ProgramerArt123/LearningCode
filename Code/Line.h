@@ -18,7 +18,6 @@ namespace code_learning {
 			explicit Line();
 			void Decomposition(const Glob &glob) override;
 			bool ContentAppend(char next, const Glob &glob)override;
-			std::string GetPattern(const Glob &glob) const override;
 		private:
 			bool CheckEncoding(const char *content, size_t &index, const Glob &glob);
 		};

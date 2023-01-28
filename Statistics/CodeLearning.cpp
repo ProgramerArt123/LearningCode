@@ -18,23 +18,9 @@ namespace code_learning {
 		}
 
 		void CodeLearning::Learning(code::Source &source) {
-			m_board.m_total_files_count += source.Scan(m_glob);
-			source.Foreach([&](const code::Element &element) {
-				switch (element.GetType())
-				{
-				case code::ELEMENT_TYPE_PATH:
-					m_statistics.push_back(std::shared_ptr<statistics::Element>(new statistics::Path(element.GetContent(), m_glob)));
-					break;
-				case code::ELEMENT_TYPE_FILE:
-					m_statistics.push_back(std::shared_ptr<statistics::Element>(new statistics::File(element.GetContent(), m_glob)));
-					break;
-				case code::ELEMENT_TYPE_CODE:
-					m_statistics.push_back(std::shared_ptr<statistics::Element>(new statistics::Code(element.GetContent(), m_glob)));
-					break;
-				default:
-					throw "error source";
-					break;
-				}
+			m_board.m_total_codes_count += source.Scan(m_glob);
+			source.CallBack([&](const code::Element &element) {
+				m_statistics.push_back(Path::CreateStatistic(element, m_glob));
 				m_statistics.back()->Statistics(element);
 			});
 		}

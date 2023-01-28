@@ -11,7 +11,7 @@ namespace code_learning {
 	namespace code {
 		class SourceFile : public Code {
 		public:
-			explicit SourceFile(const char *fileName);
+			explicit SourceFile(const std::string &fileName);
 			
 			
 		};

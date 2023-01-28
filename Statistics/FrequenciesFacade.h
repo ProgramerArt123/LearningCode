@@ -20,7 +20,6 @@ namespace code_learning {
 			void Count(const code::Element &element, const std::string &key);
 			void FrontCount(const code::Element &element, const std::string &key, const std::string &next);
 			void BackCount(const code::Element &element, const std::string &key, const std::string &pre);
-
 			ListMap m_children;
 		};
 

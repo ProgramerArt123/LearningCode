@@ -11,22 +11,9 @@ namespace code_learning {
 			m_type = ELEMENT_TYPE_REGION;
 		}
 		bool Region::ContentAppend(char c, const Glob &glob) {
-			ContentAppendBlock(c, glob);
 			return ContentAppendLine(c, glob);
 		}
-		std::string Region::GetPattern(const Glob &glob)const {
-			std::string pattern;
-			pattern.append("[");
-			for (auto &child : m_children.front()) {
-				if (1 < pattern.length()) {
-					pattern.append(",");
-				}
-				child->Decomposition(glob);
-				pattern.append(child->GetSignature());
-			}
-			pattern.append("]");
-			return pattern;
-		}
+		
 		void Region::SetContent() {
 			for (const auto &child : m_children.front()) {
 				if (!m_content.empty()) {
@@ -35,23 +22,7 @@ namespace code_learning {
 				m_content.append(child->GetContent());
 			}
 		}
-		void Region::ContentAppendBlock(char next, const Glob &glob) {
-			if (m_children.back().empty()) {
-				if (glob.m_generate.symmetries.find(next) !=
-					glob.m_generate.symmetries.end()) {
-					m_children.back().push_back(std::shared_ptr<Element>(new Block(next)));
-				}
-			}
-			else {
-				auto &lastBlock = m_children.back().back();
-				if (!lastBlock->TryAppendChar(next, glob)) {
-					if (glob.m_generate.symmetries.find(next) !=
-						glob.m_generate.symmetries.end()) {
-						m_children.back().push_back(std::shared_ptr<Element>(new Block(next)));
-					}
-				}
-			}
-		}
+		
 		bool Region::ContentAppendLine(char next, const Glob &glob) {
 			if (IsReLine(next)) {
 				re_line_count++;

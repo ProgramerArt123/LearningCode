@@ -22,10 +22,8 @@ namespace code_learning {
 		public:
 			explicit Region();
 			bool ContentAppend(char next, const Glob &glob)override;
-			std::string GetPattern(const Glob &glob) const override;
 			friend class statistics::Region;
 		private:
-			void ContentAppendBlock(char next, const Glob &glob);
 			bool ContentAppendLine(char next, const Glob &glob);
 			void SetContent();
 			int re_line_count = 0;

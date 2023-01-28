@@ -40,9 +40,9 @@ namespace code_learning {
 				return m_files.size();
 			}
 
-			void Foreach(std::function<void(const code::Element &)> factor) const override {
+			void CallBack(std::function<void(const code::Element &)> factor) const override {
 				for (const auto &file : m_files) {
-					file->Foreach(factor);
+					file->CallBack(factor);
 				}
 			}
 

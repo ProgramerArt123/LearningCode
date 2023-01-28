@@ -17,10 +17,10 @@ namespace code_learning {
 			explicit Lexis(char first);
 			bool TryAppendChar(char next, const Glob &glob) override;
 			bool ContentAppend(char next, const Glob &glob) override;
+			std::string GetPattern() const override;
 			bool IsMulti()const override;
 			bool IsSpace()const override;
 			bool IsNewLine()const;
-			static LEXIS_TYPE JudgeLexisType(const std::string &content);
 		private:
 			bool IsDisconnection(char next);
 		private:

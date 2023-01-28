@@ -18,8 +18,7 @@ namespace code_learning {
 			uint64_t Scan(const Glob &glob) override;
 			bool ContentAppend(char next, const Glob &glob) override;
 			void Decomposition(const Glob &glob) override;
-			std::string GetPattern(const Glob &glob) const override;
-			void Foreach(std::function<void(const code::Element &)> factor) const override;
+			void CallBack(std::function<void(const code::Element &)> factor) const override;
 			template<typename T>
 			void AddSuffixNames(T name) {
 				m_suffix_names.insert(name);

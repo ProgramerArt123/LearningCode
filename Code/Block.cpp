@@ -52,21 +52,7 @@ namespace code_learning {
 			m_content += next;
 			return false;
 		}
-		std::string Block::GetPattern(const Glob &glob) const {
-			std::string pattern;
-			pattern.append("[");
-			for (const auto &lexis : m_children.front()) {
-				LEXIS_TYPE type = Lexis::JudgeLexisType(std::string(lexis->begin(), lexis->end()));
-				if (code_learning::code::LEXIS_TYPE_SPACE != type) {
-					if (1 < pattern.length()) {
-						pattern.append(",");
-					}
-					pattern.append(lexisTypes[type].m_name);
-				}
-			}
-			pattern.append("]");
-			return pattern;
-		}
+		
 		bool Block::CheckEncoding(const char *content, size_t &index, const Glob &glob) {
 			uint8_t highOne = CharHighOne(content[index]);
 			bool isMulti = highOne;

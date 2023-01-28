@@ -1,4 +1,5 @@
-#include "Code/Element.h"
+#include "Glob.h"
+#include "Code/SourcePath.h"
 #include "Path.h"
 
 namespace code_learning {
@@ -8,21 +9,24 @@ namespace code_learning {
 
 		}
 		void Path::Statistics(const code::Element &element) {
-			for (auto &child : *element.GetChild(0)) {
-				switch (child->GetType())
-				{
-				case code::ELEMENT_TYPE_PATH:
-					Statistics(*child);
-					break;
-				case code::ELEMENT_TYPE_FILE:
-					File::Statistics(*child);
-					break;
-				case code::ELEMENT_TYPE_CODE:
-					Code::Statistics(*child);
-					break;
-				default:
-					break;
-				}
+			Region::Statistics(element);
+		}
+
+		std::shared_ptr<statistics::Element> Path::CreateStatistic(const code::Element &element, Glob &glob) {
+			switch (element.GetType())
+			{
+			case code::ELEMENT_TYPE_PATH:
+				return std::shared_ptr<statistics::Element>(new statistics::Path(element.GetContent(), glob));
+				break;
+			case code::ELEMENT_TYPE_FILE:
+				return std::shared_ptr<statistics::Element>(new statistics::File(element.GetContent(), glob));
+				break;
+			case code::ELEMENT_TYPE_CODE:
+				return std::shared_ptr<statistics::Element>(new statistics::Code(element.GetContent(), glob));
+				break;
+			default:
+				throw "error source";
+				break;
 			}
 		}
 	}

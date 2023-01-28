@@ -24,18 +24,19 @@ namespace code_learning {
 		class Element{
 		public:
 			ELEMENT_TYPE GetType() const;
-			virtual bool ContentAppend(char next, const Glob &glob) = 0;
+			virtual bool ContentAppend(char next, const Glob &glob);
 			virtual bool TryAppendChar(char next, const Glob &glob);
 			virtual bool IsSpace()const;
 			virtual bool IsMulti()const ;
+			virtual std::string GetPattern() const = 0;
 			virtual void Decomposition(const Glob &glob);
+			void CalculateSignature();
 			virtual rsize_t GetChildrenCount()const;
 			virtual const std::list<std::shared_ptr<Element>> *GetChild(size_t index)const;
 			const std::string &GetContent() const;
 			const std::string &GetSignature() const;
 			std::string::const_iterator begin() const;
 			std::string::const_iterator end() const;
-		
 		protected:
 			std::string m_content;
 			std::string m_signature;

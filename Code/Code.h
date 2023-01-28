@@ -19,14 +19,13 @@ namespace code_learning {
 
 		class Code : public code::Composite<code::Region, code::Block>, public Source {
 		public:
-			explicit Code(const char *content, const char *fileName);
-			explicit Code(const char *fileName);
-			void SetContent(const char *content);
+			explicit Code(const std::string &content, const std::string &fileName = "");
+			void SetContent(const std::string &content);
 			void Decomposition(const Glob &glob) override;
-			bool ContentAppend(char next, const Glob &glob) override;
-			std::string GetPattern(const Glob &glob)const override;
 			virtual uint64_t Scan(const Glob &glob) override;
-			virtual void Foreach(std::function<void(const code::Element &)> factor) const override;
+			virtual void CallBack(std::function<void(const code::Element &)> factor) const override;
+			void ContentAppendRegion(char next, const Glob &glob);
+			void ContentAppendBlock(char next, const Glob &glob);
 		};
 	}
 }

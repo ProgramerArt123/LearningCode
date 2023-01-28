@@ -29,21 +29,7 @@ namespace code_learning {
 			Element::Decomposition(glob);
 		}
 
-		std::string SourcePath::GetPattern(const Glob &glob) const {
-			std::string pattern;
-			pattern.append("[");
-			for (auto &child : m_children.front()) {
-				if (1 < pattern.length()) {
-					pattern.append(",");
-				}
-				child->Decomposition(glob);
-				pattern.append(child->GetSignature());
-			}
-			pattern.append("]");
-			return pattern;
-		}
-
-		void SourcePath::Foreach(std::function<void(const code::Element &)> factor) const {
+		void SourcePath::CallBack(std::function<void(const code::Element &)> factor) const {
 			factor(*this);
 		}
 

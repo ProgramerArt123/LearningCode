@@ -13,19 +13,21 @@ namespace code_learning {
 	public:
 		explicit SummaryBoard(const char *title);
 		virtual ~SummaryBoard();
-		void UpdateProcessing(const std::string &processing);
+		void UpdateProcessingCodes(const std::string &processing);
+		void UpdateProcessingPath(const std::string &processing);
 		void Flush() ;
 		
-		std::atomic_uint64_t m_total_files_count = 0;
+		std::atomic_uint64_t m_total_codes_count = 0;
 
-		std::atomic_uint64_t m_finished_files_count = 0;
+		std::atomic_uint64_t m_finished_codes_count = 0;
 
 		std::atomic_bool m_is_stop = false;
 	private:
 		std::thread m_disply;
 		std::mutex m_disply_mutex;
 		const std::string m_title;
-		std::string m_processing;
+		std::string m_processing_codes;
+		std::string m_processing_path;
 	};
 }
 

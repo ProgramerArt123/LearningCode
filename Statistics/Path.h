@@ -9,6 +9,7 @@ namespace code_learning {
 		public:
 			explicit Path(const std::string &content, Glob &glob);
 			void Statistics(const code::Element &element) override;
+			static std::shared_ptr<statistics::Element> CreateStatistic(const code::Element &element, Glob &glob);
 		};
 	}
 }

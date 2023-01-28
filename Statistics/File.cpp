@@ -9,9 +9,10 @@ namespace code_learning {
 		}
 
 		void File::Statistics(const code::Element &element) {
-			Code::Statistics(element);
 			const code::SourceFile &file = dynamic_cast<const code::SourceFile &>(element);
-			m_glob.m_board.UpdateProcessing(file.m_file_name);
+			m_glob.m_board.UpdateProcessingPath(file.m_parent);
+			m_glob.m_board.UpdateProcessingCodes(file.m_file_name);
+			Code::Statistics(element);
 		}
 	}
 }

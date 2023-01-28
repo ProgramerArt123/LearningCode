@@ -7,7 +7,7 @@ namespace code_learning {
 	namespace statistics {
 		Lexis::Lexis(const std::string &content, Glob &glob) :
 			Element(content, glob) {
-			m_type = code::Lexis::JudgeLexisType(content);
+			m_type = code::JudgeLexisType(content);
 		}
 
 		code::LEXIS_TYPE Lexis::GetType()const {

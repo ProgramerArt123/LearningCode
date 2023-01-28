@@ -15,15 +15,17 @@ namespace code_learning {
 		class Element;
 		class Source {
 		public:
-			explicit Source(const char *fileName);
+			explicit Source(const std::string &fileName);
 			virtual uint64_t Scan(const Glob &glob) = 0;
-			virtual void Foreach(std::function<void(const code::Element &)> factor) const = 0;
+			virtual void CallBack(std::function<void(const code::Element &)> factor) const = 0;
 
 			uint64_t m_file_count = 0;
 
 			std::string m_file_name;
 		
 			std::string m_name;
+			
+			std::string m_parent;
 		};
 	}
 }

@@ -17,9 +17,14 @@ namespace code_learning {
 		m_disply.join();
 	}
 
-	void SummaryBoard::UpdateProcessing(const std::string &processing) {
+	void SummaryBoard::UpdateProcessingCodes(const std::string &processing) {
 		std::lock_guard<std::mutex> lock(m_disply_mutex);
-		m_processing = processing;
+		m_processing_codes = processing;
+	}
+
+	void SummaryBoard::UpdateProcessingPath(const std::string &processing) {
+		std::lock_guard<std::mutex> lock(m_disply_mutex);
+		m_processing_path = processing;
 	}
 
 	void SummaryBoard::Flush()  {
@@ -39,14 +44,15 @@ namespace code_learning {
 		}
 		std::cout << "+" << std::endl;
 		std::cout << frame << std::endl << std::endl;
-		std::cout << "total codes:" << m_total_files_count << std::endl << std::endl;
-		std::cout << "finish codes:" << m_finished_files_count << std::endl << std::endl;
-		boost::progress_display progress(m_total_files_count, std::cout, "percent: ", "         ", "progress:");
-		progress += m_finished_files_count;
+		std::cout << "total codes:" << m_total_codes_count << std::endl << std::endl;
+		std::cout << "finish codes:" << m_finished_codes_count << std::endl << std::endl;
+		boost::progress_display progress(m_total_codes_count, std::cout, "percent: ", "         ", "progress:");
+		progress += m_finished_codes_count;
 		std::cout << std::endl << std::endl;
-		if (0 == m_total_files_count || m_finished_files_count < m_total_files_count) {
+		if (0 == m_total_codes_count || m_finished_codes_count < m_total_codes_count) {
 			std::lock_guard<std::mutex> lock(m_disply_mutex);
-			std::cout << "processing:" << m_processing << std::endl << std::endl;
+			std::cout << "module:" << m_processing_path << std::endl << std::endl;
+			std::cout << "codes:" << m_processing_codes << std::endl << std::endl;
 		}
 		else {
 			std::cout << "completed!" << std::endl << std::endl;

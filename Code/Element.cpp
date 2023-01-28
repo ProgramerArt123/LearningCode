@@ -1,10 +1,14 @@
-
+#include <boost/uuid/detail/md5.hpp>
+#include <boost/algorithm/hex.hpp>
 #include "Element.h"
 
 namespace code_learning {
 	namespace code {
 		ELEMENT_TYPE Element::GetType() const {
 			return m_type;
+		}
+		bool Element::ContentAppend(char next, const Glob &glob) {
+			return false;
 		}
 		bool Element::TryAppendChar(char next, const Glob &glob) {
 			return false;
@@ -16,7 +20,7 @@ namespace code_learning {
 			return false;
 		}
 		void Element::Decomposition(const Glob &glob) {
-
+			CalculateSignature();
 		}
 		size_t Element::GetChildrenCount()const {
 			return 0;
@@ -35,6 +39,17 @@ namespace code_learning {
 		}
 		std::string::const_iterator Element::end() const {
 			return m_content.end();
+		}
+		void Element::CalculateSignature()  {
+			char result[33]{ 0 };
+			const std::string &pattern = GetPattern();
+			boost::uuids::detail::md5 md5;
+			boost::uuids::detail::md5::digest_type digest;
+			md5.process_bytes(pattern.c_str(), pattern.length());
+			md5.get_digest(digest);
+			const auto charDigest = reinterpret_cast<const char *>(&digest);
+			boost::algorithm::hex(charDigest, charDigest + sizeof(boost::uuids::detail::md5::digest_type), result);
+			m_signature = result;
 		}
 	}
 }

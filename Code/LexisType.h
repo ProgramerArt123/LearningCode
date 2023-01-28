@@ -1,6 +1,8 @@
 #ifndef __CODE_LEARNING_CODE_LEXIS_TYPE_H__
 #define __CODE_LEARNING_CODE_LEXIS_TYPE_H__
 
+#include <string>
+
 namespace code_learning {
 	namespace code {
 		enum LEXIS_TYPE {
@@ -18,6 +20,8 @@ namespace code_learning {
 		};
 
 		LexisType lexisTypes[];
+
+		LEXIS_TYPE JudgeLexisType(const std::string &content);
 	}
 }
 
