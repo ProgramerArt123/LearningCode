@@ -12,12 +12,11 @@ namespace code_learning {
 			Range(uint64_t from, uint64_t to);
 
 			bool operator<(const Range &other) const;
-		
+			bool operator==(const Range &other) const;
+			bool operator<=(const Range &other) const;
 
-			bool IsSub(const std::set<Range> &super) const;
-
-			bool IsSub(const std::set<uint64_t> &super) const;
-
+			bool IsSub(const Range &super) const;
+			bool IsIntersection(const Range &other) const;
 
 			std::pair<uint64_t, uint64_t> m_limits;
 		};
@@ -31,7 +30,7 @@ namespace code_learning {
 
 			template<typename ...Elements>
 			void AddSingles(uint64_t element, Elements ...elements) {
-				m_singles.insert(element);
+				AddRanges(Range(element, element));
 				AddSingles(elements...);
 			}
 
@@ -47,16 +46,9 @@ namespace code_learning {
 
 			bool IsSub(const Set &super) const;
 
-			bool RangesIsSub(const Set &super) const;
-
-			bool SinglesIsSub(const Set &super) const;
-
-			bool IsSubSingle(uint64_t single, const std::set<Range> &super) const;
-
-			bool IsSubSingle(uint64_t single, const std::set<uint64_t> &super) const;
+			bool IsSuper(const Range &sub)const;
 
 		public:
-			std::set<uint64_t> m_singles;
 			std::set<Range> m_ranges;
 		};
 	}

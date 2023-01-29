@@ -20,41 +20,49 @@ namespace code_learning {
 			return false;
 		}
 
-
-		bool Range::IsSub(const std::set<Range> &super) const {
-			for (const auto &range : super) {
-				if (range.m_limits.first <= m_limits.first &&
-					m_limits.second <= range.m_limits.second) {
-					return true;
-				}
-			}
-			return false;
+		bool Range::operator==(const Range &other) const {
+			return m_limits.first == other.m_limits.first &&
+				m_limits.second == other.m_limits.second;
 		}
 
-		bool Range::IsSub(const std::set<uint64_t> &super) const {
-			for (uint64_t element = m_limits.first;
-				element <= m_limits.second; element++) {
-				if (super.find(element) == super.end()) {
-					return false;
-				}
-			}
-			return true;
+		bool Range::operator<=(const Range &other) const {
+			return *this < other || *this == other;
+		}
+
+		bool Range::IsSub(const Range &super) const {
+			return *this <= super;
+		}
+
+		bool Range::IsIntersection(const Range &other) const {
+			return !(m_limits.second < other.m_limits.first ||
+				other.m_limits.second < m_limits.first);
 		}
 
 		Set::Set(uint64_t max) {
-			m_ranges.insert(Range(1, max));
+			AddRanges(Range(1, max));
 		}
 
 		void Set::AddSingles(uint64_t element) {
-			m_singles.insert(element);
+			AddRanges(Range(element, element));
 		}
 		
-
 		void Set::AddRanges(const Range &range) {
+			for (auto &existed : m_ranges) {
+				if (range.IsSub(existed)) {
+					return;
+				}
+				if (range.IsIntersection(existed)) {
+					m_ranges.erase(existed);
+					uint64_t lower = range.m_limits.first < existed.m_limits.first ?
+						range.m_limits.first : existed.m_limits.first;
+					uint64_t upper = range.m_limits.second > existed.m_limits.second ?
+						range.m_limits.second : existed.m_limits.second;
+					m_ranges.insert(Range(lower, upper));
+					return;
+				}
+			}
 			m_ranges.insert(range);
 		}
-
-		
 
 		uint64_t Set::GetSize() const {
 			uint64_t size = 0;
@@ -67,55 +75,26 @@ namespace code_learning {
 			}
 			size = to - from + 1;
 
-			for (const auto &single : m_singles) {
-				if (!(from <= single && single <= to)) {
-					size++;
-				}
-			}
-
 			return size;
 		}
 
 		bool Set::IsSub(const Set &super) const {
-			return RangesIsSub(super) &&
-				SinglesIsSub(super);
-		}
-
-		bool Set::RangesIsSub(const Set &super) const {
 			for (const auto &range : m_ranges) {
-				if (!range.IsSub(super.m_ranges) &&
-					!range.IsSub(super.m_singles)) {
+				if (!super.IsSuper(range)) {
 					return false;
 				}
 			}
 			return true;
 		}
 
-		bool Set::SinglesIsSub(const Set &super) const {
-			for (const auto &single : m_singles) {
-				if (!IsSubSingle(single, super.m_ranges) &&
-					!IsSubSingle(single, super.m_singles)) {
-					return false;
-				}
-			}
-			return true;
-		}
-
-		bool Set::IsSubSingle(uint64_t single, const std::set<Range> &super) const {
-			for (const auto &range : super) {
-				if (range.m_limits.first <= single &&
-					single <= range.m_limits.second) {
+		bool Set::IsSuper(const Range &sub)const {
+			for (const auto &range : m_ranges) {
+				if (sub <= range) {
 					return true;
 				}
 			}
 			return false;
 		}
-
-		bool Set::IsSubSingle(uint64_t single, const std::set<uint64_t> &super) const {
-			return super.find(single) != super.end();
-		}
-
-
 	}
 
 }

@@ -7,6 +7,7 @@ namespace code_learning {
 			m_is_valid = m_samples.IsSub(m_space.m_samples);
 			if (!m_is_valid) {
 				m_samples.m_ranges.clear();
+				perror("Event invalid!");
 			}
 		}
 
