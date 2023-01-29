@@ -21,24 +21,22 @@ namespace code_learning {
 		public:
 			explicit CodeLearning(const char *name);
 
-			template<typename T>
-			void SetIgnores(T ignore) {
+			void SetIgnores(char ignore) {
 				m_cfg.ignores.insert(ignore);
 			}
 
-			template<typename T, typename ...Ts>
-			void SetIgnores(T ignore, Ts ...ignores) {
+			template<typename ...IGNORES>
+			void SetIgnores(char ignore, IGNORES ...ignores) {
 				m_cfg.ignores.insert(ignore);
 				SetIgnores(ignores...);
 			}
 
-			template<typename T>
-			void SetSplits(T split) {
+			void SetSplits(char split) {
 				m_cfg.splits.insert(split);
 			}
 
-			template<typename T, typename ...Ts>
-			void SetSplits(T split, Ts ...splits) {
+			template<typename ...SPLITS>
+			void SetSplits(char split, SPLITS ...splits) {
 				m_cfg.splits.insert(split);
 				SetSplits(splits...);
 			}

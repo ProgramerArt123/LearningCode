@@ -12,25 +12,23 @@ namespace code_learning {
 			SourceFileBatch():Source("[batch]"){
 			}
 
-			template<typename T>
-			SourceFileBatch(T file) {
-				AddSourceFiles(file);
+			SourceFileBatch(const std::string &fileName) :Source("[batch]") {
+				AddSourceFiles(fileName);
 			}
 
-			template<typename T, typename ...Ts>
-			SourceFileBatch(T file, Ts ...files) {
-				AddSourceFiles(file, files...);
+			template<typename ...FILENAMES>
+			SourceFileBatch(const std::string &fileName, const FILENAMES &...fileNames) {
+				AddSourceFiles(fileName, fileNames...);
 			}
 
-			template<typename T>
-			void AddSourceFiles(T file) {
-				m_files.push_back(std::unique_ptr<SourceFile>(new SourceFile(file)));
+			void AddSourceFiles(const std::string &fileName) {
+				m_files.push_back(std::unique_ptr<SourceFile>(new SourceFile(fileName)));
 			}
 
-			template<typename T, typename ...Ts>
-			void AddSourceFiles(T file, Ts ...files) {
-				m_files.push_back(std::unique_ptr<SourceFile>(new SourceFile(file)));
-				AddSourceFiles(files...);
+			template<typename ...FILENAMES>
+			void AddSourceFiles(const std::string &fileName, FILENAMES ...fileNames) {
+				m_files.push_back(std::unique_ptr<SourceFile>(new SourceFile(fileName)));
+				AddSourceFiles(fileNames...);
 			}
 
 			uint64_t Scan(const Glob &glob) override {

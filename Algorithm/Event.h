@@ -1,25 +1,21 @@
 #ifndef __CODE_LEARNING_ALGORITHM_EVENT_H__
 #define __CODE_LEARNING_ALGORITHM_EVENT_H__
 
-#include "Set.h"
+#include "SampleSpace.h"
 
 namespace code_learning {
 
 	namespace algorithm {
 		
-		class Event {
+		class Event : public SampleSpace {
 		public:
-			explicit Event(uint64_t count):m_samples(count){
+			Event(uint64_t count, const SampleSpace &space);
 
-			}
+			Event operator!()const;
 
-			Event operator!() {
-				Event complement = *this;
-				complement.m_is_complement = true;
-				return complement;
-			}
+			bool m_is_valid = false;
 
-			Set m_samples;
+			const SampleSpace &m_space;
 		private:
 			bool m_is_complement = false;
 		};

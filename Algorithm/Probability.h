@@ -7,21 +7,14 @@ namespace code_learning {
 
 	namespace algorithm {
 
-		
 		class Probability {
 		public:
-			Probability(uint64_t more, uint64_t all):
-				m_more(more), m_all(all) {
+			Probability(uint64_t part, uint64_t all);
 
-			}
-
-			bool operator<(const Probability &other) const{
-				return m_more.m_samples.GetSize() * other.m_all.m_samples.GetSize() <
-					m_all.m_samples.GetSize() * other.m_more.m_samples.GetSize();
-			}
-
-			Event m_more;
-			Event m_all;
+			bool operator<(const Probability &other) const;
+			
+			SampleSpace m_all;
+			Event m_part;
 		};
 	}
 

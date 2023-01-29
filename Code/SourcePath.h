@@ -19,13 +19,13 @@ namespace code_learning {
 			bool ContentAppend(char next, const Glob &glob) override;
 			void Decomposition(const Glob &glob) override;
 			void CallBack(std::function<void(const code::Element &)> factor) const override;
-			template<typename T>
-			void AddSuffixNames(T name) {
+			
+			void AddSuffixNames(const std::string &name) {
 				m_suffix_names.insert(name);
 			}
 
-			template<typename T, typename ...Ts>
-			void AddSuffixNames(T name, Ts ...names) {
+			template<typename ...NAMES>
+			void AddSuffixNames(const std::string &name, const NAMES &...names) {
 				m_suffix_names.insert(name);
 				AddSuffixNames(names...);
 			}
