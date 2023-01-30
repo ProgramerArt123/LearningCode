@@ -56,15 +56,8 @@ namespace code_learning {
 				m_all.m_samples.GetCardinality() * other.m_part.m_samples.GetCardinality();
 		}
 		Rational Probability::operator()(const Event &event) {
-			if (!event.IsComplement()) {
-				return Rational(event.m_samples.GetCardinality(),
-					event.m_space.m_samples.GetCardinality());
-			}
-			else {
-				return Rational(event.m_space.m_samples.GetCardinality() -
-					event.m_samples.GetCardinality(),
-					event.m_space.m_samples.GetCardinality());
-			}
+			return Rational(event.m_samples.GetCardinality(),
+				event.m_space.m_samples.GetCardinality());
 		}
 	}
 

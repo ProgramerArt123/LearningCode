@@ -15,7 +15,6 @@ int main() {
 		algorithm::SampleSpace S;
 		algorithm::Event A(123, S);
 		algorithm::Probability P;
-		algorithm::Rational CERTAIN(1);
 		BOOST_ASSERT(P(A) == CERTAIN - P(!A) && "Complementary Events");
 	}
 	statistics::CodeLearning student("CPP");

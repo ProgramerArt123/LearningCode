@@ -17,20 +17,20 @@ namespace code_learning {
 
 		class Event : public SampleSpace {
 		public:
+			Event(const SampleSpace &space);
+
 			Event(uint64_t count, const SampleSpace &space);
 			
 			Event &operator=(const Event &prototype);
 
-			Event operator!()const;
+			Event &operator-=(const Event &other);
 
-			bool IsComplement() const;
+			Event operator!()const;
 
 			EVENT_TYPE m_type = EVENT_TYPE_NONE;
 
 			const SampleSpace &m_space;
 
-		private:
-			bool m_is_complement = false;
 		};
 	}
 

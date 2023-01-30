@@ -50,6 +50,8 @@ namespace code_learning {
 
 			bool IsSuper(const Range &sub)const;
 
+			void Difference(const Range &range);
+
 		public:
 			std::set<Range> m_ranges;
 		};

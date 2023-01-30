@@ -19,6 +19,8 @@ namespace code_learning {
 			bool m_positive = true;
 		};
 
+#define CERTAIN algorithm::Rational(1)
+
 		class Probability {
 		public:
 			Probability();

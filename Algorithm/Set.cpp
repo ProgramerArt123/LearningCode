@@ -43,7 +43,9 @@ namespace code_learning {
 		}
 
 		Set::Set(uint64_t max) {
-			AddRanges(Range(1, max));
+			if (max > 1) {
+				AddRanges(Range(1, max));
+			}
 		}
 
 		void Set::AddSingles(uint64_t element) {
@@ -56,11 +58,11 @@ namespace code_learning {
 					return;
 				}
 				if (range.IsIntersection(existed)) {
-					m_ranges.erase(existed);
 					uint64_t lower = range.m_limits.first < existed.m_limits.first ?
 						range.m_limits.first : existed.m_limits.first;
 					uint64_t upper = range.m_limits.second > existed.m_limits.second ?
 						range.m_limits.second : existed.m_limits.second;
+					m_ranges.erase(existed);
 					m_ranges.insert(Range(lower, upper));
 					return;
 				}
@@ -92,6 +94,23 @@ namespace code_learning {
 				}
 			}
 			return false;
+		}
+
+		void Set::Difference(const Range &range) {
+			for (const auto &existed : m_ranges) {
+				if (range.IsIntersection(existed)) {
+					if (existed.m_limits.first < range.m_limits.first) {
+						m_ranges.insert(Range(existed.m_limits.first, 
+							range.m_limits.first - 1));
+					}
+					if (existed.m_limits.second > range.m_limits.second) {
+						m_ranges.insert(Range(range.m_limits.second + 1,
+							existed.m_limits.second));
+					}
+					m_ranges.erase(existed);
+					break;
+				}
+			}
 		}
 	}
 
