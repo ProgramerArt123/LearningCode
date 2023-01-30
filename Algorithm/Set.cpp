@@ -8,6 +8,10 @@ namespace code_learning {
 			m_limits.second = from > to ? from : to;
 		}
 
+		uint64_t Range::GetSize() const {
+			return m_limits.second - m_limits.first + 1;
+		}
+
 		bool Range::operator<(const Range &other) const {
 			if (m_limits.first >= other.m_limits.first &&
 				m_limits.second < other.m_limits.second) {
@@ -64,18 +68,12 @@ namespace code_learning {
 			m_ranges.insert(range);
 		}
 
-		uint64_t Set::GetSize() const {
-			uint64_t size = 0;
-
-			uint64_t from = UINT64_MAX;
-			uint64_t to = 0;
+		uint64_t Set::GetCardinality() const {
+			uint64_t cardinality = 0;
 			for (const auto &range : m_ranges) {
-				from = range.m_limits.first < from ? range.m_limits.first : from;
-				to = range.m_limits.second > to ? range.m_limits.second : to;
+				cardinality += range.GetSize();
 			}
-			size = to - from + 1;
-
-			return size;
+			return cardinality;
 		}
 
 		bool Set::IsSub(const Set &super) const {

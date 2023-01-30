@@ -11,6 +11,8 @@ namespace code_learning {
 		public:
 			Range(uint64_t from, uint64_t to);
 
+			uint64_t GetSize() const;
+
 			bool operator<(const Range &other) const;
 			bool operator==(const Range &other) const;
 			bool operator<=(const Range &other) const;
@@ -42,7 +44,7 @@ namespace code_learning {
 				AddRanges(ranges...);
 			}
 
-			uint64_t GetSize() const;
+			uint64_t GetCardinality() const;
 
 			bool IsSub(const Set &super) const;
 

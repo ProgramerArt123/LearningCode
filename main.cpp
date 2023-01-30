@@ -1,4 +1,4 @@
-
+#include <boost/assert.hpp>
 #include "Statistics/CodeLearning.h"
 #include "Code/SourceFile.h"
 #include "Code/SourceFileBatch.hpp"
@@ -10,6 +10,14 @@
 using namespace code_learning;
 
 int main() {
+	{
+#include "Algorithm/Probability.h"
+		algorithm::SampleSpace S;
+		algorithm::Event A(123, S);
+		algorithm::Probability P;
+		algorithm::Rational CERTAIN(1);
+		BOOST_ASSERT(P(A) == CERTAIN - P(!A) && "Complementary Events");
+	}
 	statistics::CodeLearning student("CPP");
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
 	student.SetIgnores(' ', '\n', '\r', '\t');

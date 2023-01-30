@@ -9,7 +9,7 @@ namespace code_learning {
 		
 		class SampleSpace {
 		public:
-			explicit SampleSpace(uint64_t count);
+			explicit SampleSpace(uint64_t count = UINT64_MAX);
 
 			Set m_samples;
 		

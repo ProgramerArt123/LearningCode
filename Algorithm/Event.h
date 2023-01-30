@@ -7,15 +7,28 @@ namespace code_learning {
 
 	namespace algorithm {
 		
+		enum EVENT_TYPE
+		{
+			EVENT_TYPE_NONE,
+			EVENT_TYPE_POSSIBLE,
+			EVENT_TYPE_CERTAIN,
+			EVENT_TYPE_IMPOSSIBLE
+		};
+
 		class Event : public SampleSpace {
 		public:
 			Event(uint64_t count, const SampleSpace &space);
+			
+			Event &operator=(const Event &prototype);
 
 			Event operator!()const;
 
-			bool m_is_valid = false;
+			bool IsComplement() const;
+
+			EVENT_TYPE m_type = EVENT_TYPE_NONE;
 
 			const SampleSpace &m_space;
+
 		private:
 			bool m_is_complement = false;
 		};
