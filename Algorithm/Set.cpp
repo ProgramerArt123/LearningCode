@@ -96,22 +96,32 @@ namespace code_learning {
 			return false;
 		}
 
-		void Set::Difference(const Range &range) {
-			for (const auto &existed : m_ranges) {
-				if (range.IsIntersection(existed)) {
-					if (existed.m_limits.first < range.m_limits.first) {
-						m_ranges.insert(Range(existed.m_limits.first, 
-							range.m_limits.first - 1));
+		Set Set::operator-(const Set &other)const {
+			Set difference(*this);
+			for (const auto &range : other.m_ranges) {
+				for (const auto &existed : difference.m_ranges) {
+					if (range.IsIntersection(existed)) {
+						if (existed.m_limits.first < range.m_limits.first) {
+							difference.m_ranges.insert(Range(existed.m_limits.first,
+								range.m_limits.first - 1));
+						}
+						if (existed.m_limits.second > range.m_limits.second) {
+							difference.m_ranges.insert(Range(range.m_limits.second + 1,
+								existed.m_limits.second));
+						}
+						difference.m_ranges.erase(existed);
+						break;
 					}
-					if (existed.m_limits.second > range.m_limits.second) {
-						m_ranges.insert(Range(range.m_limits.second + 1,
-							existed.m_limits.second));
-					}
-					m_ranges.erase(existed);
-					break;
 				}
 			}
+			return difference;
 		}
+
+		Set &Set::operator-=(const Set &other) {
+			*this = *this - other;
+			return *this;
+		}
+
 	}
 
 }

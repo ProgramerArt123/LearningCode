@@ -11,8 +11,11 @@ namespace code_learning {
 		public :
 			Rational(uint64_t integer, bool positive = true);
 			Rational(uint64_t numerator, uint64_t denominator, bool positive = true);
+			Rational operator-() const;
+			bool operator<(const Rational &other) const;
 			bool operator==(const Rational &other) const;
 			Rational operator-(const Rational &other) const;
+			Rational operator+(const Rational &other) const;
 			static uint64_t GCD(uint64_t a, uint64_t b);
 			uint64_t m_numerator = 0;
 			uint64_t m_denominator = UINT64_MAX;
@@ -28,7 +31,8 @@ namespace code_learning {
 
 			bool operator<(const Probability &other) const;
 			bool operator==(const Probability &other) const;
-			Rational operator()(const Event &event);
+			Rational operator()()const;
+			Rational operator()(const Event &event)const;
 
 			SampleSpace m_all;
 			Event m_part;

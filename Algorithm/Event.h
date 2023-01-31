@@ -17,13 +17,19 @@ namespace code_learning {
 
 		class Event : public SampleSpace {
 		public:
+			Event(const Event &prototype);
+
 			Event(const SampleSpace &space);
 
 			Event(uint64_t count, const SampleSpace &space);
 			
 			Event &operator=(const Event &prototype);
 
+			Event operator-(const Event &other) const;
+
 			Event &operator-=(const Event &other);
+
+			Event operator&(const Event &other)const;
 
 			Event operator!()const;
 
