@@ -16,6 +16,8 @@ namespace code_learning {
 			bool operator==(const Rational &other) const;
 			Rational operator-(const Rational &other) const;
 			Rational operator+(const Rational &other) const;
+			Rational PositiveAdd(const Rational &other) const;
+			Rational PositiveSub(const Rational &other) const;
 			static uint64_t GCD(uint64_t a, uint64_t b);
 			uint64_t m_numerator = 0;
 			uint64_t m_denominator = UINT64_MAX;

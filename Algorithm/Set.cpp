@@ -118,10 +118,20 @@ namespace code_learning {
 		}
 
 		Set &Set::operator-=(const Set &other) {
-			*this = *this - other;
-			return *this;
+			return *this = *this - other;
 		}
 
+		Set Set::operator+(const Set &other)const {
+			Set unions(*this);
+			for (const auto &range : other.m_ranges) {
+				unions.AddRanges(range);
+			}
+			return unions;
+		}
+
+		Set &Set::operator+=(const Set &other) {
+			return *this = *this + other;
+		}
 	}
 
 }

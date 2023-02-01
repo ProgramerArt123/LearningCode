@@ -54,6 +54,10 @@ namespace code_learning {
 
 			Set &operator-=(const Set &other);
 
+			Set operator+(const Set &other)const;
+
+			Set &operator+=(const Set &other);
+
 		public:
 			std::set<Range> m_ranges;
 		};

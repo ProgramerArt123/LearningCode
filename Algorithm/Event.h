@@ -22,12 +22,16 @@ namespace code_learning {
 			Event(const SampleSpace &space);
 
 			Event(uint64_t count, const SampleSpace &space);
+
+			void SetType();
 			
 			Event &operator=(const Event &prototype);
 
 			Event operator-(const Event &other) const;
 
 			Event &operator-=(const Event &other);
+
+			Event operator+(const Event &other) const;
 
 			Event operator&(const Event &other)const;
 

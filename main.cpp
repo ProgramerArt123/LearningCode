@@ -21,8 +21,11 @@ int main() {
 		BOOST_ASSERT(CERTAIN == P(A) + P(!A) && "Complementary Events--2");
 		BOOST_ASSERT(CERTAIN - P(A) == P(!A) && "Complementary Events--3");
 
-		BOOST_ASSERT(P(A - B) == P(A) - P(A&B) && "Intersection Events--1");
-		BOOST_ASSERT(P(A - B) + P(A) == P(B&A) && "Intersection Events--2");
+		BOOST_ASSERT(P(A - B) == P(A) - P(A&B) && "Difference Events--1");
+		BOOST_ASSERT(P(A - B) + P(A) == P(B&A) && "Difference Events--2");
+
+		BOOST_ASSERT(P(A + B) == P(A) + P(B) - P(B&A) && "Unions Events--1");
+		BOOST_ASSERT(P(B + A) + P(A&B) == P(B) + P(A) && "Unions Events--2");
 	}
 	statistics::CodeLearning student("CPP");
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
