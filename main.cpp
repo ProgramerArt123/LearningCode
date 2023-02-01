@@ -16,6 +16,8 @@ int main() {
 		algorithm::Event A(123, S);
 		algorithm::Probability P;
 		algorithm::Event B(456, S);
+		algorithm::Event C(0, S);
+		C.m_samples.AddRanges(algorithm::Range(666, 888));
 
 		BOOST_ASSERT(P(A) == CERTAIN - P(!A) && "Complementary Events--1");
 		BOOST_ASSERT(CERTAIN == P(A) + P(!A) && "Complementary Events--2");
@@ -26,6 +28,9 @@ int main() {
 
 		BOOST_ASSERT(P(A + B) == P(A) + P(B) - P(B&A) && "Unions Events--1");
 		BOOST_ASSERT(P(B + A) + P(A&B) == P(B) + P(A) && "Unions Events--2");
+
+		BOOST_ASSERT(P(B + C) == P(B) + P(C) && "Disjoint Events--1");
+		BOOST_ASSERT(P(C + B) - P(B) ==  P(C) && "Disjoint Events--2");
 	}
 	statistics::CodeLearning student("CPP");
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');

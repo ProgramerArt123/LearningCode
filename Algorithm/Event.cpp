@@ -47,7 +47,6 @@ namespace code_learning {
 		Event Event::operator+(const Event &other) const {
 			Event unions(*this);
 			unions.m_samples += other.m_samples;
-			unions.m_samples += other.m_samples;
 			unions.SetType();
 			return unions;
 		}

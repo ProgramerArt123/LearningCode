@@ -13,15 +13,8 @@ namespace code_learning {
 		}
 
 		bool Range::operator<(const Range &other) const {
-			if (m_limits.first >= other.m_limits.first &&
-				m_limits.second < other.m_limits.second) {
-				return true;
-			}
-			if (m_limits.first > other.m_limits.first &&
-				m_limits.second <= other.m_limits.second) {
-				return true;
-			}
-			return false;
+			return m_limits.second - m_limits.first <
+				other.m_limits.second - other.m_limits.first;
 		}
 
 		bool Range::operator==(const Range &other) const {
@@ -34,7 +27,8 @@ namespace code_learning {
 		}
 
 		bool Range::IsSub(const Range &super) const {
-			return *this <= super;
+			return (m_limits.first >= super.m_limits.first &&
+				m_limits.second <= super.m_limits.second);
 		}
 
 		bool Range::IsIntersection(const Range &other) const {
