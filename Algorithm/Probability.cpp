@@ -5,11 +5,13 @@ namespace code_learning {
 	namespace algorithm {
 		Rational::Rational(uint64_t integer, bool positive) :
 			m_numerator(integer), m_denominator(1), m_positive(positive) {
-
 		}
 		Rational::Rational(uint64_t numerator, uint64_t denominator, bool positive):
 			m_numerator(numerator), m_denominator(denominator), m_positive(positive){
 			assert(m_denominator);
+			uint64_t common = GCD(m_numerator, m_denominator);
+			m_numerator /= common;
+			m_denominator /= common;
 		}
 		Rational Rational::operator-() const {
 			return Rational(m_numerator, m_denominator, !m_positive);
@@ -36,6 +38,24 @@ namespace code_learning {
 			return selfNumerator == otherNumerator && 
 				(m_positive == other.m_positive || 0 == selfNumerator);
 		}
+		Rational Rational::operator+(const Rational &other) const {
+			if (m_positive) {
+				if (other.m_positive) {
+					return PositiveAdd(other);
+				}
+				else {
+					return PositiveSub(other);
+				}
+			}
+			else {
+				if (other.m_positive) {
+					return other.PositiveSub(*this);
+				}
+				else {
+					return -PositiveAdd(other);
+				}
+			}
+		}
 		Rational Rational::operator-(const Rational &other) const {
 			if (m_positive) {
 				if (other.m_positive) {
@@ -54,23 +74,26 @@ namespace code_learning {
 				}
 			}
 		}
-		Rational Rational::operator+(const Rational &other) const {
-			if (m_positive) {
-				if (other.m_positive) {
-					return PositiveAdd(other);
-				}
-				else {
-					return PositiveSub(other);
-				}
+		Rational Rational::operator*(const Rational &other) const {
+			uint64_t selfNumerator = 0;
+			uint64_t otherNumerator = 0;
+			uint64_t selfDenominator = UINT64_MAX;
+			uint64_t otherDenominator = UINT64_MAX;
+			{
+				uint64_t common = GCD(m_numerator, other.m_denominator);
+				selfNumerator = m_numerator / common;
+				otherDenominator = other.m_denominator / common;
 			}
-			else {
-				if (other.m_positive) {
-					return other.PositiveSub(*this);
-				}
-				else {
-					return -PositiveAdd(other);
-				}
+			{
+				uint64_t common = GCD(m_denominator, other.m_numerator);
+				selfDenominator = m_denominator / common;
+				otherNumerator = other.m_numerator / common;
 			}
+			return Rational(selfNumerator * otherNumerator,
+				selfDenominator * otherDenominator);
+		}
+		Rational &Rational::operator*=(const Rational &other) {
+			return *this = *this * other;
 		}
 		Rational Rational::PositiveAdd(const Rational &other) const {
 			if (!m_positive || !other.m_positive) {
@@ -122,12 +145,10 @@ namespace code_learning {
 			return (*this)() == other();
 		}
 		Rational Probability::operator()()const {
-			return Rational(m_part.m_samples.GetCardinality(),
-				m_all.m_samples.GetCardinality());
+			return (*this)(m_part);
 		}
 		Rational Probability::operator()(const Event &event)const {
-			return Rational(event.m_samples.GetCardinality(),
-				event.m_space.m_samples.GetCardinality());
+			return event.GetRational();
 		}
 	}
 

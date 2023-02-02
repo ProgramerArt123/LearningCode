@@ -14,8 +14,10 @@ namespace code_learning {
 			Rational operator-() const;
 			bool operator<(const Rational &other) const;
 			bool operator==(const Rational &other) const;
-			Rational operator-(const Rational &other) const;
 			Rational operator+(const Rational &other) const;
+			Rational operator-(const Rational &other) const;
+			Rational operator*(const Rational &other) const;
+			Rational &operator*=(const Rational &other);
 			Rational PositiveAdd(const Rational &other) const;
 			Rational PositiveSub(const Rational &other) const;
 			static uint64_t GCD(uint64_t a, uint64_t b);

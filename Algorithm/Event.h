@@ -7,6 +7,8 @@ namespace code_learning {
 
 	namespace algorithm {
 		
+		class Rational;
+
 		enum EVENT_TYPE
 		{
 			EVENT_TYPE_NONE,
@@ -15,7 +17,7 @@ namespace code_learning {
 			EVENT_TYPE_IMPOSSIBLE
 		};
 
-		class Event : public SampleSpace {
+		class Event {
 		public:
 			Event(const Event &prototype);
 
@@ -37,9 +39,13 @@ namespace code_learning {
 
 			Event operator!()const;
 
+			virtual Rational GetRational() const;
+
 			EVENT_TYPE m_type = EVENT_TYPE_NONE;
 
 			const SampleSpace &m_space;
+
+			SampleSpace m_samples;
 
 		};
 	}
