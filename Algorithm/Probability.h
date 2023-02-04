@@ -7,27 +7,6 @@ namespace code_learning {
 
 	namespace algorithm {
 
-		class Rational {
-		public :
-			Rational(uint64_t integer, bool positive = true);
-			Rational(uint64_t numerator, uint64_t denominator, bool positive = true);
-			Rational operator-() const;
-			bool operator<(const Rational &other) const;
-			bool operator==(const Rational &other) const;
-			Rational operator+(const Rational &other) const;
-			Rational operator-(const Rational &other) const;
-			Rational operator*(const Rational &other) const;
-			Rational &operator*=(const Rational &other);
-			Rational PositiveAdd(const Rational &other) const;
-			Rational PositiveSub(const Rational &other) const;
-			static uint64_t GCD(uint64_t a, uint64_t b);
-			uint64_t m_numerator = 0;
-			uint64_t m_denominator = UINT64_MAX;
-			bool m_positive = true;
-		};
-
-#define CERTAIN algorithm::Rational(1)
-
 		class Probability {
 		public:
 			Probability();

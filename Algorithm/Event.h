@@ -1,14 +1,13 @@
 #ifndef __CODE_LEARNING_ALGORITHM_EVENT_H__
 #define __CODE_LEARNING_ALGORITHM_EVENT_H__
 
+#include "Rational.h"
 #include "SampleSpace.h"
 
 namespace code_learning {
 
 	namespace algorithm {
 		
-		class Rational;
-
 		enum EVENT_TYPE
 		{
 			EVENT_TYPE_NONE,
@@ -17,11 +16,13 @@ namespace code_learning {
 			EVENT_TYPE_IMPOSSIBLE
 		};
 
-		class Event {
+		class Event : public SampleSpace{
 		public:
 			Event(const Event &prototype);
 
 			Event(const SampleSpace &space);
+
+			Event(const Event &prototype, const SampleSpace &space);
 
 			Event(uint64_t count, const SampleSpace &space);
 
@@ -37,6 +38,8 @@ namespace code_learning {
 
 			Event operator&(const Event &other)const;
 
+			Event operator|(const Event &other) const;
+
 			Event operator!()const;
 
 			virtual Rational GetRational() const;
@@ -45,9 +48,9 @@ namespace code_learning {
 
 			const SampleSpace &m_space;
 
-			SampleSpace m_samples;
-
 		};
+
+
 	}
 
 }

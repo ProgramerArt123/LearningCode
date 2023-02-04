@@ -9,6 +9,7 @@ namespace code_learning {
 	namespace algorithm {
 		class IndependentEvent : public Event{
 		public:
+			IndependentEvent();
 			IndependentEvent(uint64_t count, const SampleSpace &space);
 			IndependentEvent operator&(const IndependentEvent &other)const;
 			Rational GetRational() const override;

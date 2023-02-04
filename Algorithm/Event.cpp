@@ -1,3 +1,4 @@
+#include <cassert>
 #include "Probability.h"
 #include "Event.h"
 
@@ -9,21 +10,25 @@ namespace code_learning {
 		}
 		Event::Event(const SampleSpace &space):m_space(space){
 			m_type = EVENT_TYPE_CERTAIN;
-			m_samples.m_samples = m_space.m_samples;
+			m_samples = m_space.m_samples;
+		}
+		Event::Event(const Event &prototype, const SampleSpace &space) : m_space(space) {
+			*this = prototype;
+			SetType();
 		}
 		Event::Event(uint64_t count, const SampleSpace &space) :
-			m_samples(count), m_space(space) {
-			if (!m_samples.m_samples.IsSub(m_space.m_samples)) {
-				m_samples.m_samples.m_ranges.clear();
+			SampleSpace(count), m_space(space) {
+			if (!m_samples.IsSub(m_space.m_samples)) {
+				m_samples.m_ranges.clear();
 			}
 			SetType();
 		}
 
 		void Event::SetType() {
-			if (0 == m_samples.m_samples.GetCardinality()) {
+			if (0 == m_samples.GetCardinality()) {
 				m_type = EVENT_TYPE_IMPOSSIBLE;
 			}
-			else if (m_samples.m_samples.GetCardinality() <
+			else if (m_samples.GetCardinality() <
 				m_space.m_samples.GetCardinality()) {
 				m_type = EVENT_TYPE_POSSIBLE;
 			}
@@ -39,15 +44,17 @@ namespace code_learning {
 		}
 
 		Event Event::operator-(const Event &other) const{
+			assert(&m_space == &other.m_space);
 			Event difference(*this);
-			difference.m_samples.m_samples -= other.m_samples.m_samples;
+			difference.m_samples -= other.m_samples;
 			difference.SetType();
 			return difference;
 		}
 
 		Event Event::operator+(const Event &other) const {
+			assert(&m_space == &other.m_space);
 			Event unions(*this);
-			unions.m_samples.m_samples += other.m_samples.m_samples;
+			unions.m_samples += other.m_samples;
 			unions.SetType();
 			return unions;
 		}
@@ -57,8 +64,13 @@ namespace code_learning {
 		}
 
 		Event Event::operator&(const Event &other)const {
-			const Event &difference = *this - other;
-			return *this - difference;
+			assert(&m_space == &other.m_space);
+			return *this - (*this - other);
+		}
+
+		Event Event::operator|(const Event &other) const {
+			assert(&m_space == &other.m_space);
+			return Event(*this&other, other);
 		}
 
 		Event Event::operator!()const {
@@ -67,7 +79,7 @@ namespace code_learning {
 		}
 		
 		Rational Event::GetRational() const {
-			return Rational(m_samples.m_samples.GetCardinality(),
+			return Rational(m_samples.GetCardinality(),
 				m_space.m_samples.GetCardinality());
 		}
 	}
