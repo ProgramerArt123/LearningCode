@@ -37,7 +37,7 @@ namespace code_learning {
 		}
 
 		Set::Set(uint64_t max) {
-			if (max > 1) {
+			if (max) {
 				AddRanges(Range(1, max));
 			}
 		}

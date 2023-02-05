@@ -4,8 +4,11 @@
 
 namespace code_learning {
 	namespace algorithm {
+		Event::Event() : SampleSpace(1), m_space(*this) {
+			m_type = EVENT_TYPE_CERTAIN;
+		}
 		Event::Event(const Event &prototype) :
-			m_space(prototype.m_space) {
+			m_space(&prototype.m_space!=&prototype?prototype.m_space:*this) {
 			*this = prototype;
 		}
 		Event::Event(const SampleSpace &space):m_space(space){
@@ -40,6 +43,7 @@ namespace code_learning {
 		Event &Event::operator=(const Event &prototype) {
 			m_samples = prototype.m_samples;
 			m_type = prototype.m_type;
+			m_independents = prototype.m_independents;
 			return *this;
 		}
 
@@ -64,8 +68,15 @@ namespace code_learning {
 		}
 
 		Event Event::operator&(const Event &other)const {
-			assert(&m_space == &other.m_space);
-			return *this - (*this - other);
+			if (&m_space == &other.m_space) {
+				return *this - (*this - other);
+			}
+			else {
+				Event independent;
+				independent.m_independents.insert(dynamic_cast<const Event *>(this));
+				independent.m_independents.insert(dynamic_cast<const Event *>(&other));
+				return independent;
+			}
 		}
 
 		Event Event::operator|(const Event &other) const {
@@ -74,13 +85,16 @@ namespace code_learning {
 		}
 
 		Event Event::operator!()const {
-			const Event space(m_space);
-			return space - *this;
+			return Event(m_space) - *this;
 		}
 		
 		Rational Event::GetRational() const {
-			return Rational(m_samples.GetCardinality(),
+			Rational rational(m_samples.GetCardinality(),
 				m_space.m_samples.GetCardinality());
+			for (const auto &independent : m_independents) {
+				rational *= independent->GetRational();
+			}
+			return rational;
 		}
 	}
 }

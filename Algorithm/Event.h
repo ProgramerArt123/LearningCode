@@ -18,6 +18,8 @@ namespace code_learning {
 
 		class Event : public SampleSpace{
 		public:
+			Event();
+
 			Event(const Event &prototype);
 
 			Event(const SampleSpace &space);
@@ -48,6 +50,7 @@ namespace code_learning {
 
 			const SampleSpace &m_space;
 
+			std::set<const Event *> m_independents;
 		};
 
 

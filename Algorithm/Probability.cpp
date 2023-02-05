@@ -10,9 +10,6 @@ namespace code_learning {
 		}
 		Probability::Probability(uint64_t part, uint64_t all) :
 			m_all(all), m_part(part, m_all) {
-			if (EVENT_TYPE_IMPOSSIBLE == m_part.m_type) {
-				perror("EVENT_TYPE_IMPOSSIBLE");
-			}
 		}
 		
 		bool Probability::operator<(const Probability &other) const {
