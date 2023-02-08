@@ -101,7 +101,13 @@ namespace code_learning {
 
 		void Event::GetIndependents(std::map<const SampleSpace *, Event> &wrapper) const {
 			if (m_independents.empty()) {
-				wrapper.insert(std::make_pair(&m_space, *this));
+				if (wrapper.find(&m_space) == wrapper.end()) {
+					wrapper.insert(std::make_pair(&m_space, *this));
+				}
+				else {
+					wrapper.at(&m_space) = wrapper.at(&m_space) -
+						(wrapper.at(&m_space) - *this);
+				}
 			}
 			else {
 				for (const auto &independent : m_independents) {
@@ -109,7 +115,8 @@ namespace code_learning {
 						wrapper.insert(independent);
 					}
 					else {
-						wrapper.at(independent.first) -= independent.second;
+						wrapper.at(independent.first) = wrapper.at(independent.first) - 
+							(wrapper.at(independent.first) - independent.second);
 					}
 				}
 			}
