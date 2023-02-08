@@ -1,6 +1,8 @@
 #ifndef __CODE_LEARNING_ALGORITHM_EVENT_H__
 #define __CODE_LEARNING_ALGORITHM_EVENT_H__
 
+#include <map>
+
 #include "Rational.h"
 #include "SampleSpace.h"
 
@@ -28,6 +30,8 @@ namespace code_learning {
 
 			Event(uint64_t count, const SampleSpace &space);
 
+			Event(const Event &independentA, const Event &independentB);
+
 			void SetType();
 			
 			Event &operator=(const Event &prototype);
@@ -46,11 +50,13 @@ namespace code_learning {
 
 			virtual Rational GetRational() const;
 
+			void GetIndependents(std::map<const SampleSpace *, Event> &wrapper) const;
+
 			EVENT_TYPE m_type = EVENT_TYPE_NONE;
 
 			const SampleSpace &m_space;
 
-			std::set<const Event *> m_independents;
+			std::map<const SampleSpace *, Event> m_independents;
 		};
 
 
