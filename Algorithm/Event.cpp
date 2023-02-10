@@ -53,7 +53,7 @@ namespace code_learning {
 		}
 
 		Event Event::operator-(const Event &other) const{
-			assert(&m_space == &other.m_space);
+			assert(&m_space == &other.m_space || IsIndependentSamplesEqual(other));
 			Event difference(*this);
 			difference.m_samples -= other.m_samples;
 			difference.SetType();
@@ -61,7 +61,7 @@ namespace code_learning {
 		}
 
 		Event Event::operator+(const Event &other) const {
-			assert(&m_space == &other.m_space);
+			assert(&m_space == &other.m_space || IsIndependentSamplesEqual(other));
 			Event unions(*this);
 			unions.m_samples += other.m_samples;
 			unions.SetType();
@@ -101,25 +101,37 @@ namespace code_learning {
 
 		void Event::GetIndependents(std::map<const SampleSpace *, Event> &wrapper) const {
 			if (m_independents.empty()) {
-				if (wrapper.find(&m_space) == wrapper.end()) {
-					wrapper.insert(std::make_pair(&m_space, *this));
-				}
-				else {
-					wrapper.at(&m_space) = wrapper.at(&m_space) -
-						(wrapper.at(&m_space) - *this);
-				}
+				GetIndependent(wrapper, &m_space, *this);
 			}
 			else {
 				for (const auto &independent : m_independents) {
-					if (wrapper.find(independent.first) == wrapper.end()) {
-						wrapper.insert(independent);
-					}
-					else {
-						wrapper.at(independent.first) = wrapper.at(independent.first) - 
-							(wrapper.at(independent.first) - independent.second);
-					}
+					GetIndependent(wrapper, independent.first, independent.second);
 				}
 			}
+		}
+	
+		void Event::GetIndependent(std::map<const SampleSpace *, Event> &wrapper,
+			const SampleSpace *space, const Event &event) const {
+			if (wrapper.find(space) == wrapper.end()) {
+				wrapper.insert(std::make_pair(space, event));
+			}
+			else {
+				wrapper.at(space) = wrapper.at(space) -
+					(wrapper.at(space) - event);
+			}
+		}
+
+		bool Event::IsIndependentSamplesEqual(const Event &other) const {
+			if (m_independents.size() != other.m_independents.size()) {
+				return false;
+			}
+			for (const auto &independent : m_independents) {
+				if (other.m_independents.find(independent.first) ==
+					other.m_independents.end()) {
+					return false;
+				}
+			}
+			return true;
 		}
 	}
 }
