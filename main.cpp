@@ -45,6 +45,9 @@ int main() {
 
 		BOOST_ASSERT(P(B | A) == P(A&B) / P(A) && "Conditional Events--1");
 		BOOST_ASSERT(P(A | B)*P(B) == P(B&A) && "Conditional Events--2");
+
+		const algorithm::Event &G = D & E;
+		BOOST_ASSERT(P(G&G) == P(G) && "Composite Events--1");
 	}
 	statistics::CodeLearning student("CPP");
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');

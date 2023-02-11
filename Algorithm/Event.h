@@ -55,7 +55,7 @@ namespace code_learning {
 			void GetIndependent(std::map<const SampleSpace *, Event> &wrapper, 
 				const SampleSpace *space, const Event &event) const;
 
-			bool IsIndependentSamplesEqual(const Event &other) const;
+			bool IsSameIndependentSamples(const Event &other) const;
 
 			EVENT_TYPE m_type = EVENT_TYPE_NONE;
 

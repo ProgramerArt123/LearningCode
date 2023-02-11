@@ -53,19 +53,35 @@ namespace code_learning {
 		}
 
 		Event Event::operator-(const Event &other) const{
-			assert(&m_space == &other.m_space || IsIndependentSamplesEqual(other));
-			Event difference(*this);
-			difference.m_samples -= other.m_samples;
-			difference.SetType();
-			return difference;
+			if (&m_space == &other.m_space || IsSameIndependentSamples(other)) {
+				Event difference(*this);
+				difference.m_samples -= other.m_samples;
+				for (auto &independent : difference.m_independents) {
+					independent.second.m_samples -=
+						other.m_independents.at(independent.first).m_samples;
+				}
+				difference.SetType();
+				return difference;
+			}
+			else {
+				throw "Undefined";
+			}
 		}
 
 		Event Event::operator+(const Event &other) const {
-			assert(&m_space == &other.m_space || IsIndependentSamplesEqual(other));
-			Event unions(*this);
-			unions.m_samples += other.m_samples;
-			unions.SetType();
-			return unions;
+			if (&m_space == &other.m_space || IsSameIndependentSamples(other)) {
+				Event unions(*this);
+				unions.m_samples += other.m_samples;
+				for (auto &independent : unions.m_independents) {
+					independent.second.m_samples += 
+						other.m_independents.at(independent.first).m_samples;
+				}
+				unions.SetType();
+				return unions;
+			}
+			else {
+				throw "Undefined";
+			}
 		}
 
 		Event &Event::operator-=(const Event &other) {
@@ -121,7 +137,10 @@ namespace code_learning {
 			}
 		}
 
-		bool Event::IsIndependentSamplesEqual(const Event &other) const {
+		bool Event::IsSameIndependentSamples(const Event &other) const {
+			if (m_independents.empty() || other.m_independents.empty()) {
+				return false;
+			}
 			if (m_independents.size() != other.m_independents.size()) {
 				return false;
 			}
