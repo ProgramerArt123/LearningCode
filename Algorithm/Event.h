@@ -2,6 +2,7 @@
 #define __CODE_LEARNING_ALGORITHM_EVENT_H__
 
 #include <map>
+#include <functional>
 
 #include "Rational.h"
 #include "SampleSpace.h"
@@ -30,7 +31,8 @@ namespace code_learning {
 
 			Event(uint64_t count, const SampleSpace &space);
 
-			Event(const Event &independentA, const Event &independentB);
+			Event(const Event &independentA, const Event &independentB,
+				std::function<void(Event &, const Event &)> factor);
 
 			void SetType();
 			
@@ -50,10 +52,12 @@ namespace code_learning {
 
 			virtual Rational GetRational() const;
 
-			void GetIndependents(std::map<const SampleSpace *, Event> &wrapper) const;
+			void GetIndependents(std::map<const SampleSpace *, Event> &wrapper, 
+				std::function<void(Event &, const Event &)> factor) const;
 
 			void GetIndependent(std::map<const SampleSpace *, Event> &wrapper, 
-				const SampleSpace *space, const Event &event) const;
+				const SampleSpace *space, const Event &event,
+				std::function<void(Event &, const Event &)> factor) const;
 
 			bool IsSameIndependentSamples(const Event &other) const;
 

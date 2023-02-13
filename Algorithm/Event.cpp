@@ -8,10 +8,10 @@ namespace code_learning {
 			m_type = EVENT_TYPE_CERTAIN;
 		}
 		Event::Event(const Event &prototype) :
-			m_space(&prototype.m_space!=&prototype?prototype.m_space:*this) {
+			m_space(&prototype.m_space != &prototype ? prototype.m_space : *this) {
 			*this = prototype;
 		}
-		Event::Event(const SampleSpace &space):m_space(space){
+		Event::Event(const SampleSpace &space) : m_space(space) {
 			m_type = EVENT_TYPE_CERTAIN;
 			m_samples = m_space.m_samples;
 		}
@@ -26,10 +26,11 @@ namespace code_learning {
 			}
 			SetType();
 		}
-		Event::Event(const Event &independentA, const Event &independentB) :
+		Event::Event(const Event &independentA, const Event &independentB,
+			std::function<void(Event &, const Event &)> factor) :
 			Event() {
-			independentA.GetIndependents(m_independents);
-			independentB.GetIndependents(m_independents);
+			independentA.GetIndependents(m_independents, factor);
+			independentB.GetIndependents(m_independents, factor);
 		}
 
 		void Event::SetType() {
@@ -52,35 +53,49 @@ namespace code_learning {
 			return *this;
 		}
 
-		Event Event::operator-(const Event &other) const{
-			if (&m_space == &other.m_space || IsSameIndependentSamples(other)) {
+		Event Event::operator-(const Event &other) const {
+			if (&m_space == &other.m_space) {
 				Event difference(*this);
-				difference.m_samples -= other.m_samples;
-				for (auto &independent : difference.m_independents) {
-					independent.second.m_samples -=
-						other.m_independents.at(independent.first).m_samples;
+				if (m_independents.empty()) {
+					difference.m_samples -= other.m_samples;
+				}
+				else {
+					for (auto &independent : difference.m_independents) {
+						independent.second.m_samples -=
+							other.m_independents.at(independent.first).m_samples;
+					}
 				}
 				difference.SetType();
 				return difference;
 			}
 			else {
-				throw "Undefined";
+				return Event(*this, other, [](Event &one, const Event &other) {
+					one.m_samples -= other.m_samples;
+					one.SetType();
+				});
 			}
 		}
 
 		Event Event::operator+(const Event &other) const {
-			if (&m_space == &other.m_space || IsSameIndependentSamples(other)) {
+			if (&m_space == &other.m_space) {
 				Event unions(*this);
-				unions.m_samples += other.m_samples;
-				for (auto &independent : unions.m_independents) {
-					independent.second.m_samples += 
-						other.m_independents.at(independent.first).m_samples;
+				if (m_independents.empty()) {
+					unions.m_samples += other.m_samples;
+				}
+				else {
+					for (auto &independent : unions.m_independents) {
+						independent.second.m_samples +=
+							other.m_independents.at(independent.first).m_samples;
+					}
 				}
 				unions.SetType();
 				return unions;
 			}
 			else {
-				throw "Undefined";
+				return Event(*this, other, [](Event &one, const Event &other) {
+					one.m_samples += other.m_samples;
+					one.SetType();
+				});
 			}
 		}
 
@@ -93,7 +108,9 @@ namespace code_learning {
 				return *this - (*this - other);
 			}
 			else {
-				return Event(*this, other);
+				return Event(*this, other, [](Event &one, const Event &other) {
+					one = one - (one - other);
+				});
 			}
 		}
 
@@ -105,7 +122,7 @@ namespace code_learning {
 		Event Event::operator!()const {
 			return Event(m_space) - *this;
 		}
-		
+
 		Rational Event::GetRational() const {
 			Rational rational(m_samples.GetCardinality(),
 				m_space.m_samples.GetCardinality());
@@ -115,25 +132,26 @@ namespace code_learning {
 			return rational;
 		}
 
-		void Event::GetIndependents(std::map<const SampleSpace *, Event> &wrapper) const {
+		void Event::GetIndependents(std::map<const SampleSpace *, Event> &wrapper,
+			std::function<void(Event &, const Event &)> factor) const {
 			if (m_independents.empty()) {
-				GetIndependent(wrapper, &m_space, *this);
+				GetIndependent(wrapper, &m_space, *this, factor);
 			}
 			else {
 				for (const auto &independent : m_independents) {
-					GetIndependent(wrapper, independent.first, independent.second);
+					GetIndependent(wrapper, independent.first, independent.second, factor);
 				}
 			}
 		}
-	
+
 		void Event::GetIndependent(std::map<const SampleSpace *, Event> &wrapper,
-			const SampleSpace *space, const Event &event) const {
+			const SampleSpace *space, const Event &event,
+			std::function<void(Event &, const Event &)> factor) const {
 			if (wrapper.find(space) == wrapper.end()) {
 				wrapper.insert(std::make_pair(space, event));
 			}
 			else {
-				wrapper.at(space) = wrapper.at(space) -
-					(wrapper.at(space) - event);
+				factor(wrapper.at(space), event);
 			}
 		}
 

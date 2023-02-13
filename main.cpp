@@ -48,6 +48,7 @@ int main() {
 
 		const algorithm::Event &G = D & E;
 		BOOST_ASSERT(P(G&G) == P(G) && "Composite Events--1");
+		BOOST_ASSERT(P(G+G) == P(G) && "Composite Events--2");
 	}
 	statistics::CodeLearning student("CPP");
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
