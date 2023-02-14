@@ -21,7 +21,7 @@ namespace code_learning {
 
 		class Event : public SampleSpace{
 		public:
-			Event();
+			Event(uint64_t count);
 
 			Event(const Event &prototype);
 
@@ -32,7 +32,8 @@ namespace code_learning {
 			Event(uint64_t count, const SampleSpace &space);
 
 			Event(const Event &independentA, const Event &independentB,
-				std::function<void(Event &, const Event &)> factor);
+				std::function<void(Event &, const Event &)> update,
+				std::function<Event(const Event &)> insert);
 
 			void SetType();
 			
@@ -53,11 +54,14 @@ namespace code_learning {
 			virtual Rational GetRational() const;
 
 			void GetIndependents(std::map<const SampleSpace *, Event> &wrapper, 
-				std::function<void(Event &, const Event &)> factor) const;
+				std::function<void(Event &, const Event &)> update,
+				std::function<Event(const Event &other)> insert = 
+				[](const Event &other) {return other; }) const;
 
 			void GetIndependent(std::map<const SampleSpace *, Event> &wrapper, 
 				const SampleSpace *space, const Event &event,
-				std::function<void(Event &, const Event &)> factor) const;
+				std::function<void(Event &, const Event &)> update,
+				std::function<Event(const Event &)> insert) const;
 
 			bool IsSameIndependentSamples(const Event &other) const;
 

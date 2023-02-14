@@ -47,8 +47,11 @@ int main() {
 		BOOST_ASSERT(P(A | B)*P(B) == P(B&A) && "Conditional Events--2");
 
 		const algorithm::Event &G = D & E;
-		BOOST_ASSERT(P(G&G) == P(G) && "Composite Events--1");
-		BOOST_ASSERT(P(G+G) == P(G) && "Composite Events--2");
+		BOOST_ASSERT(P(G & G) == P(G) && "Composite Events--1");
+		BOOST_ASSERT(P(G + G) == P(G) && "Composite Events--2");
+		BOOST_ASSERT(P(G - G) == 0 && "Composite Events--3");
+		BOOST_ASSERT(P(G - D) == P(G) - P(D)*P(E) && "Composite Events--4");
+		BOOST_ASSERT(P(G - F) == P(G)*P(!F) && "Composite Events--5");
 	}
 	statistics::CodeLearning student("CPP");
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
