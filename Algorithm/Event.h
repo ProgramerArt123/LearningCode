@@ -23,7 +23,7 @@ namespace code_learning {
 		public:
 			Event(uint64_t count);
 
-			Event(const Event &prototype);
+			Event(const Event &prototype, bool isComplement = false);
 
 			Event(const SampleSpace &space);
 
@@ -70,6 +70,8 @@ namespace code_learning {
 			const SampleSpace &m_space;
 
 			std::map<const SampleSpace *, Event> m_independents;
+
+			bool m_is_complement = false;
 		};
 
 

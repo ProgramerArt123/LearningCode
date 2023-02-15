@@ -52,6 +52,8 @@ int main() {
 		BOOST_ASSERT(P(G - G) == 0 && "Composite Events--3");
 		BOOST_ASSERT(P(G - D) == P(G) - P(D)*P(E) && "Composite Events--4");
 		BOOST_ASSERT(P(G - F) == P(G)*P(!F) && "Composite Events--5");
+		BOOST_ASSERT(P(G - D) == P(D - D)*P(E) && "Composite Events--6");
+		BOOST_ASSERT(P(G) == 1 - P(!G) && "Composite Events--7");
 	}
 	statistics::CodeLearning student("CPP");
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');

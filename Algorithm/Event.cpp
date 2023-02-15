@@ -12,9 +12,10 @@ namespace code_learning {
 				m_type = EVENT_TYPE_IMPOSSIBLE;
 			}
 		}
-		Event::Event(const Event &prototype) :
-			m_space(&prototype.m_space != &prototype ? prototype.m_space : *this) {
+		Event::Event(const Event &prototype, bool isComplement) :
+			m_space(&prototype.m_space != &prototype ? prototype.m_space : *this){
 			*this = prototype;
+			m_is_complement = isComplement;
 		}
 		Event::Event(const SampleSpace &space) : m_space(space) {
 			m_type = EVENT_TYPE_CERTAIN;
@@ -56,6 +57,7 @@ namespace code_learning {
 			m_samples = prototype.m_samples;
 			m_type = prototype.m_type;
 			m_independents = prototype.m_independents;
+			m_is_complement = prototype.m_is_complement;
 			return *this;
 		}
 
@@ -137,19 +139,34 @@ namespace code_learning {
 		}
 
 		Event Event::operator!()const {
-			return Event(m_space) - *this;
+			if (m_independents.empty()) {
+				return Event(m_space) - *this;
+			}
+			else {
+				return Event(*this, true);
+			}
 		}
 
 		Rational Event::GetRational() const {
 			if (0 == m_samples.GetCardinality()) {
-				return Rational(0, UINT64_MAX);
+				if (!m_is_complement) {
+					return Rational(0, UINT64_MAX);
+				}
+				else {
+					return Rational(UINT64_MAX, UINT64_MAX);
+				}
 			}
 			Rational rational(m_samples.GetCardinality(),
 				m_space.m_samples.GetCardinality());
 			for (const auto &independent : m_independents) {
 				rational *= independent.second.GetRational();
 			}
-			return rational;
+			if (!m_is_complement) {
+				return rational;
+			}
+			else {
+				return 1 - rational;
+			}
 		}
 
 		void Event::GetIndependents(std::map<const SampleSpace *, Event> &wrapper,
