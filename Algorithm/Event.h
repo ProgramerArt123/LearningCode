@@ -19,11 +19,17 @@ namespace code_learning {
 			EVENT_TYPE_IMPOSSIBLE
 		};
 
+		enum INDEPENDENT_TYPE {
+			INDEPENDENT_TYPE_NONE,
+			INDEPENDENT_TYPE_AND,
+			INDEPENDENT_TYPE_OR
+		};
+
 		class Event : public SampleSpace{
 		public:
 			Event(uint64_t count);
 
-			Event(const Event &prototype, bool isComplement = false);
+			Event(const Event &prototype);
 
 			Event(const SampleSpace &space);
 
@@ -71,7 +77,7 @@ namespace code_learning {
 
 			std::map<const SampleSpace *, Event> m_independents;
 
-			bool m_is_complement = false;
+			INDEPENDENT_TYPE m_independent_type = INDEPENDENT_TYPE_NONE;
 		};
 
 

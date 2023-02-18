@@ -12,10 +12,9 @@ namespace code_learning {
 				m_type = EVENT_TYPE_IMPOSSIBLE;
 			}
 		}
-		Event::Event(const Event &prototype, bool isComplement) :
+		Event::Event(const Event &prototype) :
 			m_space(&prototype.m_space != &prototype ? prototype.m_space : *this){
 			*this = prototype;
-			m_is_complement = isComplement;
 		}
 		Event::Event(const SampleSpace &space) : m_space(space) {
 			m_type = EVENT_TYPE_CERTAIN;
@@ -38,6 +37,7 @@ namespace code_learning {
 			Event(1) {
 			independentA.GetIndependents(m_independents, update);
 			independentB.GetIndependents(m_independents, update, insert);
+			m_independent_type = INDEPENDENT_TYPE_AND;
 		}
 
 		void Event::SetType() {
@@ -57,7 +57,7 @@ namespace code_learning {
 			m_samples = prototype.m_samples;
 			m_type = prototype.m_type;
 			m_independents = prototype.m_independents;
-			m_is_complement = prototype.m_is_complement;
+			m_independent_type = prototype.m_independent_type;
 			return *this;
 		}
 
@@ -143,29 +143,43 @@ namespace code_learning {
 				return Event(m_space) - *this;
 			}
 			else {
-				return Event(*this, true);
+				Event complement(*this);
+				complement.m_independent_type = INDEPENDENT_TYPE_OR;
+				for (auto &independent : complement.m_independents) {
+					independent.second = Event(independent.second.m_space) - independent.second;
+				}
+				return complement;
 			}
 		}
 
 		Rational Event::GetRational() const {
 			if (0 == m_samples.GetCardinality()) {
-				if (!m_is_complement) {
-					return Rational(0, UINT64_MAX);
-				}
-				else {
-					return Rational(UINT64_MAX, UINT64_MAX);
-				}
+				return Rational(0, UINT64_MAX);
 			}
-			Rational rational(m_samples.GetCardinality(),
-				m_space.m_samples.GetCardinality());
-			for (const auto &independent : m_independents) {
-				rational *= independent.second.GetRational();
-			}
-			if (!m_is_complement) {
+			switch (m_independent_type)
+			{
+			case INDEPENDENT_TYPE_AND:
+			{
+				Rational rational(1);
+				for (const auto &independent : m_independents) {
+					rational *= independent.second.GetRational();
+				}
 				return rational;
 			}
-			else {
+				break;
+			case INDEPENDENT_TYPE_OR:
+			{
+				Rational rational(1);
+				for (const auto &independent : m_independents) {
+					rational *= (!independent.second).GetRational();
+				}
 				return 1 - rational;
+			}
+				break;
+			default:
+				return Rational(m_samples.GetCardinality(),
+					m_space.m_samples.GetCardinality());
+				break;
 			}
 		}
 
