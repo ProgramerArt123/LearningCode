@@ -37,7 +37,12 @@ namespace code_learning {
 			Event(1) {
 			independentA.GetIndependents(m_independents, update);
 			independentB.GetIndependents(m_independents, update, insert);
-			m_independent_type = INDEPENDENT_TYPE_AND;
+			if (independentA.m_independent_type != INDEPENDENT_TYPE_NONE) {
+				m_independent_type = independentA.m_independent_type;
+			}
+			else {
+				m_independent_type = INDEPENDENT_TYPE_AND;
+			}
 		}
 
 		void Event::SetType() {
@@ -134,8 +139,33 @@ namespace code_learning {
 		}
 
 		Event Event::operator|(const Event &other) const {
-			assert(&m_space == &other.m_space);
-			return Event(*this&other, static_cast<const SampleSpace &>(other));
+			if (&m_space == &other.m_space) {
+				if (m_independents.empty()) {
+					return Event(*this&other, static_cast<const SampleSpace &>(other));
+				}
+				else {
+					return Event(1);
+				}
+			}
+			else {
+				if (m_independent_type != other.m_independent_type ||
+					m_independents.size() != other.m_independents.size()) {
+					throw "Undefined";
+				}
+				Event intersection(1);
+				intersection.m_independent_type = m_independent_type;
+				for (const auto &independent : m_independents) {
+					const auto &otherIndependent = other.m_independents.find(independent.first);
+					if (otherIndependent == other.m_independents.end()) {
+						throw "Undefined";
+					}
+					intersection.m_independents.insert(
+						std::make_pair(&otherIndependent->second, 
+							Event(independent.second&otherIndependent->second, 
+								static_cast<const SampleSpace &>(otherIndependent->second))));
+				}
+				return intersection;
+			}
 		}
 
 		Event Event::operator!()const {
