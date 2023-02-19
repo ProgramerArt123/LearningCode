@@ -10,7 +10,7 @@
 
 using namespace code_learning;
 
-int main() {
+int main(int argc, char *argv[]) {
 	{
 #include "Algorithm/Probability.h"
 		srand(time(0));
@@ -86,14 +86,17 @@ int main() {
 		BOOST_ASSERT(P(H | M) == P(H&M) / P(M) && "Composite Events--23");
 
 	}
-	statistics::CodeLearning student("CPP");
+	statistics::CodeLearning student("CPP", argc, argv);
+
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
 	student.SetIgnores(' ', '\n', '\r', '\t');
 	code::SourcePath samples(".");
 	samples.AddSuffixNames(".h", ".hpp", ".cpp", ".cc", ".cxx", ".c++", ".cp", ".c");
-	student.Learning(samples);
-	code::Code code("int main(){return 0;}");
-	student.Learning(code);
-	getchar();
+	student.StartLearning(samples);
+	//code::Code code("int main(){return 0;}");
+	//student.Learning(code);
+	
+	student.m_board.Display();
+
 	return 0;
 }

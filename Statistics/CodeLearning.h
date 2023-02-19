@@ -6,11 +6,12 @@
 #include <string>
 #include "Glob.h"
 #include "Path.h"
-#include "SummaryBoard.h"
+#include "GUI/SummaryBoard.h"
 
 namespace code_learning {
 	namespace code {
 		class Source;
+		class SourcePath;
 		class SourceFile;
 		class SourceFileBatch;
 	}
@@ -19,7 +20,9 @@ namespace code_learning {
 
 		class CodeLearning  {
 		public:
-			explicit CodeLearning(const char *name);
+			CodeLearning(const char *name, int argc, char *argv[]);
+			virtual ~CodeLearning();
+
 
 			void SetIgnores(char ignore) {
 				m_cfg.ignores.insert(ignore);
@@ -41,12 +44,15 @@ namespace code_learning {
 				SetSplits(splits...);
 			}
 
+			void StartLearning(code::SourcePath &source);
+
 			void Learning(code::Source &source);
-		
+
+			GUI::SummaryBoard m_board;
+
+			std::atomic_uint64_t m_learning_count = 0;
 		private:
 			Config m_cfg;
-
-			SummaryBoard m_board;
 
 			Glob m_glob;
 

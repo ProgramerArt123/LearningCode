@@ -15,6 +15,7 @@ namespace code_learning {
 		class SourcePath : public code::Composite<code::Element>, public Source{
 		public:
 			explicit SourcePath(const char *path);
+			virtual ~SourcePath();
 			uint64_t Scan(const Glob &glob) override;
 			bool ContentAppend(char next, const Glob &glob) override;
 			void Decomposition(const Glob &glob) override;
@@ -32,6 +33,8 @@ namespace code_learning {
 
 			void AddSourceFile(const char *fileName, SourcePath &source, const Glob &glob);
 			void SearchFiles(const char *path, SourcePath &source, const Glob &glob);
+
+			std::atomic_bool m_is_learning = false;
 
 		private:
 			bool IsValidName(const std::string &name) const;
