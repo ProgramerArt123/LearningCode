@@ -1,4 +1,5 @@
 #include <cassert>
+#include "Integer.h"
 #include "Rational.h"
 namespace code_learning {
 
@@ -9,7 +10,7 @@ namespace code_learning {
 		Rational::Rational(uint64_t numerator, uint64_t denominator, bool positive) :
 			m_numerator(numerator), m_denominator(denominator), m_positive(positive) {
 			assert(m_denominator);
-			uint64_t common = GCD(m_numerator, m_denominator);
+			uint64_t common = Integer::GreatestCommonDivisor(m_numerator, m_denominator);
 			m_numerator /= common;
 			m_denominator /= common;
 		}
@@ -26,13 +27,13 @@ namespace code_learning {
 			if (!m_positive && other.m_positive) {
 				return true;
 			}
-			uint64_t common = GCD(m_denominator, other.m_denominator);
+			uint64_t common = Integer::GreatestCommonDivisor(m_denominator, other.m_denominator);
 			uint64_t selfNumerator = m_numerator * (other.m_denominator / common);
 			uint64_t otherNumerator = other.m_numerator * (m_denominator / common);
 			return m_positive == (selfNumerator < otherNumerator);
 		}
 		bool Rational::operator==(const Rational &other) const {
-			uint64_t common = GCD(m_denominator, other.m_denominator);
+			uint64_t common = Integer::GreatestCommonDivisor(m_denominator, other.m_denominator);
 			uint64_t selfNumerator = m_numerator * (other.m_denominator / common);
 			uint64_t otherNumerator = other.m_numerator * (m_denominator / common);
 			return selfNumerator == otherNumerator &&
@@ -80,12 +81,12 @@ namespace code_learning {
 			uint64_t selfDenominator = UINT64_MAX;
 			uint64_t otherDenominator = UINT64_MAX;
 			{
-				uint64_t common = GCD(m_numerator, other.m_denominator);
+				uint64_t common = Integer::GreatestCommonDivisor(m_numerator, other.m_denominator);
 				selfNumerator = m_numerator / common;
 				otherDenominator = other.m_denominator / common;
 			}
 			{
-				uint64_t common = GCD(m_denominator, other.m_numerator);
+				uint64_t common = Integer::GreatestCommonDivisor(m_denominator, other.m_numerator);
 				selfDenominator = m_denominator / common;
 				otherNumerator = other.m_numerator / common;
 			}
@@ -105,7 +106,7 @@ namespace code_learning {
 			if (!m_positive || !other.m_positive) {
 				throw "sign error";
 			}
-			uint64_t common = GCD(m_denominator, other.m_denominator);
+			uint64_t common = Integer::GreatestCommonDivisor(m_denominator, other.m_denominator);
 			uint64_t selfNumerator = m_numerator * (other.m_denominator / common);
 			uint64_t otherNumerator = other.m_numerator * (m_denominator / common);
 			return Rational(selfNumerator + otherNumerator,
@@ -115,7 +116,7 @@ namespace code_learning {
 			if (!m_positive || !other.m_positive) {
 				throw "sign error";
 			}
-			uint64_t common = GCD(m_denominator, other.m_denominator);
+			uint64_t common = Integer::GreatestCommonDivisor(m_denominator, other.m_denominator);
 			uint64_t selfNumerator = m_numerator * (other.m_denominator / common);
 			uint64_t otherNumerator = other.m_numerator * (m_denominator / common);
 			uint64_t numerator = 0;
@@ -129,9 +130,6 @@ namespace code_learning {
 				numerator = otherNumerator - selfNumerator;
 			}
 			return Rational(numerator, m_denominator * (other.m_denominator / common), positive);
-		}
-		uint64_t Rational::GCD(uint64_t a, uint64_t b) {
-			return b ? GCD(b, a%b) : a;
 		}
 		bool operator==(int number, const Rational &rational) {
 			return Rational(number) == rational;

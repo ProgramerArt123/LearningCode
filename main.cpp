@@ -6,6 +6,7 @@
 #include "Code/Code.h"
 #include "Algorithm/Set.hpp"
 #include "Algorithm/Event.h"
+#include "Algorithm/Integer.h"
 
 using namespace code_learning;
 

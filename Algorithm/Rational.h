@@ -25,7 +25,6 @@ namespace code_learning {
 			friend bool operator==(int number, const Rational &rational);
 			friend Rational operator-(int number, const Rational &rational);
 
-			static uint64_t GCD(uint64_t a, uint64_t b);
 			uint64_t m_numerator = 0;
 			uint64_t m_denominator = UINT64_MAX;
 			bool m_positive = true;
