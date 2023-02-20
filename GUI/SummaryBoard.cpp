@@ -33,25 +33,31 @@ namespace code_learning {
 		void SummaryBoard::IncrementalTotalCodesCount(uint64_t increment) {
 			m_total_codes_count += increment;
 #ifndef CONSOLE
-			emit m_window->UpdateProgressMaxSignal(m_total_codes_count);
+			emit m_window->UpdateProgressSignal(m_finished_codes_count, m_total_codes_count);
 #endif // !CONSOLE
 		}
 
 		void SummaryBoard::IncrementalFinishedCodesCount() {
 			m_finished_codes_count++;
 #ifndef CONSOLE
-			emit m_window->UpdateProgressValueSignal(m_finished_codes_count);
+			emit m_window->UpdateProgressSignal(m_finished_codes_count, m_total_codes_count);
 #endif // !CONSOLE
 		}
 
 		void SummaryBoard::UpdateProcessingCodes(const std::string &processing) {
 			std::lock_guard<std::mutex> lock(m_disply_mutex);
 			m_processing_codes = processing;
+#ifndef CONSOLE
+			emit m_window->UpdateCodesSignal(m_processing_codes.c_str());
+#endif // !CONSOLE
 		}
 
 		void SummaryBoard::UpdateProcessingPath(const std::string &processing) {
 			std::lock_guard<std::mutex> lock(m_disply_mutex);
 			m_processing_path = processing;
+#ifndef CONSOLE
+			emit m_window->UpdatePathSignal(m_processing_path.c_str());
+#endif // !CONSOLE
 		}
 
 		void SummaryBoard::Flush() {

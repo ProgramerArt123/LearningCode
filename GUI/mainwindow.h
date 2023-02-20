@@ -8,6 +8,7 @@ class MainWindow;
 }
 
 class QProgressBar;
+class QLabel;
 
 class MainWindow : public QMainWindow
 {
@@ -18,15 +19,19 @@ public:
     ~MainWindow();
 
 signals:
-	void UpdateProgressMaxSignal(int max);
-	void UpdateProgressValueSignal(int value);     
-
+	void UpdateProgressSignal(int value, int max);
+	void UpdateCodesSignal(const QString &codes);
+	void UpdatePathSignal(const QString &path);
 private slots:
-	void UpdateProgressMax(int max);
-	void UpdateProgressValue(int value);
+	void UpdateProgress(int value, int max);
+	void UpdateCodes(const QString &codes);
+	void UpdatePath(const QString &path);
 private:
     Ui::MainWindow *ui;
 	QProgressBar *m_progress = NULL;
+	QLabel *m_progress_label = NULL;
+	QLabel *m_codes_label = NULL;
+	QLabel *m_path_label = NULL;
 };
 
 #endif // MAINWINDOW_H
