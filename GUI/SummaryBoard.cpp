@@ -4,43 +4,43 @@
 namespace code_learning {
 
 	namespace GUI {
-		static void Disply(SummaryBoard &board) {
-#ifdef CONSOLE
-			while (!board.m_is_stop) {
-				board.Flush();
-				std::this_thread::sleep_for(std::chrono::seconds(1));
-			}
-#endif
-
-		}
 
 		SummaryBoard::SummaryBoard(const char *title, int argc, char *argv[]) :
-			m_title(title), m_disply(Disply, std::ref(*this)), m_argc(argc), m_argv(argv)  {
-			m_app.reset(new QApplication(m_argc, m_argv));
-			m_window.reset(new MainWindow(m_title));
+			m_title(title)
+#ifndef CONSOLE
+			,m_app(argc, argv),
+			m_window(m_title)
+#endif // !CONSOLE
+		{
 		}
 
 		SummaryBoard::~SummaryBoard() {
-			m_is_stop = true;
-			m_disply.join();
+			
 		}
 
 		void SummaryBoard::Display() {
-			m_window->show();
-			m_app->exec();
+#ifdef CONSOLE
+			while (true) {
+				Flush();
+				std::this_thread::sleep_for(std::chrono::seconds(1));
+			}
+#else
+			m_window.show();
+			m_app.exec();
+#endif
 		}
 
 		void SummaryBoard::IncrementalTotalCodesCount(uint64_t increment) {
 			m_total_codes_count += increment;
 #ifndef CONSOLE
-			emit m_window->UpdateProgressSignal(m_finished_codes_count, m_total_codes_count);
+			emit m_window.UpdateProgressSignal(m_finished_codes_count, m_total_codes_count);
 #endif // !CONSOLE
 		}
 
 		void SummaryBoard::IncrementalFinishedCodesCount() {
 			m_finished_codes_count++;
 #ifndef CONSOLE
-			emit m_window->UpdateProgressSignal(m_finished_codes_count, m_total_codes_count);
+			emit m_window.UpdateProgressSignal(m_finished_codes_count, m_total_codes_count);
 #endif // !CONSOLE
 		}
 
@@ -48,7 +48,7 @@ namespace code_learning {
 			std::lock_guard<std::mutex> lock(m_disply_mutex);
 			m_processing_codes = processing;
 #ifndef CONSOLE
-			emit m_window->UpdateCodesSignal(m_processing_codes.c_str());
+			emit m_window.UpdateCodesSignal(m_processing_codes.c_str());
 #endif // !CONSOLE
 		}
 
@@ -56,7 +56,7 @@ namespace code_learning {
 			std::lock_guard<std::mutex> lock(m_disply_mutex);
 			m_processing_path = processing;
 #ifndef CONSOLE
-			emit m_window->UpdatePathSignal(m_processing_path.c_str());
+			emit m_window.UpdatePathSignal(m_processing_path.c_str());
 #endif // !CONSOLE
 		}
 

@@ -9,7 +9,9 @@ namespace code_learning {
 		void Code::Statistics(const code::Element &element) {
 			Region::Statistics(element);
 			ProcessSymmetries();
-			m_glob.m_board.IncrementalFinishedCodesCount();
+			if (m_glob.m_board) {
+				m_glob.m_board->IncrementalFinishedCodesCount();
+			}
 		}
 		void Code::ProcessSymmetries() {
 			const int count = sizeof(code::symmetries) / sizeof(code::Symmetry);

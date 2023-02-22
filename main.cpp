@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 		BOOST_ASSERT(P(H | M) == P(H&M) / P(M) && "Composite Events--23");
 
 	}
-	statistics::CodeLearning student("CPP", argc, argv);
+	statistics::CodeLearning student("CPP");
 
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
 	student.SetIgnores(' ', '\n', '\r', '\t');
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
 	//code::Code code("int main(){return 0;}");
 	//student.Learning(code);
 	
-	student.m_board.Display();
+	student.Display(argc, argv);
 
 	return 0;
 }

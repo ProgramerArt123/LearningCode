@@ -9,9 +9,6 @@ namespace code_learning {
 			m_type = ELEMENT_TYPE_PATH;
 		}
 		SourcePath::~SourcePath() {
-			while (m_is_learning) {
-				std::this_thread::sleep_for(std::chrono::seconds(1));
-			}
 		}
 		uint64_t SourcePath::Scan(const Glob &glob) {
 			SearchFiles(m_file_name.c_str(), *this, glob);

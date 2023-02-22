@@ -16,6 +16,7 @@ namespace code_learning {
 		class Source {
 		public:
 			explicit Source(const std::string &fileName);
+			virtual ~Source();
 			virtual uint64_t Scan(const Glob &glob) = 0;
 			virtual void CallBack(std::function<void(const code::Element &)> factor) const = 0;
 
@@ -26,6 +27,8 @@ namespace code_learning {
 			std::string m_name;
 			
 			std::string m_parent;
+
+			std::atomic_bool m_is_learning = false;
 		};
 	}
 }

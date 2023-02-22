@@ -9,11 +9,11 @@ namespace code_learning {
 	
 	class Glob {
 	public:
-		Glob(const Config &cfg, GUI::SummaryBoard &board):
+		Glob(const Config &cfg, std::shared_ptr<GUI::SummaryBoard> &board):
 			m_cfg(cfg), m_board(board){
 		}
 		const Config &m_cfg;
-		GUI::SummaryBoard &m_board;
+		std::shared_ptr<GUI::SummaryBoard> &m_board;
 		statistics::Generate m_generate;
 
 	};

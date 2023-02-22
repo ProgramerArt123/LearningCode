@@ -20,7 +20,7 @@ namespace code_learning {
 
 		class CodeLearning  {
 		public:
-			CodeLearning(const char *name, int argc, char *argv[]);
+		 	explicit CodeLearning(const char *name);
 			virtual ~CodeLearning();
 
 
@@ -44,11 +44,11 @@ namespace code_learning {
 				SetSplits(splits...);
 			}
 
-			void StartLearning(code::SourcePath &source);
+			void StartLearning(code::Source &source);
 
 			void Learning(code::Source &source);
 
-			GUI::SummaryBoard m_board;
+			void Display(int argc, char *argv[]);
 
 			std::atomic_uint64_t m_learning_count = 0;
 		private:
@@ -57,6 +57,10 @@ namespace code_learning {
 			Glob m_glob;
 
 			std::list<std::shared_ptr<statistics::Element>> m_statistics;
+
+			std::shared_ptr<GUI::SummaryBoard> m_board;
+
+			std::string m_name;
 
 		};
 	}

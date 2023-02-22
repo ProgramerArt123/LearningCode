@@ -10,8 +10,10 @@ namespace code_learning {
 
 		void File::Statistics(const code::Element &element) {
 			const code::SourceFile &file = dynamic_cast<const code::SourceFile &>(element);
-			m_glob.m_board.UpdateProcessingPath(file.m_parent);
-			m_glob.m_board.UpdateProcessingCodes(file.m_file_name);
+			if (m_glob.m_board) {
+				m_glob.m_board->UpdateProcessingPath(file.m_parent);
+				m_glob.m_board->UpdateProcessingCodes(file.m_file_name);
+			}
 			Code::Statistics(element);
 		}
 	}

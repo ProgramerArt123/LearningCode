@@ -34,7 +34,6 @@ namespace code_learning {
 			void AddSourceFile(const char *fileName, SourcePath &source, const Glob &glob);
 			void SearchFiles(const char *path, SourcePath &source, const Glob &glob);
 
-			std::atomic_bool m_is_learning = false;
 
 		private:
 			bool IsValidName(const std::string &name) const;

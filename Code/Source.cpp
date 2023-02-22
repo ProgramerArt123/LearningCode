@@ -9,6 +9,11 @@ namespace code_learning {
 			m_name = dir.filename().string();
 			m_parent = dir.parent_path().string();
 		}
+		Source::~Source() {
+			while (m_is_learning) {
+				std::this_thread::sleep_for(std::chrono::seconds(1));
+			}
+		}
 	}
 
 }
