@@ -41,6 +41,7 @@ namespace code_learning {
 		}
 
 		void CodeLearning::Learning(code::Source &source) {
+			std::lock_guard<std::mutex> lock(m_learning_mutex);
 			uint64_t count = source.Scan(m_glob);
 			if (m_board) {
 				m_board->IncrementalTotalCodesCount(count);

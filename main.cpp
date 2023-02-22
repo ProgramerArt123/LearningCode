@@ -93,8 +93,8 @@ int main(int argc, char *argv[]) {
 	code::SourcePath samples(".");
 	samples.AddSuffixNames(".h", ".hpp", ".cpp", ".cc", ".cxx", ".c++", ".cp", ".c");
 	student.StartLearning(samples);
-	//code::Code code("int main(){return 0;}");
-	//student.Learning(code);
+	code::Code code("int main(){return 0;}");
+	student.StartLearning(code);
 	
 	student.Display(argc, argv);
 

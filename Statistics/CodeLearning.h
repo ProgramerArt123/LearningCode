@@ -62,6 +62,7 @@ namespace code_learning {
 
 			std::string m_name;
 
+			std::mutex m_learning_mutex;
 		};
 	}
 }

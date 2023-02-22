@@ -1,6 +1,6 @@
 #ifndef __CODE_LEARNING_GUI_SUMMARY_BOARD_H__
 #define __CODE_LEARNING_GUI_SUMMARY_BOARD_H__
-#define CONSOLE
+//#define CONSOLE
 #include <thread>
 #include <mutex>
 #include <atomic>
