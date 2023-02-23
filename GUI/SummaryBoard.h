@@ -20,16 +20,13 @@ namespace code_learning {
 			explicit SummaryBoard(const char *title, int argc, char *argv[]);
 			virtual ~SummaryBoard();
 			void Display();
-			void IncrementalTotalCodesCount(uint64_t increment);
-			void IncrementalFinishedCodesCount();
+			void SetTotalCodesCount(uint64_t total);
+			void SetFinishedCodesCount(uint64_t finished);
 			void UpdateProcessingCodes(const std::string &processing);
 			void UpdateProcessingPath(const std::string &processing);
 			void Flush();
 
-#ifndef CONSOLE
-			QApplication m_app;
-			MainWindow m_window;
-#endif // !CONSOLE
+
 		private:
 			std::mutex m_disply_mutex;
 			std::string m_processing_codes;
@@ -37,7 +34,11 @@ namespace code_learning {
 			std::atomic_uint64_t m_total_codes_count = 0;
 			std::atomic_uint64_t m_finished_codes_count = 0;
 
-			const std::string m_title;
+			const std::string m_title; 
+#ifndef CONSOLE
+			QApplication m_app;
+			MainWindow m_window;
+#endif // !CONSOLE
 
 		};
 	}

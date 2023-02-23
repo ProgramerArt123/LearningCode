@@ -41,15 +41,21 @@ namespace code_learning {
 		}
 
 		void CodeLearning::Learning(code::Source &source) {
-			std::lock_guard<std::mutex> lock(m_learning_mutex);
-			uint64_t count = source.Scan(m_glob);
-			if (m_board) {
-				m_board->IncrementalTotalCodesCount(count);
-			}
+			IncrementalTotalCodesCount(source.Scan(m_glob));
 			source.CallBack([&](const code::Element &element) {
-				m_statistics.push_back(Path::CreateStatistic(element, m_glob));
-				m_statistics.back()->Statistics(element);
+				std::shared_ptr<statistics::Element> statistics = Path::CreateStatistic(element, m_glob);
+				statistics->Statistics(element);
+				std::lock_guard<std::mutex> lock(m_learning_mutex);
+				m_statistics.push_back(statistics);
 			});
+		}
+
+		void CodeLearning::IncrementalTotalCodesCount(uint64_t increment) {
+			static std::atomic_uint64_t total = 0;
+			total += increment;
+			if (m_board) {
+				m_board->SetTotalCodesCount(total);
+			}
 		}
 
 		void CodeLearning::Display(int argc, char *argv[]) {

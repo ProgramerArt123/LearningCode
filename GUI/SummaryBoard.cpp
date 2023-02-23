@@ -30,15 +30,15 @@ namespace code_learning {
 #endif
 		}
 
-		void SummaryBoard::IncrementalTotalCodesCount(uint64_t increment) {
-			m_total_codes_count += increment;
+		void SummaryBoard::SetTotalCodesCount(uint64_t total) {
+			m_total_codes_count = total;
 #ifndef CONSOLE
 			emit m_window.UpdateProgressSignal(m_finished_codes_count, m_total_codes_count);
 #endif // !CONSOLE
 		}
 
-		void SummaryBoard::IncrementalFinishedCodesCount() {
-			m_finished_codes_count++;
+		void SummaryBoard::SetFinishedCodesCount(uint64_t finished) {
+			m_finished_codes_count = finished;
 #ifndef CONSOLE
 			emit m_window.UpdateProgressSignal(m_finished_codes_count, m_total_codes_count);
 #endif // !CONSOLE

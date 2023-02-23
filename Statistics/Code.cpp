@@ -9,8 +9,10 @@ namespace code_learning {
 		void Code::Statistics(const code::Element &element) {
 			Region::Statistics(element);
 			ProcessSymmetries();
+			static std::atomic_uint64_t finished = 0;
+			finished ++;
 			if (m_glob.m_board) {
-				m_glob.m_board->IncrementalFinishedCodesCount();
+				m_glob.m_board->SetFinishedCodesCount(finished);
 			}
 		}
 		void Code::ProcessSymmetries() {

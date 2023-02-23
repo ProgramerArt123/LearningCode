@@ -48,9 +48,12 @@ namespace code_learning {
 
 			void Learning(code::Source &source);
 
+			void IncrementalTotalCodesCount(uint64_t increment);
+
 			void Display(int argc, char *argv[]);
 
 			std::atomic_uint64_t m_learning_count = 0;
+
 		private:
 			Config m_cfg;
 
@@ -63,6 +66,7 @@ namespace code_learning {
 			std::string m_name;
 
 			std::mutex m_learning_mutex;
+
 		};
 	}
 }
