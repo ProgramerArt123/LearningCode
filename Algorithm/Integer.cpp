@@ -5,7 +5,9 @@ namespace code_learning {
 	namespace algorithm {
 		Integer::Integer(uint64_t value, bool positive):
 			m_value(value), m_positive(positive){
-
+			if (0 == m_value) {
+				m_positive = true;
+			}
 		}
 		Integer::operator bool() const {
 			return m_value;
@@ -32,22 +34,7 @@ namespace code_learning {
 			}
 		}
 		Integer Integer::operator-(const Integer &subtrahend) const {
-			if (m_positive) {
-				if (subtrahend.m_positive) {
-					return PositiveSub(subtrahend);
-				}
-				else {
-					return PositiveAdd(subtrahend);
-				}
-			}
-			else {
-				if (subtrahend.m_positive) {
-					return -PositiveAdd(subtrahend);
-				}
-				else {
-					return subtrahend.PositiveSub(*this);
-				}
-			}
+			return *this + (-subtrahend);
 		}
 		Integer Integer::operator*(const Integer &multiplier) const {
 			Integer product = m_value * multiplier.m_value;
@@ -69,8 +56,7 @@ namespace code_learning {
 			return *this;
 		}
 		bool Integer::operator==(const Integer &other)const {
-			return (m_value == other.m_value && m_positive == other.m_positive) ||
-				(0 == m_value && 0 == other.m_value);
+			return m_positive == other.m_positive && m_value == other.m_value;
 		}
 		Integer Integer::GreatestCommonDivisor(const Integer &other) const{
 			return other ? other.GreatestCommonDivisor(*this%other) : *this;

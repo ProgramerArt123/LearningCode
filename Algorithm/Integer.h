@@ -2,12 +2,13 @@
 #define __CODE_LEARNING_ALGORITHM_INTEGER_H__
 
 #include <cstdint>
+#include "Number.h"
 
 namespace code_learning {
 
 	namespace algorithm {
 
-		class Integer {
+		class Integer : public Number {
 		public :
 			Integer(uint64_t value, bool positive = true);
 			Integer GreatestCommonDivisor(const Integer &other) const;

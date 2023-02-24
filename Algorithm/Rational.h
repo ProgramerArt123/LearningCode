@@ -2,13 +2,14 @@
 #define __CODE_LEARNING_ALGORITHM_RATIONAL_H__
 
 #include <cstdint>
+#include "Number.h"
 #include "Integer.h"
 
 namespace code_learning {
 
 	namespace algorithm {
 
-		class Rational {
+		class Rational : public Number {
 		public :
 			Rational(int64_t value);
 			Rational(const Integer &integer);
@@ -17,11 +18,13 @@ namespace code_learning {
 			Rational operator-() const;
 			bool operator<(const Rational &other) const;
 			bool operator==(const Rational &other) const;
-			Rational operator+(const Rational &other) const;
-			Rational operator-(const Rational &other) const;
-			Rational operator*(const Rational &other) const;
-			Rational &operator*=(const Rational &other);
-			Rational operator/(const Rational &other) const;
+
+			Rational operator+(const Rational &addition) const;
+			Rational operator-(const Rational &subtrahend) const;
+			Rational operator*(const Rational &multiplier) const;
+			Rational operator/(const Rational &divisor) const;
+
+			Rational &operator*=(const Rational &multiplier);
 
 			friend bool operator==(int number, const Rational &rational);
 			friend Rational operator-(int number, const Rational &rational);
