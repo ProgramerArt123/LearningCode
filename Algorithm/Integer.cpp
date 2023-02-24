@@ -9,6 +9,9 @@ namespace code_learning {
 				m_positive = true;
 			}
 		}
+		const std::string Integer::GetString() {
+			return m_positive ? "" : "-" + std::to_string(m_value);
+		}
 		Integer::operator bool() const {
 			return m_value;
 		}

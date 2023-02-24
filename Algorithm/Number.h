@@ -8,8 +8,8 @@ namespace code_learning {
 	namespace algorithm {
 
 		class Number {
-		protected :
-			std::string m_string;
+		public:
+			virtual const std::string GetString() = 0;
 		};
 
 	}

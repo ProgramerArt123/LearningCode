@@ -11,6 +11,7 @@ namespace code_learning {
 		class Integer : public Number {
 		public :
 			Integer(uint64_t value, bool positive = true);
+			const std::string GetString() override;
 			Integer GreatestCommonDivisor(const Integer &other) const;
 			operator bool() const;
 			Integer operator-() const;

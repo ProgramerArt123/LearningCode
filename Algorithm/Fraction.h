@@ -14,6 +14,8 @@ namespace code_learning {
 			Fraction(int64_t value);
 			Fraction(const Integer &integer);
 			Fraction(const Integer &numerator, const Integer &denominator);
+			const std::string GetString() override;
+
 			bool IsPositive() const;
 			Fraction operator-() const;
 			bool operator<(const Fraction &other) const;
@@ -31,6 +33,7 @@ namespace code_learning {
 
 			Integer m_numerator = 0;
 			Integer m_denominator = UINT64_MAX;
+			bool m_is_decimal = false;
 		};
 
 	}

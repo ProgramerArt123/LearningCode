@@ -20,6 +20,15 @@ namespace code_learning {
 				m_denominator.m_positive = true;
 			}
 		}
+		const std::string Fraction::GetString() {
+			if (!m_is_decimal) {
+				return m_numerator.GetString() + "/" + m_denominator.GetString();
+			}
+			else {
+				return m_numerator.m_positive == m_denominator.m_positive ? "" : "-" +
+					std::to_string((float)m_numerator.m_value / m_denominator.m_value);
+			}
+		}
 		bool Fraction::IsPositive() const {
 			return m_numerator.m_positive == m_denominator.m_positive;
 		}
