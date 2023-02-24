@@ -18,10 +18,10 @@ namespace code_learning {
 		bool Probability::operator==(const Probability &other) const {
 			return (*this)() == other();
 		}
-		Rational Probability::operator()()const {
+		Fraction Probability::operator()()const {
 			return (*this)(m_part);
 		}
-		Rational Probability::operator()(const Event &event)const {
+		Fraction Probability::operator()(const Event &event)const {
 			return event.GetRational();
 		}
 	}

@@ -1,16 +1,16 @@
 #include <cassert>
 #include "Integer.h"
-#include "Rational.h"
+#include "Fraction.h"
 namespace code_learning {
 
 	namespace algorithm {
-		Rational::Rational(int64_t value):
-			Rational(Integer(value>=0?value:-value, value >= 0)){
+		Fraction::Fraction(int64_t value):
+			Fraction(Integer(value>=0?value:-value, value >= 0)){
 		}
-		Rational::Rational(const Integer &integer) :
+		Fraction::Fraction(const Integer &integer) :
 			m_numerator(integer), m_denominator(1) {
 		}
-		Rational::Rational(const Integer &numerator, const Integer &denominator) :
+		Fraction::Fraction(const Integer &numerator, const Integer &denominator) :
 			m_numerator(numerator), m_denominator(denominator) {
 			assert(m_denominator);
 			const Integer &common = m_numerator.GreatestCommonDivisor(m_denominator);
@@ -20,13 +20,13 @@ namespace code_learning {
 				m_denominator.m_positive = true;
 			}
 		}
-		bool Rational::IsPositive() const {
+		bool Fraction::IsPositive() const {
 			return m_numerator.m_positive == m_denominator.m_positive;
 		}
-		Rational Rational::operator-() const {
-			return Rational(-m_numerator, m_denominator);
+		Fraction Fraction::operator-() const {
+			return Fraction(-m_numerator, m_denominator);
 		}
-		bool Rational::operator<(const Rational &other) const {
+		bool Fraction::operator<(const Fraction &other) const {
 			if (m_numerator.m_positive * m_denominator.m_positive <
 				other.m_numerator.m_positive * other.m_denominator.m_positive) {
 				return true;
@@ -34,21 +34,21 @@ namespace code_learning {
 			return m_numerator.m_positive * m_denominator.m_positive ==
 				m_numerator * other.m_denominator < other.m_numerator * m_denominator;
 		}
-		bool Rational::operator==(const Rational &other) const {
+		bool Fraction::operator==(const Fraction &other) const {
 			return m_denominator == other.m_denominator &&
 				m_numerator == other.m_numerator;
 		}
-		Rational Rational::operator+(const Rational &addition) const {
+		Fraction Fraction::operator+(const Fraction &addition) const {
 			const Integer &common = m_denominator.GreatestCommonDivisor(addition.m_denominator);
 			const Integer &selfNumerator = m_numerator * (addition.m_denominator / common);
 			const Integer &otherNumerator = addition.m_numerator * (m_denominator / common);
-			return Rational(selfNumerator + otherNumerator,
+			return Fraction(selfNumerator + otherNumerator,
 				m_denominator * (addition.m_denominator / common));
 		}
-		Rational Rational::operator-(const Rational &subtrahend) const {
+		Fraction Fraction::operator-(const Fraction &subtrahend) const {
 			return *this + (-subtrahend);
 		}
-		Rational Rational::operator*(const Rational &multiplier) const {
+		Fraction Fraction::operator*(const Fraction &multiplier) const {
 			Integer selfNumerator = 0;
 			Integer otherNumerator = 0;
 			Integer selfDenominator = UINT64_MAX;
@@ -63,21 +63,21 @@ namespace code_learning {
 				selfDenominator = m_denominator / common;
 				otherNumerator = multiplier.m_numerator / common;
 			}
-			return Rational(selfNumerator * otherNumerator,
+			return Fraction(selfNumerator * otherNumerator,
 				selfDenominator * otherDenominator);
 		}
-		Rational &Rational::operator*=(const Rational &multiplier) {
+		Fraction &Fraction::operator*=(const Fraction &multiplier) {
 			return *this = *this * multiplier;
 		}
-		Rational Rational::operator/(const Rational &divisor) const {
+		Fraction Fraction::operator/(const Fraction &divisor) const {
 			assert(divisor.m_numerator);
-			return *this * Rational(divisor.m_denominator, divisor.m_numerator);
+			return *this * Fraction(divisor.m_denominator, divisor.m_numerator);
 		}
-		bool operator==(int number, const Rational &rational) {
-			return Rational(number) == rational;
+		bool operator==(int number, const Fraction &rational) {
+			return Fraction(number) == rational;
 		}
-		Rational operator-(int number, const Rational &rational) {
-			return Rational(number) - rational;
+		Fraction operator-(int number, const Fraction &rational) {
+			return Fraction(number) - rational;
 		}
 	}
 

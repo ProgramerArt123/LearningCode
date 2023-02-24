@@ -182,15 +182,15 @@ namespace code_learning {
 			}
 		}
 
-		Rational Event::GetRational() const {
+		Fraction Event::GetRational() const {
 			if (0 == m_samples.GetCardinality()) {
-				return Rational(0, UINT64_MAX);
+				return Fraction(0, UINT64_MAX);
 			}
 			switch (m_independent_type)
 			{
 			case INDEPENDENT_TYPE_AND:
 			{
-				Rational rational(1);
+				Fraction rational(1);
 				for (const auto &independent : m_independents) {
 					rational *= independent.second.GetRational();
 				}
@@ -199,7 +199,7 @@ namespace code_learning {
 				break;
 			case INDEPENDENT_TYPE_OR:
 			{
-				Rational rational(1);
+				Fraction rational(1);
 				for (const auto &independent : m_independents) {
 					rational *= (!independent.second).GetRational();
 				}
@@ -207,7 +207,7 @@ namespace code_learning {
 			}
 				break;
 			default:
-				return Rational(m_samples.GetCardinality(),
+				return Fraction(m_samples.GetCardinality(),
 					m_space.m_samples.GetCardinality());
 				break;
 			}

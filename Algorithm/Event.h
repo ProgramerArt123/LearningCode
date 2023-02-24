@@ -4,7 +4,7 @@
 #include <map>
 #include <functional>
 
-#include "Rational.h"
+#include "Fraction.h"
 #include "SampleSpace.h"
 
 namespace code_learning {
@@ -57,7 +57,7 @@ namespace code_learning {
 
 			Event operator!()const;
 
-			virtual Rational GetRational() const;
+			virtual Fraction GetRational() const;
 
 			void GetIndependents(std::map<const SampleSpace *, Event> &wrapper, 
 				std::function<void(Event &, const Event &)> update,

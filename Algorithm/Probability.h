@@ -14,8 +14,8 @@ namespace code_learning {
 
 			bool operator<(const Probability &other) const;
 			bool operator==(const Probability &other) const;
-			Rational operator()()const;
-			Rational operator()(const Event &event)const;
+			Fraction operator()()const;
+			Fraction operator()(const Event &event)const;
 
 			SampleSpace m_all;
 			Event m_part;
