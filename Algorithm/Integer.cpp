@@ -10,13 +10,20 @@ namespace code_learning {
 			}
 		}
 		const std::string Integer::GetString() {
-			return m_positive ? "" : "-" + std::to_string(m_value);
+			return m_positive ? std::to_string(m_value) : "-" + std::to_string(m_value);
 		}
 		Integer::operator bool() const {
 			return m_value;
 		}
 		Integer Integer::operator-() const {
 			return Integer(m_value, !m_positive);
+		}
+		Integer Integer::operator!() const {
+			Integer product = 1;
+			for (uint64_t index = 1; index <= m_value; index ++) {
+				product *= index;
+			}
+			return product;
 		}
 		Integer Integer::operator+(const Integer &addition) const {
 			if (m_positive) {
@@ -53,6 +60,14 @@ namespace code_learning {
 			Integer quotient = m_value / divisor.m_value;
 			quotient.m_positive = m_positive == divisor.m_positive;
 			return quotient;
+		}
+		Integer &Integer::operator+=(const Integer &addition) {
+			*this = *this + addition;
+			return *this;
+		}
+		Integer &Integer::operator*=(const Integer &multiplier) {
+			*this = *this * multiplier;
+			return *this;
 		}
 		Integer &Integer::operator/=(const Integer &divisor)  {
 			*this = *this / divisor;

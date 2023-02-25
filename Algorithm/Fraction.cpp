@@ -12,7 +12,7 @@ namespace code_learning {
 		}
 		Fraction::Fraction(const Integer &numerator, const Integer &denominator) :
 			m_numerator(numerator), m_denominator(denominator) {
-			assert(m_denominator);
+			assert(0 != m_denominator);
 			const Integer &common = m_numerator.GreatestCommonDivisor(m_denominator);
 			m_numerator /= common;
 			m_denominator /= common;
@@ -25,9 +25,14 @@ namespace code_learning {
 				return m_numerator.GetString() + "/" + m_denominator.GetString();
 			}
 			else {
-				return m_numerator.m_positive == m_denominator.m_positive ? "" : "-" +
+				return m_numerator.m_positive == m_denominator.m_positive ? 
+					std::to_string((float)m_numerator.m_value / m_denominator.m_value) : "-" +
 					std::to_string((float)m_numerator.m_value / m_denominator.m_value);
 			}
+		}
+		Fraction &Fraction::SetDecimal(bool isDecimal) {
+			m_is_decimal = isDecimal;
+			return *this;
 		}
 		bool Fraction::IsPositive() const {
 			return m_numerator.m_positive == m_denominator.m_positive;
@@ -75,11 +80,14 @@ namespace code_learning {
 			return Fraction(selfNumerator * otherNumerator,
 				selfDenominator * otherDenominator);
 		}
+		Fraction &Fraction::operator+=(const Fraction &addition) {
+			return *this = *this + addition;
+		}
 		Fraction &Fraction::operator*=(const Fraction &multiplier) {
 			return *this = *this * multiplier;
 		}
 		Fraction Fraction::operator/(const Fraction &divisor) const {
-			assert(divisor.m_numerator);
+			assert(0 != divisor.m_numerator);
 			return *this * Fraction(divisor.m_denominator, divisor.m_numerator);
 		}
 		bool operator==(int number, const Fraction &rational) {

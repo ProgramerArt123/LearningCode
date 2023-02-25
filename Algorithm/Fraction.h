@@ -11,10 +11,12 @@ namespace code_learning {
 
 		class Fraction : public Number {
 		public :
-			Fraction(int64_t value);
+			Fraction(int64_t value = 0);
 			Fraction(const Integer &integer);
 			Fraction(const Integer &numerator, const Integer &denominator);
 			const std::string GetString() override;
+
+			Fraction &SetDecimal(bool isDecimal);
 
 			bool IsPositive() const;
 			Fraction operator-() const;
@@ -26,6 +28,7 @@ namespace code_learning {
 			Fraction operator*(const Fraction &multiplier) const;
 			Fraction operator/(const Fraction &divisor) const;
 
+			Fraction &operator+=(const Fraction &addition);
 			Fraction &operator*=(const Fraction &multiplier);
 
 			friend bool operator==(int number, const Fraction &rational);

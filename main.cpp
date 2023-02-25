@@ -7,6 +7,7 @@
 #include "Algorithm/Set.hpp"
 #include "Algorithm/Event.h"
 #include "Algorithm/Integer.h"
+#include "Algorithm/Series.hpp"
 
 using namespace code_learning;
 
@@ -84,7 +85,26 @@ int main(int argc, char *argv[]) {
 		BOOST_ASSERT(P(A | A) == 1 && "Composite Events--21");
 		BOOST_ASSERT(P(H | H) == 1 && "Composite Events--22");
 		BOOST_ASSERT(P(H | M) == P(H&M) / P(M) && "Composite Events--23");
+		
+		std::cout << algorithm::Series<algorithm::Integer>(
+			[](const uint64_t index) {
+			return algorithm::Integer(index);
+		}).Summation(100).GetString() << std::endl;
 
+		std::cout << algorithm::Series<algorithm::Fraction>(
+			[](const uint64_t index) {
+			if (0 == index%2) {
+				return algorithm::Fraction(algorithm::Integer(4,false), index * 2 - 1);
+			}
+			else {
+				return algorithm::Fraction(4, index * 2 - 1);
+			}
+		}).Summation(20).GetMonomial().SetDecimal(true).GetString() << std::endl;
+
+		std::cout << algorithm::Series<algorithm::Fraction>(
+			[](const uint64_t index) {
+			return algorithm::Fraction(1, !algorithm::Integer(index - 1));
+		}).Summation(20).GetMonomial().SetDecimal(true).GetString() << std::endl;
 	}
 	statistics::CodeLearning student("CPP");
 
@@ -97,6 +117,6 @@ int main(int argc, char *argv[]) {
 	student.StartLearning(code);
 	
 	student.Display(argc, argv);
-
+	
 	return 0;
 }
