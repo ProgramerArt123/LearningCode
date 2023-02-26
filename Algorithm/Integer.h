@@ -2,6 +2,7 @@
 #define __CODE_LEARNING_ALGORITHM_INTEGER_H__
 
 #include <cstdint>
+#include <vector>
 #include "Number.h"
 
 namespace code_learning {
@@ -30,7 +31,8 @@ namespace code_learning {
 		private:
 			Integer PositiveAdd(const Integer &addition) const;
 			Integer PositiveSub(const Integer &subtrahend) const;
-
+			void DecomposeDecimal(uint64_t value);
+			std::vector<uint8_t> m_singles;
 		};
 
 	}

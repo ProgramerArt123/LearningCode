@@ -11,6 +11,7 @@ namespace code_learning {
 
 		template<typename Monomial>
 		class Series : public Number {
+			static_assert(std::is_base_of_v<Number, Monomial>, "Monomial invalid");
 		public:
 			Series(std::function<Monomial(const uint64_t index)> monomial):
 				m_monomial(monomial){

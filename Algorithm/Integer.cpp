@@ -90,6 +90,12 @@ namespace code_learning {
 				return Integer(subtrahend.m_value - m_value, false);
 			}
 		}
+		void Integer::DecomposeDecimal(uint64_t value) {
+			m_singles.clear();
+			do {
+				m_singles.push_back(value % 10);
+			} while (value /= 10);
+		}
 	}
 
 }

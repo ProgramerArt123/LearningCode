@@ -56,6 +56,8 @@ namespace code_learning {
 			const Integer &common = m_denominator.GreatestCommonDivisor(addition.m_denominator);
 			const Integer &selfNumerator = m_numerator * (addition.m_denominator / common);
 			const Integer &otherNumerator = addition.m_numerator * (m_denominator / common);
+			const Integer &x = selfNumerator + otherNumerator;
+			const Integer &y = m_denominator * (addition.m_denominator / common);
 			return Fraction(selfNumerator + otherNumerator,
 				m_denominator * (addition.m_denominator / common));
 		}

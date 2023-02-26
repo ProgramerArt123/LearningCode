@@ -36,6 +36,7 @@ namespace code_learning {
 
 			Integer m_numerator = 0;
 			Integer m_denominator = UINT64_MAX;
+
 			bool m_is_decimal = false;
 		};
 

@@ -107,7 +107,6 @@ int main(int argc, char *argv[]) {
 		}).Summation(20).GetMonomial().SetDecimal(true).GetString() << std::endl;
 	}
 	statistics::CodeLearning student("CPP");
-
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
 	student.SetIgnores(' ', '\n', '\r', '\t');
 	code::SourcePath samples(".");
