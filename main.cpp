@@ -7,6 +7,7 @@
 #include "Algorithm/Set.hpp"
 #include "Algorithm/Event.h"
 #include "Algorithm/Integer.h"
+#include "Algorithm/Decimal.h"
 #include "Algorithm/Series.hpp"
 
 using namespace code_learning;
@@ -100,6 +101,16 @@ int main(int argc, char *argv[]) {
 				return algorithm::Fraction(4, index * 2 - 1);
 			}
 		}).Summation(20).GetMonomial().SetDecimal(true).GetString() << std::endl;
+
+		std::cout << algorithm::Series<algorithm::Decimal>(
+			[](const uint64_t index) {
+			if (0 == index % 2) {
+				return algorithm::Fraction(algorithm::Integer(4, false), index * 2 - 1);
+			}
+			else {
+				return algorithm::Fraction(4, index * 2 - 1);
+			}
+		}).Summation(100).GetMonomial().GetString() << std::endl;
 
 		std::cout << algorithm::Series<algorithm::Fraction>(
 			[](const uint64_t index) {
