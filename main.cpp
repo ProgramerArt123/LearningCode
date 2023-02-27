@@ -9,6 +9,7 @@
 #include "Algorithm/Integer.h"
 #include "Algorithm/Decimal.h"
 #include "Algorithm/Series.hpp"
+#include "Algorithm//BitSet.h"
 
 using namespace code_learning;
 
@@ -116,6 +117,10 @@ int main(int argc, char *argv[]) {
 			[](const uint64_t index) {
 			return algorithm::Fraction(1, !algorithm::Integer(index - 1));
 		}).Summation(20).GetMonomial().SetDecimal(true).GetString() << std::endl;
+
+		std::cout << algorithm::BitSet(10).GetString() << std::endl;
+		std::cout << algorithm::BitSet(100).GetString() << std::endl;
+		std::cout << algorithm::BitSet(128).GetString() << std::endl;
 	}
 	statistics::CodeLearning student("CPP");
 	student.SetSplits(' ', '\n', '\r', '\t', ';', ',');
